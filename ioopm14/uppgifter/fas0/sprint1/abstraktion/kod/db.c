@@ -35,17 +35,17 @@ void query(Node cursor){
   }
 }
 
-void update(Node *list){
+void update(Node list){
   char buffer[128];
   printf("Enter key: ");
   readline(buffer, sizeof(buffer), stdin);
   puts("Searching database...\n");
   int found = 0;
-  Node cursor = *list;
+  Node cursor = list;
   while(!found && cursor != NULL){
     if(strcmp(buffer, cursor->key) == 0){
       puts("Matching entry found:");
-      printf("key: %s\nvalue: %s\n\n", cursor->key, cursor->value);
+      printf("+key: %s\nvalue: %s\n\n", cursor->key, cursor->value);
       found = 1;
     }else{
       cursor = cursor->next;
