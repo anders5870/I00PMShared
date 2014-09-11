@@ -62,13 +62,14 @@ void update(Node list){
     puts("Value inserted successfully!");
   }
 }
-/*
-void update(char buffer, int n, Node *list){
+
+void insert(Node list){
+  char buffer[128];
   printf("Enter key: ");
-  readline(buffer, n, stdin);
+  readline(buffer, sizeof(buffer), stdin);
   puts("Searching database for duplicate keys...");
-  found = 0;
-  cursor = *list;
+  int found = 0;
+  Node cursor = list;
   while(!found && cursor != NULL){
     if(strcmp(buffer, cursor->key) == 0){
       printf("key \"%s\" already exists!\n", cursor->key);
@@ -83,7 +84,7 @@ void update(char buffer, int n, Node *list){
     newNode->key = malloc(strlen(buffer) + 1);
     strcpy(newNode->key, buffer);
     printf("Enter value: ");
-    readline(buffer, n, stdin);
+    readline(buffer, sizeof(buffer), stdin);
     newNode->value = malloc(strlen(buffer) + 1);
     strcpy(newNode->value, buffer);
     newNode->next = list;
@@ -93,12 +94,14 @@ void update(char buffer, int n, Node *list){
     printf("key: %s\nvalue: %s\n", list->key, list->value);
   }
 }
-void delete(char buffer, int n, Node *list){
+
+void delete(Node list){
   printf("Enter key: ");
-  readline(buffer, n, stdin);
+  char buffer[128]; 
+  readline(buffer, sizeof(buffer), stdin);
   puts("Searching database...\n");
-  found = 0;
-  cursor = *list;
+  int found = 0;
+  Node cursor = list;
   Node prev = NULL;
   while(!found && cursor != NULL){
     if(strcmp(buffer, cursor->key) == 0){
@@ -118,15 +121,16 @@ void delete(char buffer, int n, Node *list){
     printf("Could not find an entry matching key \"%s\"!\n", buffer);
   }
 }
+
 void print(Node cursor){
-  cursor = list;
+  //cursor = list;
   while(cursor != NULL){
     puts(cursor->key);
     puts(cursor->value);
     cursor = cursor->next;
   }
 }
-*/
+
 int main(int argc, char *argv[]){
   if (argc < 2){
     puts("Usage: db [FILE]");
@@ -179,13 +183,13 @@ int main(int argc, char *argv[]){
       update(list);
       break;
     case 3:
-      //      insert(buffer, 128, list);
+      insert(list);
       break;
     case 4:
-      //      delete(buffer, 128, list);
+      delete(list);
       break;
     case 5:
-      //      print(list);      
+      print(list);      
       break;
     case 0:
       // Exit
