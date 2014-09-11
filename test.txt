@@ -3,3 +3,4 @@ README.md
 README.md~
 test.txt
 test
+Testrad för git
