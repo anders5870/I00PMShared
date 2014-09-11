@@ -3,3 +3,5 @@ README.md
 README.md~
 test.txt
 test
+Testrad ör git juhiu
+blablalba
