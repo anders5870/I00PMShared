@@ -62,13 +62,17 @@ void update(Node cursor){
   }
 }
 
-void insert(Node list){ 
+//<<<<<<< HEAD
+//void insert(Node list){ 
+//)=======
+void insert(Node *list){
+  //>>>>>>> 38f5e6481ce3f32d689143ce8c425a9f32e7834a
   char buffer[128];
   printf("Enter key: ");
   readline(buffer, sizeof(buffer), stdin);
   puts("Searching database for duplicate keys...");
   int found = 0;
-  Node cursor = list;
+  Node cursor = *list;
   while(!found && cursor != NULL){
     if(strcmp(buffer, cursor->key) == 0){
       printf("key \"%s\" already exists!\n", cursor->key);
@@ -86,11 +90,15 @@ void insert(Node list){
     readline(buffer, sizeof(buffer), stdin);
     newNode->value = malloc(strlen(buffer) + 1);
     strcpy(newNode->value, buffer);
-    newNode->next = list;
-    list = newNode;
+    newNode->next = *list;
+    *list = newNode;
     puts("");
     puts("Entry inserted successfully:");
-    printf("key: %s\nvalue: %s\n", list->key, list->value); 
+    //<<<<<<< HEAD
+    //printf("key: %s\nvalue: %s\n", list->key, list->value); 
+    //=======
+    printf("key: %s\nvalue: %s\n", (*list)->key, (*list)->value);
+    //>>>>>>> 38f5e6481ce3f32d689143ce8c425a9f32e7834a
   }
 }
 
@@ -144,13 +152,15 @@ int main(int argc, char *argv[]){
   puts("   \\ \\____/\\ \\____/ ");
   puts("    \\/___/  \\/___/  ");
   puts("");
+
   // Read the input file
   char *filename = argv[1];
   printf("Loading database \"%s\"...\n\n", filename);
   FILE *database = fopen(filename, "r");
   char buffer[128];
   Node list = NULL;
-   while(!(feof(database))){
+  //fillFromFile(&list, database);
+  while(!(feof(database))){
     Node newNode = malloc(sizeof(struct node));
     readline(buffer, sizeof(buffer), database);
     newNode->key = malloc(strlen(buffer) + 1);
@@ -182,7 +192,7 @@ int main(int argc, char *argv[]){
       update(list);
       break;
     case 3:
-      insert(list);
+      insert(&list);
       break;
     case 4:
       delete(list);
