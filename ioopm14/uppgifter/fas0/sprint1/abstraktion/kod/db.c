@@ -35,13 +35,12 @@ void query(Node cursor){
   }
 }
 
-void update(Node list){
+void update(Node cursor){
   char buffer[128];
   printf("Enter key: ");
   readline(buffer, sizeof(buffer), stdin);
   puts("Searching database...\n");
   int found = 0;
-  Node cursor = list;
   while(!found && cursor != NULL){
     if(strcmp(buffer, cursor->key) == 0){
       puts("Matching entry found:");
@@ -63,7 +62,7 @@ void update(Node list){
   }
 }
 
-void insert(Node list){
+void insert(Node list){ 
   char buffer[128];
   printf("Enter key: ");
   readline(buffer, sizeof(buffer), stdin);
@@ -91,7 +90,7 @@ void insert(Node list){
     list = newNode;
     puts("");
     puts("Entry inserted successfully:");
-    printf("key: %s\nvalue: %s\n", list->key, list->value);
+    printf("key: %s\nvalue: %s\n", list->key, list->value); 
   }
 }
 
