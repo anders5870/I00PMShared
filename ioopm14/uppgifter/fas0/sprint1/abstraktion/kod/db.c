@@ -62,11 +62,7 @@ void update(Node cursor){
   }
 }
 
-//<<<<<<< HEAD
-//void insert(Node list){ 
-//)=======
 void insert(Node *list){
-  //>>>>>>> 38f5e6481ce3f32d689143ce8c425a9f32e7834a
   char buffer[128];
   printf("Enter key: ");
   readline(buffer, sizeof(buffer), stdin);
