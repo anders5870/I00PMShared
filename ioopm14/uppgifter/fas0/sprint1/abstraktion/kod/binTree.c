@@ -1,51 +1,37 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 typedef struct binTreeNode{
   char *key;
   char *value;
   struct binTreeNode *lLeaf;
   struct binTreeNode *rLeaf;
-}
+} *BinTreeNode;
 
-void addLeaf(struct binTreeNode *root, struct binTreeNode leaf){
-  if(*root->key != leaf->key){
-    if(*root->key > leaf->key){
-      if(root->rLeaf != NULL){
-	addLeaf(*root->rleaf, leaf);
+vvoid updateTree(BinTreeNode bt, char *match, char *newVal){
+  while(bt != NULL){
+    int check = strcmp(bt->key, match);
+    if(check == 0){
+      bt->value = newVal;
+      return;
+    }
+    else{
+      if(check < 0){
+	bt = bt->rLeaf;
       }
       else{
-	*root->rLeaf = leaf;
-      }
-      else{
-	if(*root->lLeaf != NULL){
-	  addLeaf(*root->lLeaf, leaf);
-	}
-	else{
-	  *root->lLeaf = leaf;
-	}
+	bt = bt->lLeaf;
       }
     }
   }
-  else{
-    //todo - error duplicate key
-  }
+  // no matching key found
 }
 
-void readline(char *dest, int n, FILE *source){
-  fgets(dest, n, source);
-  int len = strlen(dest);
-  if(dest[len-1] == '\n')
-    dest[len-1] = '\0';
+int main(int argc, char *argv[]){
+  return 0;
 }
 
-void fillFromFile(struct binTreeNode *bt, FILE *database){
-  char buffer[128];
-    while(!(feof(database))){
-    binTreeNode newNode = malloc(sizeof(struct binTreeNode));
-    readline(buffer, sizeof(buffer), database);
-    newNode->key = malloc(strlen(buffer) + 1);
-    strcpy(newNode->key, buffer);
-    readline(buffer, sizeof(buffer), database);
-    newNode->value = malloc(strlen(buffer) + 1);
-    strcpy(newNode->value, buffer);
-    addLeaf(bt, newNode);
-  }
+void printTree(BinTreeNode bt){
+  
 }
