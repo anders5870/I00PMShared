@@ -16,7 +16,7 @@ typedef struct binTreeNode{
   struct binTreeNode *rLeaf;
 }*BinTreeNode;
 
-void readline(char *dest, intn, FILE *source);
+void readline(char *dest, int n, FILE *source);
 //list specific
 void query(Node list);
 void update(Node list);
@@ -30,4 +30,4 @@ char *queryTree(BinTreeNode bt, char *match);
 void updateTree(BinTreeNode bt, char *match, char *newVal);
 void insertLeaf(BinTreeNode bt, char key, char value);
 void deleteNode(BinTreeNode bt, char *match);
-void printTree(BintTreeNode bt);
+void printTree(BinTreeNode bt);
