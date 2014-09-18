@@ -90,11 +90,7 @@ void insert(Node *list){
     *list = newNode;
     puts("");
     puts("Entry inserted successfully:");
-    //<<<<<<< HEAD
-    //printf("key: %s\nvalue: %s\n", list->key, list->value); 
-    //=======
     printf("key: %s\nvalue: %s\n", (*list)->key, (*list)->value);
-    //>>>>>>> 38f5e6481ce3f32d689143ce8c425a9f32e7834a
   }
 }
 
@@ -126,7 +122,6 @@ void delete(Node list){
 }
 
 void print(Node cursor){
-  //cursor = list;
   while(cursor != NULL){
     puts(cursor->key);
     puts(cursor->value);
@@ -134,11 +129,25 @@ void print(Node cursor){
   }
 }
 
-int main(int argc, char *argv[]){
-  if (argc < 2){
-    puts("Usage: db [FILE]");
-    return -1;
+Node fillFromFile(char *filename){ 
+  FILE *database = fopen(filename, "r");
+  char buffer[128]; 
+  Node list = NULL; 
+  while(!(feof(database))){ 
+    Node newNode = malloc(sizeof(struct node)); 
+    readline(buffer, sizeof(buffer), database); 
+    newNode->key = malloc(strlen(buffer) + 1); 
+    strcpy(newNode->key, buffer); 
+    readline(buffer, sizeof(buffer), database); 
+    newNode->value = malloc(strlen(buffer) + 1); 
+    strcpy(newNode->value, buffer); 
+    newNode->next = list; 
+    list = newNode;
   }
+  return list;
+} 
+
+void printWelcomeMessage(){
   puts("Welcome to");
   puts(" ____    ____       ");
   puts("/\\  _`\\ /\\  _`\\     ");
@@ -148,26 +157,9 @@ int main(int argc, char *argv[]){
   puts("   \\ \\____/\\ \\____/ ");
   puts("    \\/___/  \\/___/  ");
   puts("");
+}
 
-  // Read the input file
-  char *filename = argv[1];
-  printf("Loading database \"%s\"...\n\n", filename);
-  FILE *database = fopen(filename, "r");
-  char buffer[128];
-  Node list = NULL;
-  //fillFromFile(&list, database);
-  while(!(feof(database))){
-    Node newNode = malloc(sizeof(struct node));
-    readline(buffer, sizeof(buffer), database);
-    newNode->key = malloc(strlen(buffer) + 1);
-    strcpy(newNode->key, buffer);
-    readline(buffer, sizeof(buffer), database);
-    newNode->value = malloc(strlen(buffer) + 1);
-    strcpy(newNode->value, buffer);
-    newNode->next = list;
-    list = newNode;
-  }
-  // Main loop
+void mainLoop(Node list){
   int choice = -1;
   while(choice != 0){
     puts("Please choose an operation");
@@ -206,5 +198,17 @@ int main(int argc, char *argv[]){
     }
     puts("");
   }
+}
+
+int main(int argc, char *argv[]){
+  if (argc < 2){
+    puts("Usage: db [FILE]");
+    return -1;
+  }
+  printWelcomeMessage();
+  char *filename = argv[1];
+  printf("Loading database \"%s\"...\n\n", filename);
+  Node list = fillFromFile(filename);
+  mainLoop(list);
   return 0;
 }
