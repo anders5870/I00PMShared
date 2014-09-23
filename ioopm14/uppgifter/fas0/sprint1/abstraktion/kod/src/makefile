@@ -17,7 +17,7 @@ $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 db : $(OBJ) 
-	-o $@ $^ $(CFLAGS)
+	gcc -o $@ $^ $(CFLAGS) $(LIBS)
 
 .PHONY: clean
 
