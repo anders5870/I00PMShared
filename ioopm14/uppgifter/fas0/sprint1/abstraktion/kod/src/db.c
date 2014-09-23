@@ -1,7 +1,8 @@
 //Main
 #include "db.h"
 
-
+//move to list implementation
+//make eqvivalent function for a binary tree structure
 Node fillFromFile(char *filename){ 
   FILE *database = fopen(filename, "r");
   char buffer[128]; 
