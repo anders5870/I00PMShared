@@ -9,7 +9,7 @@ int main(int argc, char *argv[]){
   printWelcomeMessage();
   char *filename = argv[1];
   printf("Loading database \"%s\"...\n\n", filename);
-  Node tree = fillFromFile(filename);
+  BstNode tree = treeFillFromFile(filename);
   mainLoop(tree);//make linked 
                  //structure type-independent
   return 0;

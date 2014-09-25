@@ -20,7 +20,8 @@ void printWelcomeMessage(){
   puts("");
 }
 
-void mainLoop(Node root){
+
+void mainLoop(BstNode root){
   int choice = -1;
   while(choice != 0){
     puts("Please choose an operation");
@@ -41,7 +42,9 @@ void mainLoop(Node root){
       update(root); //update
       break;
     case 3:
-      insert(&root); //insert(&)
+      puts("Enter key: ");
+      scanf("%d", &choice);
+      insertNewNode(root); //insert(&)
       break;
     case 4:
       delete(root); //delete
