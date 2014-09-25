@@ -3,21 +3,35 @@
 #include <stdlib.h>
 #include "db.h"
 
-BstNode* getNewNode(char* key, char value){
-  BstNode* newNode = (BstNode*)malloc(sizeof(BstNode));
+BstNode getNewNode(char *key, char *value){
+  BstNode newNode = malloc(sizeof(BstNode));
   newNode->key = key;
   (*newNode).value = value;
   (*newNode).left = (*newNode).right = NULL;
   return newNode;
 }
 
-BstNode* treeFillFromFile(char *filename)
-{
+void insertNewNode(BstNode root, char *key, char *value){
+  while (root != NULL){
+    if (strcmp(key, root->key) < 0)
+      root = root->left;
+    else if (strcmp(key, root->key) > 0)
+      root = root->right;
+    else{
+      printf("key \"%s\" already exists!\n", key);
+      return;
+    }
+  }
+  root->key = key;
+  root->value = value;
+}
+
+BstNode treeFillFromFile(char *filename){
   FILE *database = fopen(filename, "r");
   char buffer[128];
-  BstNode* root = createTree();
+  BstNode root = createTree();
   while(!(feof(database))){ 
-    BstNode* newNode = (BstNode*)malloc(sizeof(BstNode));
+    BstNode newNode = malloc(sizeof(BstNode));
     readline(buffer, sizeof(buffer), database);
     newNode->key = malloc(strlen(buffer) + 1); 
     strcpy(newNode->key, buffer);
@@ -26,57 +40,19 @@ BstNode* treeFillFromFile(char *filename)
     newNode->value = malloc(strlen(buffer) + 1); 
     strcpy(newNode->value, buffer);
 
-    root = insertNewNode(root, newNode->key, newNode->value);
+    insertNewNode(root, newNode->key, newNode->value);
   }
   return root;
 }
 
-BstNode* createTree(){
-  BstNode* root = NULL;
+BstNode createTree(){
+  BstNode root = NULL;
   return root;
 }
 
-BstNode* insertNewNode(BstNode* root, char* key, char value){
-  BstNode* temp = root;
-  if (root == NULL)
-    root->key = key;
-  while (root->key != NULL)
-    if (key < root->key)
-      if (root->left->key == NULL)
-        root->left->key = key;
-      else
-        root = root->left;
-    else if (key > root->key)
-      if (root->right->key == NULL)
-        root->right->key = key;
-      else 
-        root = root->right;
-    else
-      printf("key \"%s\" already exists!\n", key);
-  return temp;
-}
-
-
-
-BstNode* updateTree(BstNode* root)
+BstNode searchIterative(BstNode root, int toggle)
 {
-  int toggleQueryOrUpdate = 1;
-  BstNode* root = searchIterative(root, toggleQueryOrUpdate);
-  return root;
-}
-
-BstNode* queryTree(BstNode* root)
-{
-  int toggleQueryOrUpdate = 0;
-  BstNode* root = searchIterative(root, toggleQueryOrUpdate);
-  return root;
-}
-
-}
-
-BstNode* searchIterative(BstNode* root, int toggle)
-{
-  BstNode* temp = root;
+  BstNode temp = root;
   printf("Enter key: ");
   char buffer[128];
   readline(buffer, sizeof(buffer), stdin);
@@ -107,14 +83,33 @@ BstNode* searchIterative(BstNode* root, int toggle)
   return temp;
 }
 
-
-BstNode* deleteNode(root, key)
+void updateTree(BstNode root)
 {
-  BstNode* temp_ = root;
+  int toggleQueryOrUpdate = 1;
+  root = searchIterative(root, toggleQueryOrUpdate);
+}
+
+
+
+void queryTree(BstNode root)
+{
+  int toggleQueryOrUpdate = 0;
+  root = searchIterative(root, toggleQueryOrUpdate);
+}
+
+BstNode findMin(BstNode root)
+{
+	while(root->left != NULL) root = root->left;
+	return root;
+}
+
+void deleteNode(BstNode root, char *key)
+{
   printf("Enter key: ");
   char buffer[128]; 
   readline(buffer, sizeof(buffer), stdin);
   puts("Searching database...\n");
+  int found = 0;
   while(!found && root->key != NULL){
     if(strcmp(buffer, root->key) == -1)
       root = root->left;
@@ -123,67 +118,60 @@ BstNode* deleteNode(root, key)
     else{ //found root to be deleted
       puts("Found entry");
       //case1. no child
-      if (root->left = root->right = NULL){
+      if (root->left == NULL && root->right == NULL){
         free(root);
         root = NULL;
       }//case2. 1 child
       else if(root->left == NULL) {
-        BstNode* temp = root;
+        BstNode temp = root;
         root = root->right;
         free(temp);
       }
       else if(root->right == NULL) {
-        BstNode* temp = root;
+        BstNode temp = root;
         root = root->left;
         free(temp);
       }
       else{ 
-        BstNode* temp = findMin(root->right);
+        BstNode temp = findMin(root->right);
         root->key = temp->key;
-        root->right = deleteNode(root->right,temp->key);
+        deleteNode(root->right, temp->key);
       }
     }
   }
-  return temp_;
 }
 
-BstNode* findMin(BstNode* root)
-{
-	while(root->left != NULL) root = root->left;
-	return root;
-}
 
-void printTree(BstNode* root)
+
+void printTree(BstNode root)
 {
   if(root == NULL) return;
-  Inorder(root->left);       //Visit left subtree
+  printTree(root->left);       //Visit left subtree
   puts(root->key);
   puts(root->value);         //Print data
-  Inorder(root->right);      // Visit right subtree
+  printTree(root->right);      // Visit right subtree
 }
 
 //example of recursive equivalent functions (not used)
 
-BstNode* insertRecursive(BstNode* root, char* key, char value){
+BstNode insertRecursive(BstNode root, char *key, char *value){
   if (root == NULL)
-    root = addNewNode(key, value);
-  else if (key <= (*root).key)
-    root->left = insert(root->left, key, value);
-  else (key > root->key)
-    root->right = insert(root->right, key, value);
+    insertNewNode(root, key, value);
+  else if (strcmp(key, (*root).key) < 0)
+    root->left = insertRecursive(root->left, key, value);
+  else if(strcmp(key, root->key) > 1){
+    root->right = insertRecursive(root->right, key, value);
+  }
   return root;
 }
 
-int searchRecursive(BstNode* root, char* key){
+int searchRecursive(BstNode root, char *key){
   if (root == NULL)
     return 0;
-  else if (root->key == key)
+  else if (strcmp(root->key, key) == 0)
     return 1;
-  else if (root-key <= key)
-    return search(root->left, key);
+  else if (strcmp(root->key, key) < 0)
+    return searchRecursive(root->left, key);
   else
-    return search(root->right, key);
+    return searchRecursive(root->right, key);
 }
-
-
-
