@@ -1,0 +1,2 @@
+git rm $(git ls-files --deleted) //tar bort alla borttagna filer från incheckningskön i git
+git add -a -m ""  // "addar" alla filer till commit 
