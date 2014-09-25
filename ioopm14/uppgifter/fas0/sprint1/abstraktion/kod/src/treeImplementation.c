@@ -11,19 +11,43 @@ BstNode getNewNode(char *key, char *value){
   return newNode;
 }
 
-void insertNewNode(BstNode root, char *key, char *value){
+
+void insertNewNode(BstNode root){
+  char buffer[128];
+  printf("Enter key: ");
+  readline(buffer, sizeof(buffer), stdin);
+  puts("Searching database for duplicate keys...");
   while (root != NULL){
-    if (strcmp(key, root->key) < 0)
+    if (strcmp(buffer, root->key) < 0)
       root = root->left;
-    else if (strcmp(key, root->key) > 0)
+    else if (strcmp(buffer, root->key) > 0)
       root = root->right;
     else{
-      printf("key \"%s\" already exists!\n", key);
+      printf("key \"%s\" already exists!\n", buffer);
       return;
     }
   }
-  root->key = key;
-  root->value = value;
+  puts("Key is unique!\n");
+  BstNode newNode = getNewNode(buffer, buffer);
+  printf("Enter value: ");
+  readline(buffer, sizeof(buffer), stdin);
+  newNode->value = malloc(strlen(buffer) + 1);
+  strcpy(newNode->value, buffer);
+  puts("");
+  puts("Entry inserted successfully:");
+  printf("key: %s\nvalue: %s\n", newNode->key, newNode->value);
+
+}
+
+BstNode insertRecursive(BstNode root, BstNode newNode){
+  if (root == NULL)
+    root = newNode;
+  else if (strcmp(newNode->key, (*root).key) < 0)
+    root->left = insertRecursive(root->left, newNode);
+  else if (strcmp(newNode->key, root->key) > 1){
+    root->right = insertRecursive(root->right, newNode);
+  }
+  return root;
 }
 
 BstNode treeFillFromFile(char *filename){
@@ -31,16 +55,15 @@ BstNode treeFillFromFile(char *filename){
   char buffer[128];
   BstNode root = createTree();
   while(!(feof(database))){ 
-    BstNode newNode = malloc(sizeof(BstNode));
     readline(buffer, sizeof(buffer), database);
+    BstNode newNode = getNewNode(buffer, buffer);
     newNode->key = malloc(strlen(buffer) + 1); 
     strcpy(newNode->key, buffer);
-
     readline(buffer, sizeof(buffer), database); 
     newNode->value = malloc(strlen(buffer) + 1); 
     strcpy(newNode->value, buffer);
 
-    insertNewNode(root, newNode->key, newNode->value);
+    insertRecursive(root, newNode);
   }
   return root;
 }
@@ -103,7 +126,7 @@ BstNode findMin(BstNode root)
 	return root;
 }
 
-void deleteNode(BstNode root, char *key)
+void deleteNode(BstNode root, char* key)
 {
   printf("Enter key: ");
   char buffer[128]; 
@@ -154,16 +177,6 @@ void printTree(BstNode root)
 
 //example of recursive equivalent functions (not used)
 
-BstNode insertRecursive(BstNode root, char *key, char *value){
-  if (root == NULL)
-    insertNewNode(root, key, value);
-  else if (strcmp(key, (*root).key) < 0)
-    root->left = insertRecursive(root->left, key, value);
-  else if(strcmp(key, root->key) > 1){
-    root->right = insertRecursive(root->right, key, value);
-  }
-  return root;
-}
 
 int searchRecursive(BstNode root, char *key){
   if (root == NULL)

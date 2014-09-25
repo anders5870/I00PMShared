@@ -15,7 +15,7 @@ _DEPS = db.h
 #List of all .h files to use when compiling
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 #Looks in IDIR for files included in _DEPS
-_OBJ = db.o listImplementation.o functions.o
+_OBJ = db.o treeImplementation.o functions.o
 #List of all .o files to use when compiling
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 #Looks in ODIR for files included in _OBJ

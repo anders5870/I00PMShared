@@ -25,8 +25,8 @@ typedef struct bstNode {
 } *BstNode;
 
 void printTree(BstNode root);
-void deleteNode(BstNode root, char *key);
-void insertNewNode(BstNode root, char *key, char *value); 
+void deleteNode(BstNode root, char* temp);
+void insertNewNode(BstNode root); 
 void updateTree(BstNode root);
 void queryTree(BstNode root);
 void readline(char *dest, int n, FILE *source);
