@@ -14,12 +14,17 @@ typedef struct BstNode {
   struct bstNode* left;
   struct bstNode* right;
 }BstNode;
-
+void print(Node cursor);
+void delete(Node list);
+void insert(Node *list);
+void update(Node cursor);
+void query(Node cursor);
 void readline(char *dest, int n, FILE *source);
 void printWelcomeMessage();
-void mainLoop(BstNode* root);
+void mainLoop(Node root);
 Node fillFromFile(char *filename);
-BstNode* treeFillFromFile(char *filename);
+//BstNode* treeFillFromFile(char *filename);
+Node fillFromFile(char *filename);
 BstNode* createTree();
 #endif
 

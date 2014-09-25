@@ -1,4 +1,5 @@
 #include "db.h"
+#include <string.h>
 
 void readline(char *dest, int n, FILE *source){
   fgets(dest, n, source);
@@ -19,7 +20,7 @@ void printWelcomeMessage(){
   puts("");
 }
 
-void mainLoop(BstNode* root){
+void mainLoop(Node root){
   int choice = -1;
   while(choice != 0){
     puts("Please choose an operation");
@@ -34,19 +35,19 @@ void mainLoop(BstNode* root){
     while(getchar() != '\n'); // Clear stdin
     switch(choice){
     case 1:
-      queryTree(root); //query
+      query(root); //query
       break;
     case 2:
-      updateTree(root); //update
+      update(root); //update
       break;
     case 3:
-      insertNewNode(root) //insert(&)
+      insert(&root); //insert(&)
       break;
     case 4:
-      deleteNode(root); //delete
+      delete(root); //delete
       break;
     case 5:
-      printTree(root);    //print  
+      print(root);    //print  
       break;
     case 0:
       // Exit

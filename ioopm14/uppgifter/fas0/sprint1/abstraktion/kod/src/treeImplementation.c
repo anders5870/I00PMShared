@@ -177,9 +177,9 @@ BstNode* insertRecursive(BstNode* root, char* key, char value){
 int searchRecursive(BstNode* root, char* key){
   if (root == NULL)
     return 0;
-  else if (root->key == key)
+  else if (strcmp(root->key, key) = 0)
     return 1;
-  else if (root-key <= key)
+  else if (root->key <= key)
     return search(root->left, key);
   else
     return search(root->right, key);

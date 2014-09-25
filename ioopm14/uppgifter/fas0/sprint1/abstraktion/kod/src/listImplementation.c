@@ -1,7 +1,7 @@
 #include "db.h"
 #include <string.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 //
 Node fillFromFile(char *filename){ 
   FILE *database = fopen(filename, "r");
