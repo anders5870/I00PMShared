@@ -1,12 +1,27 @@
 #include "db.h"
+#include <string.h>
+#include <stdio.h>
 
-void readline(char *dest, int n, FILE *source){
-  fgets(dest, n, source);
-  int len = strlen(dest);
-  if(dest[len-1] == '\n')
-    dest[len-1] = '\0';
-}
+//
+Node fillFromFile(char *filename){ 
+  FILE *database = fopen(filename, "r");
+  char buffer[128]; 
+  Node list = NULL; 
+  while(!(feof(database))){ 
+    Node newNode = malloc(sizeof(struct node)); 
+    readline(buffer, sizeof(buffer), database); 
+    newNode->key = malloc(strlen(buffer) + 1); 
+    strcpy(newNode->key, buffer); 
+    readline(buffer, sizeof(buffer), database); 
+    newNode->value = malloc(strlen(buffer) + 1); 
+    strcpy(newNode->value, buffer); 
+    newNode->next = list; 
+    list = newNode;
+  }
+  return list;
+} 
 
+//
 void query(Node cursor){
   printf("Enter key: ");
   char buffer[128];

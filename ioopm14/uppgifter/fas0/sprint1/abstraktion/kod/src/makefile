@@ -3,7 +3,7 @@ IDIR =../include
 #"include" above the current directory
 CC=gcc
 #Sets the compiler
-CFLAGS= -march=native -pipe -O2 -std=c99 -Wall -ggdb -I$(IDIR)
+CFLAGS= -march=native -std=c99 -pipe -O2 -Wall -ggdb -I$(IDIR)
 #Sets the flags to use when compiling
 ODIR=obj
 #Refers to the name "obj"
@@ -11,11 +11,11 @@ LDIR =../lib
 #Looks for files in directory "lib" 
 LIBS=-lm
 #Optional library additions
-_DEPS = db.h
+_DEPS = db.h 
 #List of all .h files to use when compiling
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 #Looks in IDIR for files included in _DEPS
-_OBJ = db.o listImplementation.o
+_OBJ = db.o treeImplementation.o functions.o
 #List of all .o files to use when compiling
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 #Looks in ODIR for files included in _OBJ
