@@ -3,14 +3,81 @@
 #include <stdlib.h>
 #include "db.h"
 
-BstNode getNewNode(char *key, char *value){
-  BstNode newNode = malloc(sizeof(BstNode));
-  newNode->key = key;
-  (*newNode).value = value;
-  (*newNode).left = (*newNode).right = NULL;
+BstNode getNewNode()/* (char *key, char *value) */{
+  BstNode newNode = malloc(32);
+  /* newNode->key = key; */
+  /* (*newNode).value = value; */
+  newNode->key = newNode->value = NULL;
+  newNode->left = newNode->right = NULL;
   return newNode;
 }
 
+BstNode insertRecursive(BstNode root, BstNode newNode){
+  if (root == NULL){
+    root = newNode;
+    printf("%s\t%s\n",root->key,root->value);
+  }
+  else if (strcmp(newNode->key, root->key) < 0){;
+    root->left = insertRecursive(root->left, newNode);
+  }
+  else if (strcmp(newNode->key, root->key) > 1){   
+    root->right = insertRecursive(root->right, newNode);
+  }
+  return root;
+}
+
+void insertIterative(BstNode root, BstNode newNode){
+  printf("%s\tdebug newNode in insert\n", newNode->key);
+  printf("%s\tdebug root(#2!=null) i insert\n", root->key);
+  int placed = 0;
+  while (!placed){
+    if (root->key == '\0'){
+      printf("%s\tdebug root in insert\n", root->key);
+      root->key = newNode->key;
+      root->value = newNode->value;
+      printf("%s\tdebug root in insert\n", root->key);
+      placed = 1;
+    }
+    else{
+      if (strcmp(root->key, newNode->key) < 0)
+        root = root->left;
+      else {
+        root = root->right;
+      }
+    }
+  }
+  printf("%s\tdebug root i insert\n", root->key);
+}
+
+BstNode treeFillFromFile(char *filename){
+  FILE *database = fopen(filename, "r");
+  char buffer[128];
+
+  BstNode root = malloc(32);
+  root->key = root->value = NULL;
+  root->left = root->right = NULL;
+
+  while(!(feof(database))){ 
+    readline(buffer, sizeof(buffer), database);
+
+    BstNode newNode = malloc(32);
+    newNode->key = newNode->value = '\0';
+    newNode->left = newNode->right = '\0';
+
+    newNode->key = malloc(strlen(buffer) + 1);
+    strcpy(newNode->key, buffer);
+    readline(buffer, sizeof(buffer), database); 
+    newNode->value = malloc(strlen(buffer) + 1); 
+    strcpy(newNode->value, buffer);
+    printf("%s\tnewNode i tff\n", newNode->key);
+    insertIterative(root, newNode);
+
+    printf("%s\tdebug in treeFillFromFile\n", root->key);
+  }
+  root = root->left;
+  printf("%s\tdebug in treeFillFromFile\n", root->value);
+  return root;
+}
 
 void insertNewNode(BstNode root){
   char buffer[128];
@@ -39,42 +106,13 @@ void insertNewNode(BstNode root){
 
 }
 
-BstNode insertRecursive(BstNode root, BstNode newNode){
-  if (root == NULL)
-    root = newNode;
-  else if (strcmp(newNode->key, (*root).key) < 0)
-    root->left = insertRecursive(root->left, newNode);
-  else if (strcmp(newNode->key, root->key) > 1){
-    root->right = insertRecursive(root->right, newNode);
-  }
-  return root;
-}
-
-BstNode treeFillFromFile(char *filename){
-  FILE *database = fopen(filename, "r");
-  char buffer[128];
-  BstNode root = createTree();
-  while(!(feof(database))){ 
-    readline(buffer, sizeof(buffer), database);
-    BstNode newNode = getNewNode(buffer, buffer);
-    newNode->key = malloc(strlen(buffer) + 1); 
-    strcpy(newNode->key, buffer);
-    readline(buffer, sizeof(buffer), database); 
-    newNode->value = malloc(strlen(buffer) + 1); 
-    strcpy(newNode->value, buffer);
-
-    insertRecursive(root, newNode);
-  }
-  return root;
-}
-
 BstNode createTree(){
-  BstNode root = NULL;
+  BstNode root = malloc(32);
+  /* BstNode root = NULL; */
   return root;
 }
 
-BstNode searchIterative(BstNode root, int toggle)
-{
+BstNode searchIterative(BstNode root, int toggle){
   BstNode temp = root;
   printf("Enter key: ");
   char buffer[128];
@@ -106,28 +144,22 @@ BstNode searchIterative(BstNode root, int toggle)
   return temp;
 }
 
-void updateTree(BstNode root)
-{
+void updateTree(BstNode root){
   int toggleQueryOrUpdate = 1;
   root = searchIterative(root, toggleQueryOrUpdate);
 }
 
-
-
-void queryTree(BstNode root)
-{
+void queryTree(BstNode root){
   int toggleQueryOrUpdate = 0;
   root = searchIterative(root, toggleQueryOrUpdate);
 }
 
-BstNode findMin(BstNode root)
-{
-	while(root->left != NULL) root = root->left;
-	return root;
+BstNode findMin(BstNode root){
+  while(root->left != NULL) root = root->left;
+  return root;
 }
 
-void deleteNode(BstNode root, char* key)
-{
+void deleteNode(BstNode root, char* key){
   printf("Enter key: ");
   char buffer[128]; 
   readline(buffer, sizeof(buffer), stdin);
@@ -164,19 +196,19 @@ void deleteNode(BstNode root, char* key)
   }
 }
 
-
-
-void printTree(BstNode root)
-{
-  if(root == NULL) return;
-  printTree(root->left);       //Visit left subtree
-  puts(root->key);
-  puts(root->value);         //Print data
-  printTree(root->right);      // Visit right subtree
+void printTree(BstNode root){
+  /* if(root == NULL){ */
+  /*     return; */
+  /* } */
+  if (root->left != NULL)
+    printTree(root->left);       //Visit left subtree
+  printf("%s\ti print\n", root->key);
+  printf("%s\ti print\n", root->value);
+  if (root->right != NULL)
+  /* puts(root->key); */
+  /* puts(root->value);     */     //Print data
+    printTree(root->right);      // Visit right subtree
 }
-
-//example of recursive equivalent functions (not used)
-
 
 int searchRecursive(BstNode root, char *key){
   if (root == NULL)

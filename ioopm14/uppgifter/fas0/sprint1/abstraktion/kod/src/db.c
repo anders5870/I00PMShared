@@ -10,6 +10,9 @@ int main(int argc, char *argv[]){
   char *filename = argv[1];
   printf("Loading database \"%s\"...\n\n", filename);
   BstNode tree = treeFillFromFile(filename);
+  printf("%s\ti db\n", tree->key);
+  printf("%s\ti db\n", tree->value);
+
   mainLoop(tree);//make linked 
                  //structure type-independent
   return 0;

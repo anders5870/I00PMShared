@@ -22,7 +22,6 @@ void printWelcomeMessage(){
   puts("");
 }
 
-
 void mainLoop(BstNode root){
   int choice = -1;
   char temp[128];
@@ -51,6 +50,8 @@ void mainLoop(BstNode root){
       deleteNode(root, temp); //delete
       break;
     case 5:
+      printf("%s\ti functions\n", root->key);
+      printf("%s\ti functions\n", root->value);
       printTree(root);    //print  
       break;
     case 0:

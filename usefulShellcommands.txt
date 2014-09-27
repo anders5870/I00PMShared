@@ -1,2 +1,4 @@
 git rm $(git ls-files --deleted) //tar bort alla borttagna filer från incheckningskön i git
 git add -a -m ""  // "addar" alla filer till commit 
+valgrind --tool=memcheck ./db --leak-check=full -v //valgrind
+valgrind --vgdb=yes --vgdb-error=0  ./db SWE.db //valgrind med gdb
