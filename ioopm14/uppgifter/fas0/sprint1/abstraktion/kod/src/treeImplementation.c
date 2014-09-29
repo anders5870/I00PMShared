@@ -10,19 +10,31 @@ BstNode getNewNode(char *key, char *value){
   newNode->left = newNode->right = NULL;
   return newNode;
 }
-
-BstNode insertIterative(BstNode root,  char *key, char *value){
+//skit ner dig
+BstNode insertIterative(BstNode root,  char *key_, char *value){
   BstNode tempNode = root;
-  while(root != NULL){
-    if (strcmp(root->key, key) <= 0)
-      root = root->left;
-    else 
-      root = root->right;
+  int i = strcmp("Anna", "Boris");
+  printf"%d strcmp is -1  ?!?\n",i);
+
+  if (root == NULL){
+    root = getNewNode(key_, value);
+    printf("%s\n", root->key);
   }
-  root = getNewNode(key, value);
+  while(root != NULL){
+    printf("%s in while\n", root->key);
+    if (strcmp(root->key, key_) > 0){
+      printf("%s i greater\n", root->key);
+      root = root->right;
+    
+    }
+    else {
+      printf("%s i lesser\n", root->key);
+      root = root->left;
+    }
+  }
+  root = getNewNode(key_, value);
   return tempNode;
 }
-
 
 BstNode treeFillFromFile(char *filename){
   FILE *database = fopen(filename, "r");
@@ -31,8 +43,9 @@ BstNode treeFillFromFile(char *filename){
   char *value;
 
   BstNode root = malloc(32);
-  root->key = root->value = NULL;
-  root->left = root->right = NULL;
+  root  = NULL;
+  /* root->key = root->value = NULL; */
+  /* root->left = root->right = NULL; */
 
   while(!(feof(database))){ 
     readline(buffer, sizeof(buffer), database);
@@ -46,6 +59,7 @@ BstNode treeFillFromFile(char *filename){
     root = insertIterative(root, key, value);
   }
   puts("");
+  printf("%s     %s\n", root->key, root->value);
   if (root->left && root->right != NULL)
     printf("both left and right are not empty\n");
   else if (root->right != NULL)
@@ -195,8 +209,6 @@ int searchRecursive(BstNode root, char *key){
   else
     return searchRecursive(root->right, key);
 }
-
-
 
 BstNode insertRecursive(BstNode root, BstNode newNode){
   if (root == NULL){
