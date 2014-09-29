@@ -27,26 +27,16 @@ BstNode insertRecursive(BstNode root, BstNode newNode){
 }
 
 void insertIterative(BstNode root, BstNode newNode){
-  printf("%s\tdebug newNode in insert\n", newNode->key);
-  printf("%s\tdebug root(#2!=null) i insert\n", root->key);
-  int placed = 0;
-  while (!placed){
-    if (root->key == '\0'){
-      printf("%s\tdebug root in insert\n", root->key);
-      root->key = newNode->key;
-      root->value = newNode->value;
-      printf("%s\tdebug root in insert\n", root->key);
-      placed = 1;
-    }
-    else{
-      if (strcmp(root->key, newNode->key) < 0)
-        root = root->left;
-      else {
-        root = root->right;
-      }
-    }
+  printf("%p   ",&root);
+  while(root->key != NULL){
+    if (strcmp(root->key, newNode->key) < 0)
+      root = root->left;
+    else 
+      root = root->right;
   }
-  printf("%s\tdebug root i insert\n", root->key);
+
+  root = newNode;
+  printf("%p   ",&root);
 }
 
 BstNode treeFillFromFile(char *filename){
@@ -57,6 +47,8 @@ BstNode treeFillFromFile(char *filename){
   root->key = root->value = NULL;
   root->left = root->right = NULL;
 
+  printf("%p\n",&root);
+  
   while(!(feof(database))){ 
     readline(buffer, sizeof(buffer), database);
 
@@ -69,13 +61,20 @@ BstNode treeFillFromFile(char *filename){
     readline(buffer, sizeof(buffer), database); 
     newNode->value = malloc(strlen(buffer) + 1); 
     strcpy(newNode->value, buffer);
-    printf("%s\tnewNode i tff\n", newNode->key);
+    printf("%p   ",&root);
     insertIterative(root, newNode);
-
-    printf("%s\tdebug in treeFillFromFile\n", root->key);
+    printf("%p\n",&root);
   }
-  root = root->left;
-  printf("%s\tdebug in treeFillFromFile\n", root->value);
+  puts("");
+  if (root->left && root->right != NULL)
+    printf("both left and right are not empty\n");
+  else if (root->right != NULL)
+    printf("right is not empty\n");
+  else if (root->left != NULL)
+    printf("left is not empty\n");
+  else 
+    printf("both left and right are empty\n");
+  puts("");
   return root;
 }
 
@@ -220,3 +219,23 @@ int searchRecursive(BstNode root, char *key){
   else
     return searchRecursive(root->right, key);
 }
+
+
+/* int placed = 0;
+
+  while (!placed){
+    if (root->key == NULL){
+      printf("%s\tdebug root in insert\n", root->key);
+      root->key = newNode->key;
+      root->value = newNode->value;
+      printf("%s\tdebug root in insert\n", root->key);
+      placed = 1;
+    }
+    else{
+      if (strcmp(root->key, newNode->key) < 0)
+        root = root->left;
+      else {
+        root = root->right;
+      }
+    }
+  }*/
