@@ -4,7 +4,7 @@
 #include "db.h"
 
 BstNode getNewNode(char *key, char *value){
-  BstNode newNode = malloc(32);
+  BstNode newNode = malloc(sizeof(struct bstNode));
   newNode->key = key;
   (*newNode).value = value;
   newNode->left = newNode->right = NULL;
@@ -14,26 +14,35 @@ BstNode getNewNode(char *key, char *value){
 BstNode insertIterative(BstNode root,  char *key_, char *value){
   BstNode tempNode = root;
   int i = strcmp("Anna", "Boris");
-  printf"%d strcmp is -1  ?!?\n",i);
+  printf("%d strcmp is -1  ?!?\n",i);
 
   if (root == NULL){
     root = getNewNode(key_, value);
     printf("%s\n", root->key);
+    return root;
   }
   while(root != NULL){
     printf("%s in while\n", root->key);
     if (strcmp(root->key, key_) > 0){
       printf("%s i greater\n", root->key);
+      if(root->right == NULL){
+	root->right = getNewNode(key_, value);
+	return tempNode;
+      }
       root = root->right;
-    
     }
     else {
       printf("%s i lesser\n", root->key);
+      if(root->left == NULL){
+	root->left = getNewNode(key_, value);
+	return tempNode;
+      }
       root = root->left;
     }
   }
-  root = getNewNode(key_, value);
-  return tempNode;
+  //root = getNewNode(key_, value);
+  //return tempNode;
+  return root; //Kommer aldrig hit
 }
 
 BstNode treeFillFromFile(char *filename){
@@ -42,23 +51,23 @@ BstNode treeFillFromFile(char *filename){
   char *key;
   char *value;
 
-  BstNode root = malloc(32);
-  root  = NULL;
+  //BstNode root = malloc(sizeof(struct bstNode));
+  BstNode root = NULL;
   /* root->key = root->value = NULL; */
   /* root->left = root->right = NULL; */
-
+  puts("1");
   while(!(feof(database))){ 
+    puts("2");
     readline(buffer, sizeof(buffer), database);
-
     key = malloc(strlen(buffer) + 1);
     strcpy(key, buffer);
     readline(buffer, sizeof(buffer), database); 
     value = malloc(strlen(buffer) + 1); 
     strcpy(value, buffer);
- 
+    puts("3");
     root = insertIterative(root, key, value);
   }
-  puts("");
+  puts("dfgh");
   printf("%s     %s\n", root->key, root->value);
   if (root->left && root->right != NULL)
     printf("both left and right are not empty\n");
