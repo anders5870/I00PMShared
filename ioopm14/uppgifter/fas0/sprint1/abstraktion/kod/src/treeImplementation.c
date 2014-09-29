@@ -3,67 +3,47 @@
 #include <stdlib.h>
 #include "db.h"
 
-BstNode getNewNode()/* (char *key, char *value) */{
+BstNode getNewNode(char *key, char *value){
   BstNode newNode = malloc(32);
-  /* newNode->key = key; */
-  /* (*newNode).value = value; */
-  newNode->key = newNode->value = NULL;
+  newNode->key = key;
+  (*newNode).value = value;
   newNode->left = newNode->right = NULL;
   return newNode;
 }
 
-BstNode insertRecursive(BstNode root, BstNode newNode){
-  if (root == NULL){
-    root = newNode;
-    printf("%s\t%s\n",root->key,root->value);
-  }
-  else if (strcmp(newNode->key, root->key) < 0){;
-    root->left = insertRecursive(root->left, newNode);
-  }
-  else if (strcmp(newNode->key, root->key) > 1){   
-    root->right = insertRecursive(root->right, newNode);
-  }
-  return root;
-}
-
-void insertIterative(BstNode root, BstNode newNode){
-  printf("%p   ",&root);
-  while(root->key != NULL){
-    if (strcmp(root->key, newNode->key) < 0)
+BstNode insertIterative(BstNode root,  char *key, char *value){
+  BstNode tempNode = root;
+  while(root != NULL){
+    if (strcmp(root->key, key) <= 0)
       root = root->left;
     else 
       root = root->right;
   }
-
-  root = newNode;
-  printf("%p   ",&root);
+  root = getNewNode(key, value);
+  return tempNode;
 }
+
 
 BstNode treeFillFromFile(char *filename){
   FILE *database = fopen(filename, "r");
   char buffer[128];
+  char *key;
+  char *value;
 
   BstNode root = malloc(32);
   root->key = root->value = NULL;
   root->left = root->right = NULL;
 
-  printf("%p\n",&root);
-  
   while(!(feof(database))){ 
     readline(buffer, sizeof(buffer), database);
 
-    BstNode newNode = malloc(32);
-    newNode->key = newNode->value = '\0';
-    newNode->left = newNode->right = '\0';
-
-    newNode->key = malloc(strlen(buffer) + 1);
-    strcpy(newNode->key, buffer);
+    key = malloc(strlen(buffer) + 1);
+    strcpy(key, buffer);
     readline(buffer, sizeof(buffer), database); 
-    newNode->value = malloc(strlen(buffer) + 1); 
-    strcpy(newNode->value, buffer);
-    printf("%p   ",&root);
-    insertIterative(root, newNode);
-    printf("%p\n",&root);
+    value = malloc(strlen(buffer) + 1); 
+    strcpy(value, buffer);
+ 
+    root = insertIterative(root, key, value);
   }
   puts("");
   if (root->left && root->right != NULL)
@@ -196,16 +176,12 @@ void deleteNode(BstNode root, char* key){
 }
 
 void printTree(BstNode root){
-  /* if(root == NULL){ */
-  /*     return; */
-  /* } */
+
   if (root->left != NULL)
     printTree(root->left);       //Visit left subtree
   printf("%s\ti print\n", root->key);
   printf("%s\ti print\n", root->value);
   if (root->right != NULL)
-  /* puts(root->key); */
-  /* puts(root->value);     */     //Print data
     printTree(root->right);      // Visit right subtree
 }
 
@@ -218,6 +194,22 @@ int searchRecursive(BstNode root, char *key){
     return searchRecursive(root->left, key);
   else
     return searchRecursive(root->right, key);
+}
+
+
+
+BstNode insertRecursive(BstNode root, BstNode newNode){
+  if (root == NULL){
+    root = newNode;
+    printf("%s\t%s\n",root->key,root->value);
+  }
+  else if (strcmp(newNode->key, root->key) < 0){;
+    root->left = insertRecursive(root->left, newNode);
+  }
+  else if (strcmp(newNode->key, root->key) > 1){   
+    root->right = insertRecursive(root->right, newNode);
+  }
+  return root;
 }
 
 
@@ -239,3 +231,45 @@ int searchRecursive(BstNode root, char *key){
       }
     }
   }*/
+
+/* BstNode Insert(BstNode T, char *key, char *value) */
+/* { */
+/*   BstNode temp=T; */
+/*   BstNode node=malloc(32); */
+/*   node->key=key; */
+/*   node->value=value; */
+/*   node->left=NULL; */
+/*   node->right=NULL; */
+/*   if (T==NULL) */
+/*     { */
+/*       T=node; */
+/*       return(T); */
+/*       //printf("%d\n",T->Element); */
+/*     } */
+/*   else */
+/*     { */
+/*       while(1) */
+/*         { */
+/*           if ((strcmp(temp->key, key) >= 0) && temp->left==NULL) */
+/*             { */
+/*               temp->left=node; */
+/*               break; */
+/*             } */
+/*           else if ((strcmp(temp->key, key) >= 0) && temp->left!=NULL) */
+/*             { */
+
+/*               temp=temp->left; */
+/*             } */
+/*           else if ((strcmp(temp->key, node->key) < 0) && temp->right==NULL) */
+/*             { */
+/*               temp->right=node; */
+/*               break; */
+/*             } */
+/*           else */
+/*             { */
+/*               temp=temp->right; */
+/*             } */
+/*         }    */
+/*       return(T); */
+/*     }             */
+/* } */
