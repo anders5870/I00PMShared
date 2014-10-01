@@ -17,7 +17,8 @@ BstNode treeFillFromFile(char *filename);
 BstNode createTree();
 BstNode searchIterative(BstNode root, int toggle);
 BstNode findMin(BstNode root);
-void printTree(BstNode root);
+void printTreeRecursively(BstNode root);
+void printTreeIteratively(BstNode root);
 void destroyTree(BstNode root);
 
 

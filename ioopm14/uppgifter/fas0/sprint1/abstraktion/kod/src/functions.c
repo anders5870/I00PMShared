@@ -30,7 +30,8 @@ void mainLoop(BstNode root){
     puts("2. Update an entry");
     puts("3. New entry");
     puts("4. Remove entry");
-    puts("5. Print database");
+    puts("5. Print database recursively");
+    puts("6. Print database iteratively");
     puts("0. Exit database");
     printf("? ");
     scanf("%d", &choice);
@@ -49,9 +50,10 @@ void mainLoop(BstNode root){
       root = searchIterative(root, 3); //delete
       break;
     case 5:
-      printf("%s\ti functions\n", root->key);
-      printf("%s\ti functions\n", root->value);
-      printTree(root);    //print  
+      printTreeRecursively(root);    //print recursively 
+      break;
+    case 6:
+      printTreeIteratively(root); //print iteratively
       break;
     case 0:
       // Exit

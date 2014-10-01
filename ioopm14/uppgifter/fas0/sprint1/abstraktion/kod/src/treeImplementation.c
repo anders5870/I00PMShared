@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "db.h"
+#include "stack.h"
 
 BstNode getNewNode(char *key, char *value){
   BstNode newNode = malloc(sizeof(struct bstNode));
@@ -236,13 +237,36 @@ BstNode findMin(BstNode root){
   return dir;
 }
 
-void printTree(BstNode root){    //inorder traversal
+void printTreeRecursively(BstNode root){    //inorder traversal
   if (root->left != NULL)
-    printTree(root->left);       //Visit left subtree
+    printTreeRecursively(root->left);       //Visit left subtree
   printf("%s\t", root->key);
   printf("%s\n", root->value);
   if (root->right != NULL)
-    printTree(root->right);      // Visit right subtree
+    printTreeRecursively(root->right);      // Visit right subtree
+}
+
+void printTreeIteratively(BstNode root){
+  stackT stack;
+  BstNode current = root;
+  StackInit(&stack, MAXSTACKSIZE);
+  int done = 0;
+  printf("Key\tValue\n");
+  while (!done) {
+    if (current) {
+      StackPush(&stack, current);
+      current = current->left;
+    } else {
+      if (StackIsEmpty(&stack)) {
+        done = 1;
+      } else {
+        current = StackPop(&stack);
+        printf("%s\t%s\n",current->key,current->value);
+        current = current->right;
+      }
+    }
+  }
+  StackDestroy(&stack);
 }
 
 void destroyTree(BstNode root)  {
@@ -255,19 +279,6 @@ void destroyTree(BstNode root)  {
     free(root);
     root = NULL;
 }
-
-
-/* void destroyTree(BstNode root){ */
-/*   if (root == NULL) return; */
-/*   if (root->left != NULL){ */
-/*     destroyTree(root->left); */
-/*   }       //Visit left subtree */
-/*   if (root->right != NULL){ */
-/*     destroyTree(root->right); */
-/*   }      // Visit right subtree */
-/*   root = NULL; */
-/*   free(root); */
-/* } */
 
 int searchRecursive(BstNode root, char *key){
   if (root == NULL)
