@@ -1,0 +1,17 @@
+D9 - Väldokumenterad modul - båda
+
+F13 -iterativt /rekursivt - båda
+
+H20 - värde- och referenssemantik - båda
+
+I22* - Defensiv programmering
+
+J26, J27 - Minnesallokering
+
+M38, M39 - pekare - båda
+
+R50 - GDB - båda
+
+X60 - välstrukturerad redovisning
+
+V56 - Terminalen
