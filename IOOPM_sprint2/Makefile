@@ -26,3 +26,5 @@ test: unittests.c istring.c istring.h
 	$(C_COMPILER) $(C_OPTIONS) unittests.c istring.c -o unittests -lcunit
 	./unittests
 
+istring: istring.c
+	$(C_COMPILER) $(C_OPTIONS) istring.c -o istring
