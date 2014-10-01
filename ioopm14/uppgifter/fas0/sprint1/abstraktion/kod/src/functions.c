@@ -24,7 +24,6 @@ void printWelcomeMessage(){
 
 void mainLoop(BstNode root){
   int choice = -1;
-  char temp[128];
   while(choice != 0){
     puts("Please choose an operation");
     puts("1. Query a key");
@@ -38,16 +37,16 @@ void mainLoop(BstNode root){
     while(getchar() != '\n'); // Clear stdin
     switch(choice){
     case 1:
-      queryTree(root); //query
+      root = searchIterative(root, 0); //query
       break;
     case 2:
-      updateTree(root); //update
+      root = searchIterative(root, 1); //update
       break;
     case 3:
-      insertNewNode(root); //insert(&)
+      root = searchIterative(root, 2); //insert(&)
       break;
     case 4:
-      deleteNode(root, temp); //delete
+      root = searchIterative(root, 3); //delete
       break;
     case 5:
       printf("%s\ti functions\n", root->key);
@@ -56,6 +55,7 @@ void mainLoop(BstNode root){
       break;
     case 0:
       // Exit
+      destroyTree(root);
       puts("Good bye!");
       break;
     default:
