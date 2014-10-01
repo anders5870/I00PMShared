@@ -65,6 +65,7 @@ size_t istrlen(const char *s);
  * STRING(dst) för att hoppa över längd-delen av strängen.
 */
 char *istrcpy(char *dst, const char *src);
+
 char *istrncpy(char *dst, const char *src, size_t n);
 char *istrcat(char *dst, const char *src);
 char *istrncat(char *dst, const char *src, size_t n);
