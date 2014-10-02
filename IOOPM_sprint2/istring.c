@@ -37,14 +37,29 @@ char *istring_mk(const char* str){
 }
 
 void istring_rm(char *str){
-  START(str);
+  printf("1. Addressen %p är vad test pekar på och pekaren ligger i %p\n", str, &str); 
+  str = START(str);
   free(str);
-  str = NULL;
+  //  free(str+1);
+  *str = NULL;
 }
+
+/* char *istring_to_string(const char *str){ */
+/*   char *string = START(str);  */
+ 
+/*   int subbuff[4]; */
+/*   memcpy( subbuff, &string[0], 4 ); */
+  
+/* } */
 
 int main(){
   char *test = istring_mk("Teststring");
   istring_rm(test);
-  printf("TESTING, %s \n", test); 
+  printf("1. Addressen %p är vad test pekar på och pekaren ligger i %p\n", test, &test); 
+  printf("2. %s \n", test); 
+  if (test != NULL)
+    printf("3. TESTING, its not empty\n"); 
+  else 
+    printf("4. All is well\n"); 
   return 0;
 }

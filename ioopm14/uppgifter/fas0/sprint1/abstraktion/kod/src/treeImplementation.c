@@ -234,19 +234,19 @@ BstNode insertNode(BstNode root){
   strcpy(key, buffer);
   puts("Searching database for duplicate keys...!\n");
   if (isNodePresentRecursive(root, key)){
-  puts("Key is unique!\n");
-  printf("Enter value: ");
-  readline(buffer, sizeof(buffer), stdin); 
-  value = malloc(strlen(buffer) + 1); 
-  strcpy(value, buffer);
-  root = insertIterative(root, key, value);
-  puts("");
-  puts("Entry inserted successfully:");
-  printf("key: %s\nvalue: %s\n", key, value); 
+    puts("Key is unique!\n");
+    printf("Enter value: ");
+    readline(buffer, sizeof(buffer), stdin); 
+    value = malloc(strlen(buffer) + 1); 
+    strcpy(value, buffer);
+    root = insertIterative(root, key, value);
+    puts("");
+    puts("Entry inserted successfully:");
+    printf("key: %s\nvalue: %s\n", key, value); 
   } 
   else {
     printf("key \"%s\" already exists!\n", buffer);
-}
+  }
   return root;
 }
 
@@ -290,7 +290,7 @@ void printTreeIteratively(BstNode root){
       }
     }
   }
-  StackDestroy(&stack);
+  //StackDestroy(&stack);
 }
 
 void destroyTree(BstNode root){
