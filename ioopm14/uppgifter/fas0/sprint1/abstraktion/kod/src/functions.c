@@ -38,19 +38,20 @@ void mainLoop(BstNode root){
     while(getchar() != '\n'); // Clear stdin
     switch(choice){
     case 1:
-      root = searchIterative(root, 0);//queryTree(root); //query
+      queryTree(root); //queryroot = searchIterative(root, 0);//
       break;
     case 2:
-      root = searchIterative(root, 1);//root = updateTree(root); //update
+      root = updateNode(root); //updateroot = searchIterative(root, 1);//
       break;
     case 3:
-      root = searchIterative(root, 2);//root = insertNode(root); //insert(&)
+      root = insertNode(root); //insert(&)root = searchIterative(root, 2);//
       break;
     case 4:
-      root = searchIterative(root,3);//root = deleteNode(root); //delete
+      root = deleteNode(root); //delete root = searchIterative(root,3);//
       break;
     case 5:
-      printTreeRecursively(root);    //print recursively 
+      puts("");
+      printTreeRecursively(root);    //print recursively(root); 
       break;
     case 6:
       printTreeIteratively(root); //print iteratively
