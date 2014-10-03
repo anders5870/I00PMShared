@@ -232,7 +232,6 @@ BstNode findNodeWithKey(BstNode root, char *key){
   return root = NULL;
 }
 
-
 BstNode deleteNode(BstNode root){
   BstNode temp = root;
   char buffer[128];

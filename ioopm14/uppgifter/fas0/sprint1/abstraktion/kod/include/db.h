@@ -31,9 +31,6 @@ void destroyTree(BstNode root); //used before exiting
 /***************************************************/
 BstNode searchIterativeParent(BstNode root, char *key);
 
-Input: BstNode
-
-
 BstNode searchIterative(BstNode root); // main search function
 
 void queryTree(BstNode root); //option1
@@ -60,7 +57,7 @@ void mainLoop(BstNode root);
 /* Pre: inget.                                    */
 /* Post: BstNode med nyckel key, annars med NULL. */
 /**************************************************/
-BstNode findNodeWithKey(BstNode root, char *key)
+BstNode findNodeWithKey(BstNode root, char *key);
 
 
 #endif
