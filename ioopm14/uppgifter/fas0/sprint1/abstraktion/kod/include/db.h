@@ -22,7 +22,18 @@ BstNode findMin(BstNode root); // used by deleteNode to find smallest node in ri
 
 void destroyTree(BstNode root); //used before exiting
 
+
+/***************************************************/
+/* Name: searchIterativeParent                     */
+/* Type: (BstNode root, char *key)->BstNode parent */
+/* Pre: inget.                                     */
+/* Post: Parent of BstNode with key key.           */
+/***************************************************/
 BstNode searchIterativeParent(BstNode root, char *key);
+
+Input: BstNode
+
+
 BstNode searchIterative(BstNode root); // main search function
 
 void queryTree(BstNode root); //option1
@@ -42,5 +53,15 @@ void readline(char *dest, int n, FILE *source);
 void printWelcomeMessage();
 
 void mainLoop(BstNode root);
+
+/**************************************************/
+/* Name: findNodeWithKey                          */
+/* Type: (BstNode root, char key*)->BstNode       */
+/* Pre: inget.                                    */
+/* Post: BstNode med nyckel key, annars med NULL. */
+/**************************************************/
+BstNode findNodeWithKey(BstNode root, char *key)
+
+
 #endif
 

@@ -61,170 +61,6 @@ BstNode createTree(){
   return root;
 }
 
-/* BstNode searchIterative(BstNode root, int toggle){ */
-/*   printf("Enter key: "); */
-/*   BstNode temp = root; */
-/*   BstNode parent = root; */
-/*   char buffer[128]; */
-/*   readline(buffer, sizeof(buffer), stdin); */
-/*   int found = 0; */
-/*   toggle0 = query, 1 = update, 2 = insert, 3 = delete */
-/*     if (toggle == 0 || toggle == 1 || toggle == 3) */
-/*       puts("Searching database...\n"); */
-/*     else */
-/*       puts("Searching database for duplicate keys...\n"); */
-/*   while (root != NULL && !found){ */
-/*     if (strcmp(root->key, buffer) > 0){ */
-/*       parent = root; */
-/*       root = root->right; */
-/*     } */
-/*     else if (strcmp(root->key, buffer) < 0){ */
-/*       parent = root; */
-/*       root = root->left; */
-/*     } */
-/*     else { */
-/*       found = 1; */
-/*       if (toggle == 0 || toggle == 1 || toggle == 3){ */
-/*         printf("Found entry!\n\n"); */
-/*         printf("Key: %s\nValue: %s\n", root->key, root->value); */
-/*       } */
-/*       else */
-/*         printf("key \"%s\" already exists!\n", buffer); */
-/*     } */
-/*   } */
-/*   if(!found) */
-/*     printf("Could not find an entry matching key \"%s\"!\n", buffer); */
-
-/*   if(toggle == 1 && found){update */
-/*       puts(""); */
-/*     printf("Enter new value: "); */
-/*     readline(buffer, sizeof(buffer), stdin); */
-/*     free(root->value); */
-/*     root->value = malloc(strlen(buffer) + 1); */
-/*     strcpy(root->value, buffer); */
-/*     puts(""); */
-/*     puts("Value inserted successfully!"); */
-/*   } */
-/*   if (toggle == 2){insert */
-/*       char *key; */
-/*     char *value; */
-/*     puts("Key is unique!\n"); */
-/*     printf("Enter value: "); */
-/*     key = malloc(strlen(buffer) + 1); */
-/*     strcpy(key, buffer); */
-/*     readline(buffer, sizeof(buffer), stdin); */
-/*     value = malloc(strlen(buffer) + 1); */
-/*     strcpy(value, buffer); */
-/*     temp = insertIterative(temp, key, value); */
-/*     puts(""); */
-/*     puts("Entry inserted successfully:"); */
-/*     printf("key: %s\nvalue: %s\n", key, value); */
-/*   } */
-/*   if (toggle == 3 && found == 1){//delete */
-    
-/*       Case 1:  No child */
-/*       if(root->left == NULL && root->right == NULL) { */
-/*         puts("1"); */
-
-/*         if (parent->right == root){ */
-/*           parent->right = NULL; */
-/*           free(parent->right); */
-/*         } */
-/*         else { */
-/*           parent->left = NULL; */
-/*           free(parent->left); */
-/*         } */
-/*         puts("Entry deleted successfully"); */
-/*       } */
-/*     Case 2: One child */
-/*       else if(root->left == NULL) { */
-/*         puts("2"); */
-
-/*         BstNode test; */
-/*         test = root->right; */
-
-/*         root->key = test->key; */
-/*         root->value = test->value; */
-/*         root->left = test->left; */
-/*         root->right = test->right; */
-/*         test = NULL; */
-/*         free(test); */
-
-/*         puts("Entry deleted successfully"); */
-/*       } */
-/*       else if(root->right == NULL) { */
-/*         puts("2.1"); */
-/*         printf("%s test 2\n", root->key); */
-
-/*         BstNode test; */
-/*         test = root->left; */
-
-/*         root->key = test->key; */
-/*         root->value = test->value; */
-/*         root->left = test->left; */
-/*         root->right = test->right; */
-
-/*         printf("%p  %p  %p  %p\n",root, &root, test, &test); */
-/*         test = NULL; */
-/*         free(test); */
-/*         puts("Entry deleted successfully"); */
-/*       } */
-/*   case 3: 2 children */
-/*       else { */
-/*         puts("3"); */
-/*         BstNode minParent = findMin(root->right); */
-
-/*         -------------right */
-/*           if (minParent == NULL || minParent == temp->right) { */
-/*             minParent = temp; */
-/*             BstNode right = minParent->right; */
-/*             puts("3.4"); */
-/*             minParent->key = right->key; */
-/*             minParent->value = right->value; */
-/*             printf("#4  root:  %s\n", root->key); */
-
-/*             right->key = NULL; */
-/*             right->value = NULL; */
-
-/*             free(right->key); */
-/*             free(right->value); */
-/*             free(right); */
-
-/*             right = NULL; */
-
-/*           } */
-/*         -------------left */
-/*           else { */
-/*             BstNode left = minParent->left; */
-/*             puts("3.4.2"); */
-/*             root->key = left->key; */
-/*             root->value = left->value; */
-/*             printf("#4  root:  %s\n", root->key); */
-
-/*             left->key = NULL; */
-/*             left->value = NULL; */
-
-/*             free(left->key); */
-/*             free(left->value); */
-/*             free(left); */
-
-/*             left = NULL; */
-
-/*           } */
-
-/*         // if (left->key != NULL) printf("#1 left  parent->left:  %s\n", left->key); */
-/*         // if (minParent->key != NULL) printf("#2 left  parent:  %s\n", minParent->key); */
-/*         // if (right->key != NULL) printf("#3 left  parent->right:  %s\n", right->key); */
-
-/*         puts("3.5"); */
-/*         puts("Entry deleted successfully"); */
-/*         printf("%p\n", temp->key); */
-/*       } */
-/*   } */
-/*   printf("%p\n", temp->key); */
-/*   return temp; */
-/* } */
-
 BstNode insertNode(BstNode root){
   char *key;
   char *value;
@@ -498,41 +334,41 @@ BstNode deleteNode(BstNode root){
   return temp;
 }
 
-  void queryTree(BstNode root){
-    root = searchIterative(root);
+void queryTree(BstNode root){
+  root = searchIterative(root);
+}
+
+BstNode updateNode(BstNode root){
+
+  printf("Enter key: ");
+  char buffer[128];
+  readline(buffer, sizeof(buffer), stdin);
+  BstNode temp = root;
+  int found = 0;
+
+  while (root != NULL && !found){
+    if (strcmp(root->key, buffer) > 0){
+      root = root->right;
+    }
+    else if (strcmp(root->key, buffer) < 0){
+      root = root->left;
+    }
+    else {
+      puts("Found entry");
+      found = 1;
+    }
   }
-
-  BstNode updateNode(BstNode root){
-
-    printf("Enter key: ");
-    char buffer[128];
+  if(!found)
+    printf("Could not find an entry matching key \"%s\"!\n", buffer);
+  else{
+    puts("");
+    printf("Enter new value: ");
     readline(buffer, sizeof(buffer), stdin);
-    BstNode temp = root;
-    int found = 0;
-
-    while (root != NULL && !found){
-      if (strcmp(root->key, buffer) > 0){
-        root = root->right;
-      }
-      else if (strcmp(root->key, buffer) < 0){
-        root = root->left;
-      }
-      else {
-        puts("Found entry");
-        found = 1;
-      }
-    }
-    if(!found)
-      printf("Could not find an entry matching key \"%s\"!\n", buffer);
-    else{
-      puts("");
-      printf("Enter new value: ");
-      readline(buffer, sizeof(buffer), stdin);
-      free(root->value);
-      root->value = malloc(strlen(buffer) + 1);
-      strcpy(root->value, buffer);
-      puts("");
-      puts("Value inserted successfully!");
-    }
-    return temp;
+    free(root->value);
+    root->value = malloc(strlen(buffer) + 1);
+    strcpy(root->value, buffer);
+    puts("");
+    puts("Value inserted successfully!");
   }
+  return temp;
+}
