@@ -59,6 +59,7 @@ void mainLoop(BstNode root){
     case 0:
       // Exit
       destroyTree(root);
+      root = NULL;
       puts("Good bye!");
       break;
     default:

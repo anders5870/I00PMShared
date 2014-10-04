@@ -99,7 +99,8 @@ BstNode findMin(BstNode root){
   return dir;
 }
 
-void printTreeRecursively(BstNode root){    //inorder traversal
+void printTreeRecursively(BstNode root){ 
+  if (root == NULL) return;                  //inorder traversal
   if (root->left != NULL)
     printTreeRecursively(root->left);       //Visit left subtree
   printf("%s\t", root->key);
@@ -109,6 +110,7 @@ void printTreeRecursively(BstNode root){    //inorder traversal
 }
 
 void printTreeIteratively(BstNode root){
+  if (root == NULL) return;  
   stackT stack;
   BstNode current = root;
   StackInit(&stack, MAXSTACKSIZE);
@@ -188,28 +190,6 @@ BstNode searchIterativeParent(BstNode root, char *key){
   return parent;
 }
 
-BstNode searchIterative(BstNode root){
-  printf("Enter key: ");
-  char buffer[128];
-  readline(buffer, sizeof(buffer), stdin);
-  int found = 0;
-  while (root != NULL && !found){
-    if (strcmp(root->key, buffer) > 0){
-      root = root->right;
-    }
-    else if (strcmp(root->key, buffer) < 0){
-      root = root->left;
-    }
-    else {
-      puts("Found entry");
-      found = 1;
-    }
-  }
-  if(!found)
-    printf("Could not find an entry matching key \"%s\"!\n", buffer);
-  return root;
-}
-
 BstNode findNodeWithKey(BstNode root, char *key){
   int found = 0;
 
@@ -232,12 +212,17 @@ BstNode findNodeWithKey(BstNode root, char *key){
   return root = NULL;
 }
 
+
 BstNode deleteNode(BstNode root){
   BstNode temp = root;
   char buffer[128];
   BstNode toBeDeleted = root;
   BstNode parentOfNodeToBeDeleted = root;
-
+  //exit if tree is empty
+  if(root == NULL) {
+    puts("Database is empty...aborting...");
+    return root;
+  }
   //Input node from user
   printf("Enter key: ");
   readline(buffer, sizeof(buffer), stdin);
@@ -249,20 +234,35 @@ BstNode deleteNode(BstNode root){
   toBeDeleted = findNodeWithKey(root, buffer);
 
   //exit if entry to delete was not found
-  if (toBeDeleted == NULL) return temp;
-
+  if (toBeDeleted == NULL){ 
+    puts("Entry to delete was not found...aborting...");
+    return temp;
+  }
   // Case 1:  No child
   if(toBeDeleted->left == NULL && toBeDeleted->right == NULL) {
     puts("1");
-
+    if (toBeDeleted == root){
+      free(root->key);
+      free(root->value);
+      free(root);
+      root = NULL;
+      return root;
+    }
     if (parentOfNodeToBeDeleted->right == root){
-      parentOfNodeToBeDeleted->right = NULL;
+      //free key and value
+      free(toBeDeleted->key);
+      free(toBeDeleted->value);
+      //free the node and set it to NULL
       free(parentOfNodeToBeDeleted->right);
-      
+      parentOfNodeToBeDeleted->right = NULL;
     }
     else {
-      parentOfNodeToBeDeleted->left = NULL;
+
+      free(toBeDeleted->key);
+      free(toBeDeleted->value);
+      
       free(parentOfNodeToBeDeleted->left);
+      parentOfNodeToBeDeleted->left = NULL;
     }
     puts("Entry deleted successfully");
     
@@ -271,21 +271,62 @@ BstNode deleteNode(BstNode root){
     puts("2");
     BstNode test;
     test = toBeDeleted->right;
-    toBeDeleted->key = test->key;
-    toBeDeleted->value = test->value;
-    toBeDeleted->left = test->left;
-    toBeDeleted->right = test->right;
+    if (toBeDeleted == root){
+      free(root->key);
+      free(root->value);
+      free(root);
+      root = NULL;
+      return test;
+    }
+    parentOfNodeToBeDeleted = searchIterativeParent(root, toBeDeleted->key);
+    free(toBeDeleted->key);
+    free(toBeDeleted->value);
+    if (parentOfNodeToBeDeleted->left == toBeDeleted){
+      free(toBeDeleted);
+      parentOfNodeToBeDeleted->left = NULL;
+      parentOfNodeToBeDeleted->left = test;
+    }
+    else{
+      free(toBeDeleted);
+      parentOfNodeToBeDeleted->right = NULL;
+      parentOfNodeToBeDeleted->right = test;
+    }
+
     puts("Entry deleted successfully");
   }
   else if(toBeDeleted->right == NULL) {
     puts("2.1");
     BstNode test;
+    //1. Save test
     test = toBeDeleted->left;
-    toBeDeleted->key = test->key;
-    toBeDeleted->value = test->value;
-    toBeDeleted->left = test->left;
-    toBeDeleted->right = test->right;
-    printf("%p  %p  %p  %p\n",toBeDeleted, &toBeDeleted, test, &test);
+    if (toBeDeleted == root){
+      free(root->key);
+      free(root->value);
+      free(root);
+      root = NULL;
+      return test;
+    }
+    //2. Find parent of node to be deleted
+    parentOfNodeToBeDeleted = searchIterativeParent(root, toBeDeleted->key);
+    //3. Remove key and value from node to be deleted
+    free(toBeDeleted->key);
+    free(toBeDeleted->value);
+    //4. Check if node to be deleted is right or left child of parent node
+    if (parentOfNodeToBeDeleted->left == toBeDeleted){
+      //5.1 If it is the left child, remove the node and set it to NULL
+      free(toBeDeleted);
+      parentOfNodeToBeDeleted->left = NULL;
+      //6.1 Link parent node with test
+      parentOfNodeToBeDeleted->left = test;
+    }
+    else{
+      //5.2 Else it is the right child. Remove it and set it to NULL
+      free(toBeDeleted);
+      parentOfNodeToBeDeleted->right = NULL;
+      //6.2 Link parent node with test
+      parentOfNodeToBeDeleted->right = test;
+    }
+
     puts("Entry deleted successfully");
   }
   else {  // case 3: 2 children
@@ -299,8 +340,6 @@ BstNode deleteNode(BstNode root){
       //free space to be overwritten and create space for the new data
       free(minParent->key);
       free(minParent->value);
-      minParent->key = malloc(sizeof(right->key));
-      minParent->value = malloc(sizeof(right->value));
       //insert new data
       minParent->key = right->key;
       minParent->value = right->value;
@@ -314,8 +353,6 @@ BstNode deleteNode(BstNode root){
       //free space to be overwritten and create space for the new data
       free(toBeDeleted->key);
       free(toBeDeleted->value);
-      toBeDeleted->key = malloc(sizeof(left->key));
-      toBeDeleted->value = malloc(sizeof(left->value));
       //insert new data
       toBeDeleted->key = left->key;
       toBeDeleted->value = left->value;
@@ -334,7 +371,24 @@ BstNode deleteNode(BstNode root){
 }
 
 void queryTree(BstNode root){
-  root = searchIterative(root);
+  printf("Enter key: ");
+  char buffer[128];
+  readline(buffer, sizeof(buffer), stdin);
+  int found = 0;
+  while (root != NULL && !found){
+    if (strcmp(root->key, buffer) > 0){
+      root = root->right;
+    }
+    else if (strcmp(root->key, buffer) < 0){
+      root = root->left;
+    }
+    else {
+      puts("Found entry");
+      found = 1;
+    }
+  }
+  if(!found)
+    printf("Could not find an entry matching key \"%s\"!\n", buffer);
 }
 
 BstNode updateNode(BstNode root){
