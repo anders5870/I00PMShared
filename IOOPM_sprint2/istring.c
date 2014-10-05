@@ -82,8 +82,10 @@ char *istring_to_string(const char *str){
   uint32_t length_of_istring;
   printf("%d\n",*(str+3));
 
-
-  length_of_istring =   (uint32_t)*str;
+  //Behöver göra om 4 första bitsen i str till ett heltal 
+  //och sätta det till length_of_istring
+  //sedan borde funktionen fungera
+  length_of_istring =  //???
 
   printf("length of istring: %d\n", length_of_istring);
   // Create and assign space to the new string not_an_istring
