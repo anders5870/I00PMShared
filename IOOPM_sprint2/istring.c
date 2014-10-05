@@ -82,10 +82,9 @@ char *istring_to_string(const char *str){
   uint32_t length_of_istring;
   printf("%d\n",*(str+3));
 
-  //Behöver göra om 4 första bitsen i str till ett heltal 
-  //och sätta det till length_of_istring
-  //sedan borde funktionen fungera
-  length_of_istring =  //???
+  //Gör om de 4 första bitsen i str till ett heltal 
+  //och sätter det till length_of_istring mha byte-shifting
+  length_of_istring = (str[0] << 24) | (str[1] << 16) | (str[2] << 8) | str[3];
 
   printf("length of istring: %d\n", length_of_istring);
   // Create and assign space to the new string not_an_istring
@@ -93,10 +92,7 @@ char *istring_to_string(const char *str){
   char *temp = not_an_istring;
   //return NULL if out of memory
   if (not_an_istring == NULL) return NULL; 
-  
-  /* *not_an_istring = *(str+4); */
-  /* *(not_an_istring+1) = *(str+5); */
-
+  //Kopierar innehållet i istring till den vanliga strängen
   int n = 0;
   int m = 4;
   while(n<length_of_istring){
@@ -113,11 +109,11 @@ char *istring_to_string(const char *str){
 int main(){
   char *test = "Teststring";
   char *itest = istring_mk(test);
-  printf("The istring is %s\n", STRING(itest));
-  printf("The length of the istring is: %d%d%d%d\n",*(itest+0),*(itest+1),*(itest+2),*(itest+3));
+  printf("1. The istring is %s\n", STRING(itest));
+  printf("2. The length of the istring is: %d%d%d%d\n",*(itest+0),*(itest+1),*(itest+2),*(itest+3));
   test = istring_to_string(itest);
-  printf("The string after istring_to_string: %s\n",test);
+  printf("3. The string after istring_to_string: %s\n",test);
 
-  //istring_rm(itest);
+  istring_rm(itest);
   return 0;
 }
