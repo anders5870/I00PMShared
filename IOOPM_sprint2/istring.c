@@ -80,13 +80,13 @@ void istring_rm(char *str){
 char *istring_to_string(const char *str){
   // Find the length of the istring
   uint32_t length_of_istring;
-  printf("%d\n",*(str+3));
+  printf("0.1 %d\n",*(str+3));
 
   //Gör om de 4 första bitsen i str till ett heltal 
   //och sätter det till length_of_istring mha byte-shifting
   length_of_istring = (str[0] << 24) | (str[1] << 16) | (str[2] << 8) | str[3];
 
-  printf("length of istring: %d\n", length_of_istring);
+  printf("0.2 length of istring: %d\n", length_of_istring);
   // Create and assign space to the new string not_an_istring
   char *not_an_istring = malloc(length_of_istring+4+1);
   char *temp = not_an_istring;
@@ -113,7 +113,7 @@ int main(){
   printf("2. The length of the istring is: %d%d%d%d\n",*(itest+0),*(itest+1),*(itest+2),*(itest+3));
   test = istring_to_string(itest);
   printf("3. The string after istring_to_string: %s\n",test);
-
+  istring_rm(test);
   istring_rm(itest);
   return 0;
 }
