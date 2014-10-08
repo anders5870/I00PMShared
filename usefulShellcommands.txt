@@ -2,3 +2,24 @@ git rm $(git ls-files --deleted) //tar bort alla borttagna filer från incheckni
 git add -a -m ""  // "addar" alla filer till commit 
 valgrind --tool=memcheck ./db --leak-check=full -v //valgrind
 valgrind --vgdb=yes --vgdb-error=0  ./db SWE.db //valgrind med gdb
+
+Make CUnit installation work:
+
+1. $ sudo apt-get install m4
+2. $ sudo apt-get install autoconf
+3. $ sudo apt-get install automake
+4. $ sudo apt-get install autotools-dev
+5. $ sudo apt-get install libtool
+6. $ sudo apt-get install tofrodos
+7. $ fromdos -a
+8. $ libtoolize
+9. $ aclocal
+10. $ autoconf
+11. $ automake --add-missing
+
+And, voila! The “configure” script appears out of the blue.
+Next you would need to run the following commands to complete the installation:
+1. $ ./configure
+2. $ make
+3. $ make install
+4. $ make clean
