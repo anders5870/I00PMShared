@@ -14,26 +14,6 @@ char *STRING(char* p){
   return p;
 }
 
-/* char *istring_mk(const char* str){ */
-/*   int length = strlen(str); //ändra till istrlen? */
-/*   void *p = malloc(length + 4 + 1); */
-/*   if (p == NULL){ */
-/*     return NULL; //out of memory */
-/*   } */
-/*   char *new_string = p; */
-/*   *new_string = length; */
-/*   new_string = STRING(new_string); */
-/*   if (!*str){ */
-/*     *new_string = *str; */
-/*     return new_string; */
-/*   } */
-/*   while (*str){ */
-/*     *new_string++ = *str++; */
-/*   } */
-/*   *new_string = '\0'; */
-/*   return (new_string - length); */
-/* } */
-
 char *istring_mk(const char* str){ 
   //if input string is NULL, return a NULL
   if (!str) return NULL;
@@ -69,13 +49,6 @@ void istring_rm(char *str){
   str = NULL;
 }
 
-/* char *istring_to_string(const char *str){ */
-/*   char *string = START(str); */
- 
-/*   int subbuff[4]; */
-/*   memcpy( subbuff, &string[0], 4 ); */
-  
-/* } */
 
 char *istring_to_string(const char *str){
   // Find the length of the istring
@@ -92,7 +65,7 @@ char *istring_to_string(const char *str){
   char *temp = not_an_istring;
   //return NULL if out of memory
   if (not_an_istring == NULL) return NULL; 
-  //Kopierar innehållet i istring till den vanliga strängen
+  //Copies the contents of the istring str into the new string not_an_istring
   int n = 0;
   int m = 4;
   while(n<length_of_istring){
@@ -106,14 +79,3 @@ char *istring_to_string(const char *str){
 
 }
 
-int main(){
-  char *test = "Teststring";
-  char *itest = istring_mk(test);
-  printf("1. The istring is %s\n", STRING(itest));
-  printf("2. The length of the istring is: %d%d%d%d\n",*(itest+0),*(itest+1),*(itest+2),*(itest+3));
-  test = istring_to_string(itest);
-  printf("3. The string after istring_to_string: %s\n",test);
-  istring_rm(test);
-  istring_rm(itest);
-  return 0;
-}

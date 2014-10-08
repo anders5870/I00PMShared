@@ -24,6 +24,8 @@ void printWelcomeMessage(){
 
 void mainLoop(BstNode root){
   int choice = -1;
+  BstNode node;
+  char buffer[128];
   while(choice != 0){
     puts("Please choose an operation");
     puts("1. Query a key");
@@ -38,7 +40,11 @@ void mainLoop(BstNode root){
     while(getchar() != '\n'); // Clear stdin
     switch(choice){
     case 1:
-      queryTree(root); //queryroot = searchIterative(root, 0);//
+      printf("Enter key: ");
+      readline(buffer, sizeof(buffer), stdin);
+      node = queryTree(root, buffer); //queryroot = searchIterative(root, 0);//
+      if (node == NULL) puts("Entry was not found");
+      else printf("Key was found! It's value is: %s\n", node->value);
       break;
     case 2:
       root = updateNode(root); //updateroot = searchIterative(root, 1);//

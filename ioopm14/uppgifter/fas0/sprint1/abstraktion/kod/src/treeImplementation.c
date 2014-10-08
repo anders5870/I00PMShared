@@ -103,8 +103,10 @@ void printTreeRecursively(BstNode root){
   if (root == NULL) return;                  //inorder traversal
   if (root->left != NULL)
     printTreeRecursively(root->left);       //Visit left subtree
-  printf("%s\t", root->key);
+  printf("%s\t", root->key); 
   printf("%s\n", root->value);
+  printf("%c\t", *(root->key));             //example pointer/array notation
+  printf("%c\n", root->value[0]);           //example double pointer
   if (root->right != NULL)
     printTreeRecursively(root->right);      // Visit right subtree
 }
@@ -370,10 +372,8 @@ BstNode deleteNode(BstNode root){
   return temp;
 }
 
-void queryTree(BstNode root){
-  printf("Enter key: ");
-  char buffer[128];
-  readline(buffer, sizeof(buffer), stdin);
+BstNode queryTree(BstNode root, char *buffer){
+
   int found = 0;
   while (root != NULL && !found){
     if (strcmp(root->key, buffer) > 0){
@@ -383,12 +383,13 @@ void queryTree(BstNode root){
       root = root->left;
     }
     else {
-      puts("Found entry");
       found = 1;
+      return root;
     }
   }
   if(!found)
-    printf("Could not find an entry matching key \"%s\"!\n", buffer);
+    return NULL;
+  return root;
 }
 
 BstNode updateNode(BstNode root){
@@ -425,3 +426,4 @@ BstNode updateNode(BstNode root){
   }
   return temp;
 }
+

@@ -96,7 +96,7 @@ BstNode searchIterativeParent(BstNode root, char *key);
 /* runtime exists in the root bst tree print its value else       */
 /* print out that it was not found.                               */
 /******************************************************************/
-void queryTree(BstNode root); //option1
+BstNode queryTree(BstNode root, char *buffer); //option1
 
 /***********************************************************************/
 /* Name: updateNode                                                    */
