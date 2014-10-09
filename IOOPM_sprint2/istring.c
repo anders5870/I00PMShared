@@ -127,25 +127,14 @@ char* istrslen(char *s, size_t length){
   }
 }
 
-int isIstring(char *s){
-  //kolla på de 4 byten innan s
-  //om de är null
-}
+
 
 size_t istrlen(const char *s){
-  size_t length;
-  //Hur vet vi att vi har en istring som input?
+  size_t length_of_istring;
 
- /* if (  */
- /*      (int)*(s-4) != '\0' && (int)*(s-4) <= 255 && */
- /*      (int)*(s-3) != '\0' && (int)*(s-3) <= 255 &&             */
- /*      (int)*(s-2) != '\0' && (int)*(s-2) <= 255 &&  */
- /*      (int)*(s-1) != '\0' && (int)*(s-1) <= 255 */
- /*     )  */
+  length_of_istring = (*(s-4) << 24) | (*s(-3) << 16) | (*(s-2) << 8) | *(s-1);
 
-    length = strlen(s);
-
-  return length;
+  return length_of_istring;
 
 }
 
