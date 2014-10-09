@@ -84,17 +84,189 @@ char *istring_to_string(const char *str){
 
 }
 
-/* int main(){ */
-/*   char *str1 = istring_mk(NULL); */
-/*   printf("1. %s\n", (str1 == NULL) ? "True": "False"); */
-/*   char str2[] = "foo"; */
-/*   char *str3 = istring_mk(str2); */
-/*   //  str3 = STRING(str3); */
-/*   printf("2. %s\n", strcmp(str2, str3)  == 0 ? "True": "False"); */
-/*   printf("3. %d %d\n", (int)strlen(str2), (int)strlen(str3)); */
-/*   printf("4. %s\n", str3[0] == 'f' ? "True" : "False"); */
-/*   printf("5. %s\n", str3[1] == 'o' ? "True" : "False"); */
-/*   printf("6. %s\n", str3[2] == 'o' ? "True" : "False"); */
-/*   printf("7. %s\n", str3[3] == '\0' ? "True" : "False"); */
-/*   return 0;  */
+
+//Behöver kollas med valgrind.
+char* istrslen(char *s, size_t length){
+  char *temp2 = START(s);
+  uint32_t length_old;
+  length_old = (temp2[0] << 24) | (temp2[1] << 16) | (temp2[2] << 8) | temp2[3];
+  uint32_t length_new = length;
+  
+  //Vid kortare istringlängd än ny längd.
+  if (length_old > length_new){
+    char *iStrPointer = START(s);
+    //Sätter längdbytesen till den nya längden.
+    *(iStrPointer + 0) = (length_new >> 24) & 0xFF;
+    *(iStrPointer + 1) = (length_new >> 16) & 0xFF;
+    *(iStrPointer + 2) = (length_new >> 8) & 0xFF;
+    *(iStrPointer + 3) = length_new & 0xFF;
+    //Sätter sista byten i strängen till '\0'.
+    iStrPointer = STRING(iStrPointer);
+    *(iStrPointer + length_new) = '\0';
+    return iStrPointer;
+    //Om längderna är lika behövs ingen modifikation.
+  }else if (length_old == length_new){
+    return s;
+    //Vid längre ny längd skapas en ny istring.
+  }else{
+    //Ta näst sista elementet i arrayen (längd-1) och fylla ut resten med den.
+    char *iStrPointer = s;
+    char temp_string[length_new];
+    //Kopierar strängen till temp_string.
+    for (int i=0; i < length_old; ++i){
+      *(temp_string+i) = *(iStrPointer+i);  
+    }
+    for (int i=length_old; i < length_new; ++i){
+      *(temp_string + i) = *(iStrPointer+length_old-1);
+    }
+    *(temp_string + length_new) = '\0';
+    //Nu finns hela vår "nya" sträng i temp_string.
+    free(START(iStrPointer));
+    char *new_istring = istring_mk(temp_string);
+    return new_istring;
+  }
+}
+
+int isIstring(char *s){
+  //kolla på de 4 byten innan s
+  //om de är null
+}
+
+size_t istrlen(const char *s){
+  size_t length;
+  //Hur vet vi att vi har en istring som input?
+
+ /* if (  */
+ /*      (int)*(s-4) != '\0' && (int)*(s-4) <= 255 && */
+ /*      (int)*(s-3) != '\0' && (int)*(s-3) <= 255 &&             */
+ /*      (int)*(s-2) != '\0' && (int)*(s-2) <= 255 &&  */
+ /*      (int)*(s-1) != '\0' && (int)*(s-1) <= 255 */
+ /*     )  */
+
+    length = strlen(s);
+
+  return length;
+
+}
+
+/* char *istrcpy(char *dst, const char *src){ */
+/*   uint32_t length_of_string; */
+/*   length_of_string = strlen(src); */
+
+/*   int n = 0; */
+/*   int m = 4; */
+/*   while(*(src+n)){ */
+/*     *(dst+m) = *(src+n); */
+/*     m++; */
+/*     n++; */
+/*   } */
+/*   *(dst) = '\0'; */
+
+
+/*   *(dst + -4) = (length_of_string >> 24) & 0xFF; */
+/*   *(dst + -3) = (length_of_string >> 16) & 0xFF; */
+/*   *(dst + -2) = (length_of_string >> 8) & 0xFF; */
+/*   *(dst + -1) = length_of_string & 0xFF; */
+
+/*   return dst; */
+
 /* } */
+
+
+
+/* char *istrncpy(char *dst, const char *src, size_t n){ */
+
+/*   int x = 0; */
+/*   int m = 4; */
+/*   while(*(src+x) && x<n){ */
+/*     *(dst+m) = *(src+x); */
+/*     m++; */
+/*     x++; */
+/*   } */
+/*   *(dst) = '\0'; */
+
+/*   *(dst + -4) = (length_of_string >> 24) & 0xFF; */
+/*   *(dst + -3) = (length_of_string >> 16) & 0xFF; */
+/*   *(dst + -2) = (length_of_string >> 8) & 0xFF; */
+/*   *(dst + -1) = length_of_string & 0xFF; */
+
+/*   return dst */
+
+/* } */
+
+/* char *istrcat(char *dst, const char *src){ */
+/*   uint32_t length_of_string; */
+/*   length_of_string = strlen(src) + strlen(dst); */
+/*   int dstlen = strlen(dst); */
+/*   int n = 0; */
+/*   int m = 4; */
+/*   //move all characters in dst 4 places to the right  */
+/*   while(*(dst+n)){ */
+/*     *(dst+m) = *(dst+n); */
+/*     m++; */
+/*     n++; */
+/*   } */
+
+
+/*   *(dst + -4) = (length_of_string >> 24) & 0xFF; */
+/*   *(dst + -3) = (length_of_string >> 16) & 0xFF; */
+/*   *(dst + -2) = (length_of_string >> 8) & 0xFF; */
+/*   *(dst + -1) = length_of_string & 0xFF; */
+
+/*   int o = 0; */
+/*   while (*(src+o)){ */
+/*     *(dst+dstlen+o) = *(src+o); */
+/*     o++; */
+/*   } */
+/*   *(dst+dstlen+o) = '\0'; */
+/* } */
+
+/* char *istrncat(char *dst, const char *src, size_t n){ */
+
+/*   uint32_t length_of_string; */
+/*   length_of_string = strlen(dst) +  */
+/*   int dstlen = strlen(dst); */
+/*   int n = 0; */
+/*   int m = 4; */
+/*   //move all characters in dst 4 places to the right  */
+/*   while(*(dst+n)){ */
+/*     *(dst+m) = *(dst+n); */
+/*     m++; */
+/*     n++; */
+/*   } */
+
+/*   //set the length of the string to be stored inthe 4 first bytes */
+/*   *(dst + -4) = (length_of_string >> 24) & 0xFF; */
+/*   *(dst + -3) = (length_of_string >> 16) & 0xFF; */
+/*   *(dst + -2) = (length_of_string >> 8) & 0xFF; */
+/*   *(dst + -1) = length_of_string & 0xFF; */
+
+/*   //append n characters from src onto the end of dst */
+/*   int o = 0; */
+/*   while (*(src+o) && o<n){ */
+/*     *(dst+dstlen+o) = *(src+o); */
+/*     o++; */
+/*   } */
+/*   *(dst+dstlen+o) = '\0'; */
+/* } */
+
+
+int main(){
+  char *str1 = istring_mk(NULL);
+  printf("1. %s\n", (str1 == NULL) ? "True": "False");
+  char str2[] = "foo";
+  char *str3 = istring_mk(str2);
+  //  str3 = STRING(str3);
+  printf("%d%d%d%x\n",*(str3-4),*(str3-3),*(str3-2),*(str3-1));
+  printf("2. %s\n", strcmp(str2, str3)  == 0 ? "True": "False");
+  printf("3. %d %d\n", (int)strlen(str2), (int)strlen(str3));
+  printf("4. %s\n", str3[0] == 'f' ? "True" : "False");
+  printf("5. %s\n", str3[1] == 'o' ? "True" : "False");
+  printf("6. %s\n", str3[2] == 'o' ? "True" : "False");
+  printf("7. %s\n", str3[3] == '\0' ? "True" : "False");
+  printf("8. %c %c %c %c %c %c\n", *(str3-4),*(str3-5),*(str3-6),*(str3-7),*(str3-8),*(str3-9));
+  str3 = istrslen(str3, 6);
+  printf("9. %s\n", str3);
+  printf("10. %d\n", strlen(str3));
+  return 0;
+}
