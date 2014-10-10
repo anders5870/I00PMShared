@@ -141,7 +141,7 @@ size_t istrlen(const char *s){
 
 //Function shifts all characters in dst 4 steps to the right, 
 //making room for the istring length bits and copies src to dst. 
-char *shiftRight(char *dst, const char *src){
+char *shiftRightCpy(char *dst, const char *src){
   int a = 4;
   int b = 0;
   while (*(src+b)){
@@ -151,98 +151,81 @@ char *shiftRight(char *dst, const char *src){
   return STRING(dst);
 }
 
+//set istring length bytes
+char *setilenbytes(char *dst, int srclen){
+  *(dst - 4) = (srclen >> 24) & 0xFF;
+  *(dst - 3) = (srclen >> 16) & 0xFF;
+  *(dst - 2) = (srclen >> 8) & 0xFF;
+  *(dst - 1) = srclen & 0xFF;
+  return dst;
+}
+
+char  *shiftRightSetLen(char *dst, int dstlen){
+  //shift right
+  dst = STRING(dst);
+  dst = setilenbytes(dst, dstlen);
+  return dst;
+}
+
 char *istrcpy(char *dst, const char *src){
-  uint32_t length_of_string;
-  length_of_string = istrlen(src);
-
-  dst = shiftRight(dst, src);
-  
-  *(dst - 4) = (length_of_string >> 24) & 0xFF;
-  *(dst - 3) = (length_of_string >> 16) & 0xFF;
-  *(dst - 2) = (length_of_string >> 8) & 0xFF;
-  *(dst - 1) = length_of_string & 0xFF;
-
+  uint32_t srclen;
+  srclen = istrlen(src);
+  dst = shiftRightCpy(dst, src);
+  dst = setilenbytes(dst, srclen);
   return dst;
 
 }
 
 char *istrncpy(char *dst, const char *src, size_t n){
-  uint32_t length_of_string;
-  length_of_string = istrlen(src);
-
-  int x = 0;
-  int m = 4;
-  while(*(src+x) && x<n){
-    *(dst+m) = *(src+x);
-    m++;
-    x++;
+  dst = shiftRightSetLen(dst, n);
+  int i;
+  for (i = 0; i<n; i++){
+    *(dst+i) = *(src+i);
   }
-  *(dst) = '\0';
-
-  *(dst + -4) = (length_of_string >> 24) & 0xFF;
-  *(dst + -3) = (length_of_string >> 16) & 0xFF;
-  *(dst + -2) = (length_of_string >> 8) & 0xFF;
-  *(dst + -1) = length_of_string & 0xFF;
-
-  return dst;
-
+  //dont forget the null byte...
+  *(dst+i) = '\0';
+  //return the n characters from src as its own object
+  return dst; 
 }
 
-/* char *istrcat(char *dst, const char *src){ */
-/*   uint32_t length_of_string; */
-/*   length_of_string = strlen(src) + strlen(dst); */
-/*   int dstlen = strlen(dst); */
-/*   int n = 0; */
-/*   int m = 4; */
-/*   //move all characters in dst 4 places to the right  */
-/*   while(*(dst+n)){ */
-/*     *(dst+m) = *(dst+n); */
-/*     m++; */
-/*     n++; */
-/*   } */
 
 
-/*   *(dst + -4) = (length_of_string >> 24) & 0xFF; */
-/*   *(dst + -3) = (length_of_string >> 16) & 0xFF; */
-/*   *(dst + -2) = (length_of_string >> 8) & 0xFF; */
-/*   *(dst + -1) = length_of_string & 0xFF; */
+char *istrcat(char *dst, const char *src){
+  uint32_t srclen = istrlen(src);
+  uint32_t dstlen = strlen(dst);
+  char *dstcpy_ = malloc (dstlen + srclen+1 +4);
+  
+  dstcpy_ = shiftRightCpy(dstcpy_, dst);
+  dstcpy_ = setilenbytes(dstcpy_, srclen+dstlen);
+  int i;
+    for (i = 0; *(src+i); i++){
+    *(dstcpy_+dstlen+i) = *(src+i);
+  }
+  *(dstcpy_+dstlen+i) = '\0';
+  return dstcpy_;
+}
 
-/*   int o = 0; */
-/*   while (*(src+o)){ */
-/*     *(dst+dstlen+o) = *(src+o); */
-/*     o++; */
-/*   } */
-/*   *(dst+dstlen+o) = '\0'; */
-/* } */
+char *istrncat(char *dst, const char *src, size_t n){
+  //get some useful stuff
+  uint32_t srclen = istrlen(src);
+  uint32_t dstlen = strlen(dst);
+  //create space for the new string
+  char *dstcpy = malloc(dstlen+1 + n + 4);
+  //copy dst into the new string and shift it 4 bytes 
+  dstcpy = shiftRightCpy(dstcpy, dst);
+  //set the length bytes
+  dstcpy = setilenbytes(dstcpy, srclen+n);
+  //append n characters from src onto the end of the newly created string
+  int i;
+  for ( i = 0; i<n; i++){
+    *(dstcpy + dstlen + i) = *(src + i);
+  }
+  //dont forget to add the null byte
+  *(dstcpy + dstlen + i) = '\0';
+  //return the newly created appended string
+  return dstcpy;
 
-/* char *istrncat(char *dst, const char *src, size_t n){ */
-
-/*   uint32_t length_of_string; */
-/*   length_of_string = strlen(dst) +  */
-/*   int dstlen = strlen(dst); */
-/*   int n = 0; */
-/*   int m = 4; */
-/*   //move all characters in dst 4 places to the right  */
-/*   while(*(dst+n)){ */
-/*     *(dst+m) = *(dst+n); */
-/*     m++; */
-/*     n++; */
-/*   } */
-
-/*   //set the length of the string to be stored inthe 4 first bytes */
-/*   *(dst + -4) = (length_of_string >> 24) & 0xFF; */
-/*   *(dst + -3) = (length_of_string >> 16) & 0xFF; */
-/*   *(dst + -2) = (length_of_string >> 8) & 0xFF; */
-/*   *(dst + -1) = length_of_string & 0xFF; */
-
-/*   //append n characters from src onto the end of dst */
-/*   int o = 0; */
-/*   while (*(src+o) && o<n){ */
-/*     *(dst+dstlen+o) = *(src+o); */
-/*     o++; */
-/*   } */
-/*   *(dst+dstlen+o) = '\0'; */
-/* } */
+}
 
 
 int main(){
@@ -262,14 +245,23 @@ int main(){
   str3 = istrslen(str3, 6);
   printf("9. %s\n", str3);
   printf("10. %d\n", (int)strlen(str3));
+  //istrcpy
   char *str4 = malloc(istrlen(str3)+4 +1);
   str4 = istrcpy(str4, str3);
   printf("11. %s\n", strcmp(str3,str4) == 0 ? "True" : "False");
-  char *str5 = malloc(istrlen(str3)*2);
-  str5 = istrncpy(str3,str3,3);
-  printf("%s\n", str5);
-  printf("12. %s\n", strcmp(str5,"foo") == 0 ? "True" : "False");
-
+  //istrncpy
+  char *str5 = malloc(istrlen(str2)+1);
+  str5 = istrncpy(str5, str2, 2);
+  printf("12. %s\n", strcmp(str5,"fo") == 0 ? "True" : "False");
+  //istrcat
+  char *str6 /* = malloc(strlen(str3)*2 +2) */;
+  str6 = istrcat(str3,str3);
+  printf("13. %s and str6 is %s\n", strcmp(str6,"fooooofooooo") == 0 ? "True" : "False", str6);
+  //istrncat
+  char *str7 /* = malloc(istrlen(str3)*2) */;
+  str7 = istrncat(str3,str3,3);
+  printf("14. %s and str7 is: %s\n", strcmp(str7,"fooooofoo") == 0 ? "True" : "False", str7);
+  
   free(START(str3));
   free(START(str4));
   return 0;

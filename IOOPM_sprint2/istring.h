@@ -66,9 +66,9 @@ size_t istrlen(const char *s); //done and verified
 */
 char *istrcpy(char *dst, const char *src); //done and verified
 
-char *istrncpy(char *dst, const char *src, size_t n); //done but not verified
-char *istrcat(char *dst, const char *src); //done but not verified
-char *istrncat(char *dst, const char *src, size_t n); 
+char *istrncpy(char *dst, const char *src, size_t n); //done and verified
+char *istrcat(char *dst, const char *src); //done and verified
+char *istrncat(char *dst, const char *src, size_t n); //done and verified 
 
 #endif
 
