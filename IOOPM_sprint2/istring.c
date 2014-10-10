@@ -262,12 +262,15 @@ int main(){
   str3 = istrslen(str3, 6);
   printf("9. %s\n", str3);
   printf("10. %d\n", (int)strlen(str3));
-  char *str4 = malloc (istrlen(str3)+4 +1);
+  char *str4 = malloc(istrlen(str3)+4 +1);
   str4 = istrcpy(str4, str3);
   printf("11. %s\n", strcmp(str3,str4) == 0 ? "True" : "False");
   char *str5 = malloc(istrlen(str3)*2);
   str5 = istrncpy(str3,str3,3);
   printf("%s\n", str5);
   printf("12. %s\n", strcmp(str5,"foo") == 0 ? "True" : "False");
+
+  free(START(str3));
+  free(START(str4));
   return 0;
 }
