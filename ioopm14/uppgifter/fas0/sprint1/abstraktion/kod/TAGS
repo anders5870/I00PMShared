@@ -1,0 +1,9 @@
+
+db.c,241
+typedef struct node{node5,60
+  char *key;key6,81
+  char *value;value7,94
+  struct node *next;next8,109
+} *Node;Node9,130
+void readline(char *dest, int n, FILE *source){readline11,140
+int main(int argc, char *argv[]){main18,293

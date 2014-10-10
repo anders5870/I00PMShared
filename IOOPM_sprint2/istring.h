@@ -8,18 +8,18 @@
  * string. Returns NULL if out of memory. Returns NULL string if
  * argument str is NULL. 
  */
-char *istring_mk(const char* str);
+char *istring_mk(const char* str); //done and verified
 
 /*
  * Deallocates the supplied istring.
  */
-void istring_rm(char *str);
+void istring_rm(char *str); //done and verified
 
 /*
  * Returns a standard null terminated char* representation of the
  * supplied istring. Returns NULL if out of memory.
  */
-char *istring_to_string(const char *str);
+char *istring_to_string(const char *str); //done and verified
 
 /*
  * Inspects the length of the string from str and if it differs from
@@ -41,7 +41,7 @@ size_t istrfixlen(char *s);
  * string. The last character of the original string will be repeated
  * to fill the string to its given length.
  */
-char* istrslen(char *s, size_t length);
+char* istrslen(char *s, size_t length); //done but not verified
 
 /*
  * For definitions, see the manual page of respective function on the
@@ -55,7 +55,7 @@ char *istrchr(const char *s, int c);
 char *istrrchr(const char *s, int c);
 int istrcmp(const char *s1, const char *s2);
 int istrncmp(const char *s1, const char *s2, size_t n);
-size_t istrlen(const char *s);
+size_t istrlen(const char *s); //done s
 
 /*
  * I nedanstående funktioner är dst en pekare till en vanlig
@@ -64,11 +64,11 @@ size_t istrlen(const char *s);
  * t.ex. istrcpy anropats bör man vid anropsplatsen göra dst =
  * STRING(dst) för att hoppa över längd-delen av strängen.
 */
-char *istrcpy(char *dst, const char *src);
+char *istrcpy(char *dst, const char *src); //done but not verified
 
-char *istrncpy(char *dst, const char *src, size_t n);
-char *istrcat(char *dst, const char *src);
-char *istrncat(char *dst, const char *src, size_t n);
+char *istrncpy(char *dst, const char *src, size_t n); //done but not verified
+char *istrcat(char *dst, const char *src); //done but not verified
+char *istrncat(char *dst, const char *src, size_t n); 
 
 #endif
 
