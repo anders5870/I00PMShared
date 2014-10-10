@@ -12,6 +12,40 @@ M38, M39 - pekare - båda
 
 R50 - GDB - båda
 
-X60 - välstrukturerad redovisning
+X60 - välstrukturerad redovisning för verktyg
 
-V56 - Terminalen
+
+3:or
+D9
+F13
+I22
+J26
+
+Dessa tillsammans:
+H20
+M38
+
+O42 på db.c när den är färdig.
+
+-----------------
+Morgondagens:
+D9
+Man vänder sig mot någon som vill programmera mot din modul och använda sig av den. Jag anser att man kan förvänta sig en grundläggande programmeringskunskap, annars har de ingenting där att göra. Det är även väldigt användbart för dig själv, så att du kan återanvända din modul utan att behöva gröta kod. Det räcker att göra en "färdig" modul med ett bra gränssnitt så borde .c filen inte behöva öppnas. 
+ 
+Tillräckligt mycket information så att användaren förstår vad användandet av funktionen gör. Inte hur det går till utan vad som händer. En abstrahering av funktionen. Subjektiv fråga. Anser du att informationen tillför någonting till användaren så kan det med fördel tas med, men det gäller att sålla. Det är dokumentation för en funktion och inte en uppsats.
+
+Den interna implementationen behöver inte beskrivas särskilt mycket. Abstraktionsnivån i gränssnittet ska vara över kodnivå. Användaren ska inte behöva bry sig om implementationen. Jag kan tänka mig att ha med något sådant som trivia, t.ex att det är ett binärt sökträd istället för länkad lista.
+
+Komplexa och tvetydiga processer ska handskas varsamt. En tanke kan vara om de verkligen nödvändigtvis måste fungera så. Annars beskrivs det så gott som möjligt.
+
+Sido-effekter gör att funktioner inte kan beskrivas med entydiga in- och utdata. Utdatan kan då vara annorlunda även om du har samma indata. Detta gör att man istället för enbart pre- och postvillkor bör beskriva processen funktionen utgör och hur den fungerar i sammanhanget. Detta gör det svårare att skriva tydliga gränssnitt.          
+
+
+F13
+Rekursiva funktioner anropar sig själv. Den baseras i att lösa uppgifter m.h.a. divide and conquer-metoden. Ett problem delas upp i mindre och mindre delar tills de är triviala och kan lösas. T.ex. Fibonaccital där n1 = 0, n2 = 1.  
+
+Iteration repeterar över någonting typ en while-loop. Allting kan skrivas med båda stilarna men en ibland krävs det en stackimplementation för att göra samma sak med iteration som rekursion. Man använder den som är lämplig för stunden. 
+
+Det effektivaste beror på kompilatorn, programspråket och implementationen. Imperativa språk är anpassade för iterativa lösningar och därför är oftast rekursion långsammare, men som SO sade. Vad är viktigast? En effektiv programmerare eller effektiv kod. Rekursion kan vara mer intuitiv till flera problem, t.ex. traversering av binära sökträd (problemet delas upp i mindre subträd hela tiden tills subträdet enbart består av en rot utan grenar).   
+
+Kan undersöka med profileringsverktyg var i programmet som det spenderas mest tid och sedan försöka optimera. En intuitiv kod är oftast mer värd med tanke på dagens datorer och prestanda. 
