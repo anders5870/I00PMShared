@@ -55,7 +55,8 @@ void istring_rm(char *str){
 
 char *istring_to_string(const char *str){
   //  char *temp2 = str;
-  char *temp2 = START(str);
+  char *temp2 = str;
+  temp2 = START(temp2);
   // Find the length of the istring
   uint32_t length_of_istring;
   //  printf("0.1 %d\n",*(temp2+3));
@@ -132,56 +133,60 @@ char* istrslen(char *s, size_t length){
 size_t istrlen(const char *s){
   size_t length_of_istring;
 
-  length_of_istring = (*(s-4) << 24) | (*s(-3) << 16) | (*(s-2) << 8) | *(s-1);
+  length_of_istring = (*(s-4) << 24) | (*(s-3) << 16) | (*(s-2) << 8) | *(s-1);
 
   return length_of_istring;
 
 }
 
-/* char *istrcpy(char *dst, const char *src){ */
-/*   uint32_t length_of_string; */
-/*   length_of_string = strlen(src); */
+//Function shifts all characters in dst 4 steps to the right, 
+//making room for the istring length bits and copies src to dst. 
+char *shiftRight(char *dst, const char *src){
+  int a = 4;
+  int b = 0;
+  while (*(src+b)){
+    *(dst+a++) = *(src+b++); 
+  }
+  *(dst+a) = '\0';
+  return STRING(dst);
+}
 
-/*   int n = 0; */
-/*   int m = 4; */
-/*   while(*(src+n)){ */
-/*     *(dst+m) = *(src+n); */
-/*     m++; */
-/*     n++; */
-/*   } */
-/*   *(dst) = '\0'; */
+char *istrcpy(char *dst, const char *src){
+  uint32_t length_of_string;
+  length_of_string = istrlen(src);
 
+  dst = shiftRight(dst, src);
+  
+  *(dst - 4) = (length_of_string >> 24) & 0xFF;
+  *(dst - 3) = (length_of_string >> 16) & 0xFF;
+  *(dst - 2) = (length_of_string >> 8) & 0xFF;
+  *(dst - 1) = length_of_string & 0xFF;
 
-/*   *(dst + -4) = (length_of_string >> 24) & 0xFF; */
-/*   *(dst + -3) = (length_of_string >> 16) & 0xFF; */
-/*   *(dst + -2) = (length_of_string >> 8) & 0xFF; */
-/*   *(dst + -1) = length_of_string & 0xFF; */
+  return dst;
 
-/*   return dst; */
+}
 
-/* } */
+char *istrncpy(char *dst, const char *src, size_t n){
+  uint32_t length_of_string;
+  length_of_string = istrlen(src);
 
+  int x = 0;
+  int m = 4;
+  while(*(src+x) && x<n){
+    *(dst+m) = *(src+x);
+    m++;
+    x++;
+  }
+  *(dst) = '\0';
 
+  *(dst + -4) = (length_of_string >> 24) & 0xFF;
+  *(dst + -3) = (length_of_string >> 16) & 0xFF;
+  *(dst + -2) = (length_of_string >> 8) & 0xFF;
+  *(dst + -1) = length_of_string & 0xFF;
 
-/* char *istrncpy(char *dst, const char *src, size_t n){ */
+  return dst;
 
-/*   int x = 0; */
-/*   int m = 4; */
-/*   while(*(src+x) && x<n){ */
-/*     *(dst+m) = *(src+x); */
-/*     m++; */
-/*     x++; */
-/*   } */
-/*   *(dst) = '\0'; */
-
-/*   *(dst + -4) = (length_of_string >> 24) & 0xFF; */
-/*   *(dst + -3) = (length_of_string >> 16) & 0xFF; */
-/*   *(dst + -2) = (length_of_string >> 8) & 0xFF; */
-/*   *(dst + -1) = length_of_string & 0xFF; */
-
-/*   return dst */
-
-/* } */
+}
 
 /* char *istrcat(char *dst, const char *src){ */
 /*   uint32_t length_of_string; */
@@ -253,9 +258,16 @@ int main(){
   printf("5. %s\n", str3[1] == 'o' ? "True" : "False");
   printf("6. %s\n", str3[2] == 'o' ? "True" : "False");
   printf("7. %s\n", str3[3] == '\0' ? "True" : "False");
-  printf("8. %c %c %c %c %c %c\n", *(str3-4),*(str3-5),*(str3-6),*(str3-7),*(str3-8),*(str3-9));
+  //printf("8. %c %c %c %c %c %c\n", *(str3-4),*(str3-5),*(str3-6),*(str3-7),*(str3-8),*(str3-9));
   str3 = istrslen(str3, 6);
   printf("9. %s\n", str3);
-  printf("10. %d\n", strlen(str3));
+  printf("10. %d\n", (int)strlen(str3));
+  char *str4 = malloc (istrlen(str3)+4 +1);
+  str4 = istrcpy(str4, str3);
+  printf("11. %s\n", strcmp(str3,str4) == 0 ? "True" : "False");
+  char *str5 = malloc(istrlen(str3)*2);
+  str5 = istrncpy(str3,str3,3);
+  printf("%s\n", str5);
+  printf("12. %s\n", strcmp(str5,"foo") == 0 ? "True" : "False");
   return 0;
 }
