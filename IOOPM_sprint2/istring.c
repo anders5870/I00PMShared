@@ -293,62 +293,7 @@ char *istrncat(char *dst, const char *src, size_t n){
  
 
 
-/*   char *str6  = malloc(strlen(str3)*2 +2); */
-/*   str6 = istrcat(str3,str3); */
-/*   printf("13. %s and str6 is %s\n", strcmp(str6,"fooooofooooo") == 0 ? "True" : "False", str6); */
-  
-/*   char *str7 = malloc(istrlen(str3)*2) ; */
-/*   str7 = istrncat(str3,str3,3); */
-/*   printf("14. %s and str7 is %s\n", strcmp(str7,"fooooofoo") == 0 ? "True" : "False", str7); */
-  
-/*   char *str8 = "ABCDE"; */
-/*   str8 = istring_mk(str8); */
-/*   char *str9 = "abcde"; */
-/*   str9 = istring_mk(str9); */
-/*   printf("15. %d\n", istrcmp(str8, str9) == -1 ? 1:0); */
-/*   free(START(str8)); */
-/*   free(START(str9)); */
-/*   str8 = "abcde"; */
-/*   str8 = istring_mk(str8); */
-/*   str9 = "abcdef"; */
-/*   str9 = istring_mk(str9); */
-/*   printf("16. %d\n",istrcmp(str8, str9) == -1 ? 1:0); */
-/*   free(START(str8)); */
-/*   free(START(str9)); */
-/*   str8 = "abcde"; */
-/*   str8 = istring_mk(str8); */
-/*   str9 = "abcde"; */
-/*   str9 = istring_mk(str9); */
-/*   printf("17. %d\n",istrcmp(str8, str9) == 0 ? 1:0); */
-/*   free(START(str8)); */
-/*   free(START(str9)); */
-/*   str8 = "abcde"; */
-/*   str8 = istring_mk(str8); */
-/*   str9 = "aacdef"; */
-/*   str9 = istring_mk(str9); */
-/*   printf("18. %d\n",istrcmp(str8, str9) == 1 ? 1:0); */
-/*   free(START(str8)); */
-/*   free(START(str9)); */
-/*   str8 = "abcde"; */
-/*   str8 = istring_mk(str8); */
-/*   str9 = "aacde"; */
-/*   str9 = istring_mk(str9); */
-/*   printf("19. %d\n",istrcmp(str8, str9) == 1 ? 1:0); */
- 
-/*   char *str10 = ""; */
-/*   str10 = istring_mk(str10); */
-/*   char *str11 = ""; */
-/*   str11 = istring_mk(str11); */
-/*   printf("15. %d\n", istrncmp(str10, str11, 10) == 0 ? 1:0); */
 
-/*   free(START(str3)); */
-/*   free(START(str4)); */
-/*   free(START(str5)); */
-/*   free(START(str6)); */
-/*   free(START(str7)); */
-/*   free(START(str8)); */
-/*   free(START(str9)); */
-/*   free(START(str10)); */
-/*   free(START(str11)); */
+
 /*   return 0; */
 /* } */

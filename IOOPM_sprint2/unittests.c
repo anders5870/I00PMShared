@@ -85,8 +85,12 @@ void testISTRCAT(void)
 
 void testISTRNCAT(void)
 {
+  char *str1 = istring_mk("choklad");
+  char *str2 = istring_mk("bollar");
+  char *str3 = istrncat(str1,str2,4);
+  CU_ASSERT(istrcmp(str3, "chokladboll") == 0);
   // You must implement you own!
-  CU_FAIL("Test not implemented yet");
+  //CU_FAIL("Test not implemented yet");
 }
 
 /* void testISTRCHR(void) */
