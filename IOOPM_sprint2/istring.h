@@ -53,7 +53,7 @@ char* istrslen(char *s, size_t length); //done but not verified
  */
 char *istrchr(const char *s, int c);
 char *istrrchr(const char *s, int c);
-int istrcmp(const char *s1, const char *s2);
+int istrcmp(const char *s1, const char *s2); //done and verified
 int istrncmp(const char *s1, const char *s2, size_t n);
 size_t istrlen(const char *s); //done and verified
 

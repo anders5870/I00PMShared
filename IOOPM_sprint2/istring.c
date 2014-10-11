@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
+
+
 char *START(char* p){
   p -= 4;
   return p;
@@ -13,6 +15,39 @@ char *STRING(char* p){
   p += 4;
   return p;
 }
+
+/***********Custom functions **********/
+
+//Function shifts all characters in dst 4 steps to the right, 
+//making room for the istring length bits and copies src to dst. 
+char *shiftRightCpy(char *dst, const char *src){
+  int a = 4;
+  int b = 0;
+  while (*(src+b)){
+    *(dst+a++) = *(src+b++); 
+  }
+  *(dst+a) = '\0';
+  return STRING(dst);
+}
+
+//set istring length bytes
+char *setilenbytes(char *dst, int srclen){
+  *(dst - 4) = (srclen >> 24) & 0xFF;
+  *(dst - 3) = (srclen >> 16) & 0xFF;
+  *(dst - 2) = (srclen >> 8) & 0xFF;
+  *(dst - 1) = srclen & 0xFF;
+  return dst;
+}
+
+char  *shiftRightSetLen(char *dst, int dstlen){
+  //shift right
+  dst = STRING(dst);
+  //set len
+  dst = setilenbytes(dst, dstlen);
+  return dst;
+}
+
+/**********End custom functions **********/
 
 char *istring_mk(const char* str){ 
   //if input string is NULL, return a NULL
@@ -52,7 +87,6 @@ void istring_rm(char *str){
   str = NULL;
 }
 
-
 char *istring_to_string(const char *str){
   //  char *temp2 = str;
   char *temp2 = str;
@@ -84,7 +118,6 @@ char *istring_to_string(const char *str){
   return temp;
 
 }
-
 
 //Behöver kollas med valgrind.
 char* istrslen(char *s, size_t length){
@@ -128,7 +161,25 @@ char* istrslen(char *s, size_t length){
   }
 }
 
-
+int istrcmp(const char *s1, const char *s2){
+  int i;
+  for(i = 0;*(s1+i) != '\0' || *(s2+i) != '\0'; i++){
+    //if s1 is longer than s2 but otherwise equal
+    if(*(s1+i) == '\0')
+      return -1;
+    //if s2 is longer than s1 but otherwise equal
+    if(*(s2+i) == '\0')
+      return 1;
+    //if *(s1+i) is greater than *(s2+i) then return 1
+    if ((uint8_t)*(s1+i) > (uint8_t)*(s2+i))
+      return 1;
+    //if the other way around return -1
+    else if  ((uint8_t)*(s1+i) < (uint8_t)*(s2+i))
+      return -1;
+  }
+  //if both s1 and s2 reaches the end simultaneously they must be equal, so return 0
+  return 0;
+}
 
 size_t istrlen(const char *s){
   size_t length_of_istring;
@@ -139,33 +190,6 @@ size_t istrlen(const char *s){
 
 }
 
-//Function shifts all characters in dst 4 steps to the right, 
-//making room for the istring length bits and copies src to dst. 
-char *shiftRightCpy(char *dst, const char *src){
-  int a = 4;
-  int b = 0;
-  while (*(src+b)){
-    *(dst+a++) = *(src+b++); 
-  }
-  *(dst+a) = '\0';
-  return STRING(dst);
-}
-
-//set istring length bytes
-char *setilenbytes(char *dst, int srclen){
-  *(dst - 4) = (srclen >> 24) & 0xFF;
-  *(dst - 3) = (srclen >> 16) & 0xFF;
-  *(dst - 2) = (srclen >> 8) & 0xFF;
-  *(dst - 1) = srclen & 0xFF;
-  return dst;
-}
-
-char  *shiftRightSetLen(char *dst, int dstlen){
-  //shift right
-  dst = STRING(dst);
-  dst = setilenbytes(dst, dstlen);
-  return dst;
-}
 
 char *istrcpy(char *dst, const char *src){
   uint32_t srclen;
@@ -187,8 +211,6 @@ char *istrncpy(char *dst, const char *src, size_t n){
   //return the n characters from src as its own object
   return dst; 
 }
-
-
 
 char *istrcat(char *dst, const char *src){
   uint32_t srclen = istrlen(src);
@@ -228,6 +250,8 @@ char *istrncat(char *dst, const char *src, size_t n){
 }
 
 
+
+
 int main(){
   char *str1 = istring_mk(NULL);
   printf("1. %s\n", (str1 == NULL) ? "True": "False");
@@ -250,7 +274,7 @@ int main(){
   str4 = istrcpy(str4, str3);
   printf("11. %s\n", strcmp(str3,str4) == 0 ? "True" : "False");
   //istrncpy
-  char *str5 = malloc(istrlen(str2)+1);
+  char *str5 = malloc(strlen(str2)+1 + 4);
   str5 = istrncpy(str5, str2, 2);
   printf("12. %s\n", strcmp(str5,"fo") == 0 ? "True" : "False");
   //istrcat
@@ -260,9 +284,48 @@ int main(){
   //istrncat
   char *str7 /* = malloc(istrlen(str3)*2) */;
   str7 = istrncat(str3,str3,3);
-  printf("14. %s and str7 is: %s\n", strcmp(str7,"fooooofoo") == 0 ? "True" : "False", str7);
-  
+  printf("14. %s and str7 is %s\n", strcmp(str7,"fooooofoo") == 0 ? "True" : "False", str7);
+  //istrcmp
+  char *str8 = "ABCDE";
+  str8 = istring_mk(str8);
+  char *str9 = "abcde";
+  str9 = istring_mk(str9);
+  printf("15. %d\n", istrcmp(str8, str9) == -1 ? 1:0);
+  free(START(str8));
+  free(START(str9));
+  str8 = "abcde";
+  str8 = istring_mk(str8);
+  str9 = "abcdef";
+  str9 = istring_mk(str9);
+  printf("16. %d\n",istrcmp(str8, str9) == -1 ? 1:0);
+  free(START(str8));
+  free(START(str9));
+  str8 = "abcde";
+  str8 = istring_mk(str8);
+  str9 = "abcde";
+  str9 = istring_mk(str9);
+  printf("17. %d\n",istrcmp(str8, str9) == 0 ? 1:0);
+  free(START(str8));
+  free(START(str9));
+  str8 = "abcde";
+  str8 = istring_mk(str8);
+  str9 = "aacdef";
+  str9 = istring_mk(str9);
+  printf("18. %d\n",istrcmp(str8, str9) == 1 ? 1:0);
+  free(START(str8));
+  free(START(str9));
+  str8 = "abcde";
+  str8 = istring_mk(str8);
+  str9 = "aacde";
+  str9 = istring_mk(str9);
+  printf("19. %d\n",istrcmp(str8, str9) == 1 ? 1:0);
   free(START(str3));
   free(START(str4));
+  free(START(str5));
+  free(START(str6));
+  free(START(str7));
+  free(START(str8));
+  free(START(str9));
+
   return 0;
 }

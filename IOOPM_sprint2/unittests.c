@@ -48,18 +48,18 @@ void testISTRING_RM(void)
   istring_rm(istring_mk("test"));
 }
 
-/* void testISTRLEN(void) */
-/* { */
-/*   char *str1 = istring_mk("spam"); */
-/*   char *str2 = istring_mk("ekieki"); */
-/*   CU_ASSERT(istrlen(str1) == 4); */
-/*   CU_ASSERT(istrlen(str2) == 6); */
-/*   //START(str2)->length = 3; */
-/*   CU_ASSERT(istrlen(str2) == 3); */
-/*   CU_ASSERT(strlen(str2) == 6); */
-/*   istring_rm(str1); */
-/*   istring_rm(str2); */
-/* } */
+void testISTRLEN(void)
+{
+  char *str1 = istring_mk("spam");
+  char *str2 = istring_mk("ekieki");
+  CU_ASSERT(istrlen(str1) == 4);
+  CU_ASSERT(istrlen(str2) == 6);
+  //START(str2)->length = 3;
+  CU_ASSERT(istrlen(str2) == 3);
+  CU_ASSERT(strlen(str2) == 6);
+  istring_rm(str1);
+  istring_rm(str2);
+}
 
 void testISTRING_TO_STRING(void)
 {
@@ -105,33 +105,33 @@ void testISTRNCAT(void)
 /*   istring_rm(str); */
 /* } */
 
-/* void testISTRCMP(void) */
-/* { */
-/*   char *str1 = istring_mk("spam"); */
-/*   char *str2 = istring_mk("spam"); */
-/*   char *str3 = istring_mk("Spam"); */
-/*   CU_ASSERT(istrcmp(str1, str1) == 0); */
-/*   CU_ASSERT(istrcmp(str1, str2) == 0); */
-/*   CU_ASSERT(istrcmp(str2, str3) > 0); */
-/*   CU_ASSERT(istrcmp(str3, str2) < 0); */
-/*   istring_rm(str1); */
-/*   istring_rm(str2); */
-/*   istring_rm(str3); */
-/* } */
+void testISTRCMP(void)
+{
+  char *str1 = istring_mk("spam");
+  char *str2 = istring_mk("spam");
+  char *str3 = istring_mk("Spam");
+  CU_ASSERT(istrcmp(str1, str1) == 0);
+  CU_ASSERT(istrcmp(str1, str2) == 0);
+  CU_ASSERT(istrcmp(str2, str3) > 0);
+  CU_ASSERT(istrcmp(str3, str2) < 0);
+  istring_rm(str1);
+  istring_rm(str2);
+  istring_rm(str3);
+}
 
-/* void testISTRNCMP(void) */
-/* { */
-/*   char *str1 = istring_mk("spam "); */
-/*   char *str2 = istring_mk("spam"); */
-/*   char *str3 = istring_mk("Spam"); */
-/*   CU_ASSERT(istrncmp(str1, str2, 4) == 0); */
-/*   CU_ASSERT(istrncmp(str1, str2, 5) > 0); */
-/*   CU_ASSERT(istrncmp(str2, str3, 4) > 0); */
-/*   CU_ASSERT(istrncmp(str3, str2, 4) < 0); */
-/*   istring_rm(str1); */
-/*   istring_rm(str2); */
-/*   istring_rm(str3); */
-/* } */
+void testISTRNCMP(void)
+{
+  char *str1 = istring_mk("spam ");
+  char *str2 = istring_mk("spam");
+  char *str3 = istring_mk("Spam");
+  CU_ASSERT(istrncmp(str1, str2, 4) == 0);
+  CU_ASSERT(istrncmp(str1, str2, 5) > 0);
+  CU_ASSERT(istrncmp(str2, str3, 4) > 0);
+  CU_ASSERT(istrncmp(str3, str2, 4) < 0);
+  istring_rm(str1);
+  istring_rm(str2);
+  istring_rm(str3);
+}
 
 void testISTRCPY(void)
 {
@@ -172,8 +172,8 @@ int main()
   if (
       (NULL == CU_add_test(pSuite1, "test of istring_mk()", testISTRING_MK)) ||
       (NULL == CU_add_test(pSuite1, "test of istring_rm()", testISTRING_RM)) ||
-      (NULL == CU_add_test(pSuite1, "test of istring_to_string()", testISTRING_TO_STRING)) /* || */
-      /* (NULL == CU_add_test(pSuite1, "test of istrlen()", testISTRLEN)) */
+      (NULL == CU_add_test(pSuite1, "test of istring_to_string()", testISTRING_TO_STRING)) ||
+      (NULL == CU_add_test(pSuite1, "test of istrlen()", testISTRLEN))
       )
     {
       CU_cleanup_registry();
@@ -185,8 +185,8 @@ int main()
       (NULL == CU_add_test(pSuite2, "test of istrncat()", testISTRNCAT)) ||
       /* (NULL == CU_add_test(pSuite2, "test of istrchr()", testISTRCHR)) || */
       /* (NULL == CU_add_test(pSuite2, "test of istrrchr()", testISTRRCHR)) || */
-      /* (NULL == CU_add_test(pSuite2, "test of istrcmp()", testISTRCMP)) || */
-      /* (NULL == CU_add_test(pSuite2, "test of istrncmp()", testISTRNCMP)) || */
+      (NULL == CU_add_test(pSuite2, "test of istrcmp()", testISTRCMP)) ||
+      (NULL == CU_add_test(pSuite2, "test of istrncmp()", testISTRNCMP)) ||
       (NULL == CU_add_test(pSuite2, "test of istrcpy()", testISTRCPY)) ||
       (NULL == CU_add_test(pSuite2, "test of istrncpy()", testISTRNCPY))
       )
