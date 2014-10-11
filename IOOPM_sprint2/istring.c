@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-
+//need to implement the istring struct ... forgot to do it...
 
 char *START(char* p){
   p -= 4;
@@ -31,7 +31,7 @@ char *shiftRightCpy(char *dst, const char *src){
 }
 
 //set istring length bytes
-char *setilenbytes(char *dst, int srclen){
+char *setilenbytes(char *dst, uint32_t srclen){
   *(dst - 4) = (srclen >> 24) & 0xFF;
   *(dst - 3) = (srclen >> 16) & 0xFF;
   *(dst - 2) = (srclen >> 8) & 0xFF;
@@ -239,6 +239,9 @@ char *istrcat(char *dst, const char *src){
   uint32_t dstlen = strlen(dst);
   char *dstcpy_ = malloc (dstlen + srclen+1 +4);
   
+  if (dst == NULL && *(src) == '\0')
+    return dstcpy_ = NULL;
+  
   dstcpy_ = shiftRightCpy(dstcpy_, dst);
   dstcpy_ = setilenbytes(dstcpy_, srclen+dstlen);
   int i;
@@ -275,39 +278,29 @@ char *istrncat(char *dst, const char *src, size_t n){
 
 
 /* int main(){ */
-/*   char *str1 = istring_mk(NULL); */
-/*   printf("1. %s\n", (str1 == NULL) ? "True": "False"); */
-/*   char str2[] = "foo"; */
-/*   char *str3 = istring_mk(str2); */
-/*    str3 = STRING(str3); */
-/*   printf("%d%d%d%x\n",*(str3-4),*(str3-3),*(str3-2),*(str3-1)); */
-/*   printf("2. %s\n", strcmp(str2, str3)  == 0 ? "True": "False"); */
-/*   printf("3. %d %d\n", (int)strlen(str2), (int)strlen(str3)); */
-/*   printf("4. %s\n", str3[0] == 'f' ? "True" : "False"); */
-/*   printf("5. %s\n", str3[1] == 'o' ? "True" : "False"); */
-/*   printf("6. %s\n", str3[2] == 'o' ? "True" : "False"); */
-/*   printf("7. %s\n", str3[3] == '\0' ? "True" : "False"); */
-/*   printf("8. %c %c %c %c %c %c\n", *(str3-4),*(str3-5),*(str3-6),*(str3-7),*(str3-8),*(str3-9)); */
+
 /*   str3 = istrslen(str3, 6); */
 /*   printf("9. %s\n", str3); */
 /*   printf("10. %d\n", (int)strlen(str3)); */
-/*   istrcpy */
+ 
 /*   char *str4 = malloc(istrlen(str3)+4 +1); */
 /*   str4 = istrcpy(str4, str3); */
 /*   printf("11. %s\n", strcmp(str3,str4) == 0 ? "True" : "False"); */
-/*   istrncpy */
+ 
 /*   char *str5 = malloc(strlen(str2)+1 + 4); */
 /*   str5 = istrncpy(str5, str2, 2); */
 /*   printf("12. %s\n", strcmp(str5,"fo") == 0 ? "True" : "False"); */
-/*   istrcat */
-/*   char *str6 /\\* = malloc(strlen(str3)*2 +2) *\\/; */
+ 
+
+
+/*   char *str6  = malloc(strlen(str3)*2 +2); */
 /*   str6 = istrcat(str3,str3); */
 /*   printf("13. %s and str6 is %s\n", strcmp(str6,"fooooofooooo") == 0 ? "True" : "False", str6); */
-/*   istrncat */
-/*   char *str7 /\\* = malloc(istrlen(str3)*2) *\\/; */
+  
+/*   char *str7 = malloc(istrlen(str3)*2) ; */
 /*   str7 = istrncat(str3,str3,3); */
 /*   printf("14. %s and str7 is %s\n", strcmp(str7,"fooooofoo") == 0 ? "True" : "False", str7); */
-/*   istrcmp */
+  
 /*   char *str8 = "ABCDE"; */
 /*   str8 = istring_mk(str8); */
 /*   char *str9 = "abcde"; */
@@ -341,17 +334,12 @@ char *istrncat(char *dst, const char *src, size_t n){
 /*   str9 = "aacde"; */
 /*   str9 = istring_mk(str9); */
 /*   printf("19. %d\n",istrcmp(str8, str9) == 1 ? 1:0); */
-/*   istrncmp */
+ 
 /*   char *str10 = ""; */
 /*   str10 = istring_mk(str10); */
 /*   char *str11 = ""; */
 /*   str11 = istring_mk(str11); */
 /*   printf("15. %d\n", istrncmp(str10, str11, 10) == 0 ? 1:0); */
-
-
-
-
-
 
 /*   free(START(str3)); */
 /*   free(START(str4)); */

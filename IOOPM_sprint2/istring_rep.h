@@ -9,7 +9,7 @@
 //making room for the istring length bits and copies src to dst. 
 char *shiftRightCpy(char *dst, const char *src);
 //set istring length bytes
-char *setilenbytes(char *dst, int srclen);
+char *setilenbytes(char *dst, uint32_t srclen);
 char  *shiftRightSetLen(char *dst, int dstlen);
 /**********End custom functions **********/
 

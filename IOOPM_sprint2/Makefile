@@ -22,7 +22,7 @@ commit: beautify clean test
 beautify:
 	astyle -A7 *.c *.h
 
-test: unittests.c istring.c istring.h
+test: unittests.c istring.c istring.h 
 	$(C_COMPILER) $(C_OPTIONS) unittests.c istring.c -o unittests -lcunit
 	./unittests
 

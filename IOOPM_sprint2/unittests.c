@@ -54,7 +54,7 @@ void testISTRLEN(void)
   char *str2 = istring_mk("ekieki");
   CU_ASSERT(istrlen(str1) == 4);
   CU_ASSERT(istrlen(str2) == 6);
-  //START(str2)->length = 3;
+  //START(str2)->length = 3; 
   CU_ASSERT(istrlen(str2) == 3);
   CU_ASSERT(strlen(str2) == 6);
   istring_rm(str1);
@@ -71,8 +71,16 @@ void testISTRING_TO_STRING(void)
 
 void testISTRCAT(void)
 {
+  char *str1 = istring_mk("natur");
+  char *str2 = istring_mk("rutan");
+  char *str3 = istrcat(str1,str2);
+  CU_ASSERT(istrcmp(str3, "naturrutan") == 0);
+
+  istring_rm(str1); 
+  istring_rm(str2); 
+  istring_rm(str3);
   // You must implement you own!
-  CU_FAIL("Test not implemented yet");
+  //CU_FAIL("Test not implemented yet");
 }
 
 void testISTRNCAT(void)
