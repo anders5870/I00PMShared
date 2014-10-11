@@ -181,6 +181,28 @@ int istrcmp(const char *s1, const char *s2){
   return 0;
 }
 
+int istrncmp(const char *s1, const char *s2, size_t n){
+  int i;
+  for(i = 0;(*(s1+i) != '\0' || *(s2+i) != '\0') && i<n; i++){
+    //if s1 is longer than s2 but otherwise equal
+    if(*(s1+i) == '\0')
+      return -1;
+    //if s2 is longer than s1 but otherwise equal
+    if(*(s2+i) == '\0')
+      return 1;
+    //if *(s1+i) is greater than *(s2+i) then return 1
+    if ((uint8_t)*(s1+i) > (uint8_t)*(s2+i))
+      return 1;
+    //if the other way around return -1
+    else if  ((uint8_t)*(s1+i) < (uint8_t)*(s2+i))
+      return -1;
+  }
+  //if n pairs from s1 and s2 are equal or they reach the end 
+  //simultaneously return 0.
+  return 0;
+
+}
+
 size_t istrlen(const char *s){
   size_t length_of_istring;
 
@@ -319,6 +341,18 @@ int main(){
   str9 = "aacde";
   str9 = istring_mk(str9);
   printf("19. %d\n",istrcmp(str8, str9) == 1 ? 1:0);
+  //istrncmp
+  char *str10 = "";
+  str10 = istring_mk(str10);
+  char *str11 = "";
+  str11 = istring_mk(str11);
+  printf("15. %d\n", istrncmp(str10, str11, 10) == 0 ? 1:0);
+
+
+
+
+
+
   free(START(str3));
   free(START(str4));
   free(START(str5));
@@ -326,6 +360,7 @@ int main(){
   free(START(str7));
   free(START(str8));
   free(START(str9));
-
+  free(START(str10));
+  free(START(str11));
   return 0;
 }
