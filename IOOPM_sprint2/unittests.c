@@ -1,7 +1,7 @@
 #include <string.h>
 #include "CUnit/Basic.h"
+#include "istring_rep.h"
 #include "istring.h"
-//#include "istring_rep.h"
 #include <stdlib.h>
 
 int init_suite_1(void)
