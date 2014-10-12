@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <ctype.h>
 
 //need to implement the istring struct ... forgot to do it...
 
@@ -91,7 +92,7 @@ void istring_rm(char *str){
 }
 
 char *istring_to_string(const char *str){
-  //  char *temp2 = str;
+  
   char *temp2 = str;
   temp2 = START(temp2);
   // Find the length of the istring
@@ -122,7 +123,7 @@ char *istring_to_string(const char *str){
 
 }
 
-//Behöver kollas med valgrind.
+
 char* istrslen(char *s, size_t length){
   char *temp2 = START(s);
   uint32_t length_old;
@@ -298,7 +299,76 @@ char *istrncat(char *dst, const char *src, size_t n){
 
 }
 
+//The strchr function searches string for the first occurrence of c. The null character terminating string is included in the search.
+//The strchr function returns a pointer to the first occurrence of character c in string or a null pointer if no matching character is found.
+char *istrchr(const char *s, int c){
+  if (!s){
+    return NULL;
+  }
+  int len = istrlen(s);
+  for(int i = 0; i <= len; ++i){
+    if (s[i] == c){
+      return s + i;  
+    } 
+  } 
+  return NULL;
+}
 
+
+//The strrchr function searches string for the last occurrence of c. The null character terminating string is included in the search.
+//The strrchr function returns a pointer to the last occurrence of character c in string or a null pointer if no matching character is found.
+char *istrrchr(const char *s, int c){
+  int len = istrlen(s);
+  char *last_found = NULL;
+  if (!s){
+    return NULL;
+  }
+  for (int i = 0; i <= len; ++i){
+    if (s[i] == c){
+      last_found = &s[i];
+    } 
+  }
+  return last_found;
+}
+
+//Behövs strlen köras?
+size_t istrfixlen(char *s){
+  int len = istrlen(s);
+  //teoretiskt kan det här vara sant av dålig tur, men beskrivningen säger att den här funktionen ska vara så effektiv som möjligt och inte skanna strängen i onödan.
+  /* if (s[len] == '\0'){ */
+  /*   return 1; */
+  /* }else{ */
+  for (int i = 0; i < len ;++i){
+    if (!isprint(s[i])){
+      istrslen(s, i);
+      return 1;
+    }
+  }
+  //}
+  s[len] = '\0';
+  return 1;
+}
+
+/* int main() { */
+/*   char *str1 = istring_mk("spam"); */
+/*   //char *str2 = istring_mk("ekieki"); */
+/*   int len; */
+/*   int len2; */
+/*   str1[2] = '\0'; */
+/*   len = strlen(str1); */
+/*   len2 = istrlen(str1); */
+/*   printf("Riktig längd innan: %d, Istr längd: %d\n", len, len2); */
+
+/*   istrfixlen(str1); */
+  
+/*   len = strlen(str1); */
+/*   len2 = istrlen(str1); */
+/*   printf("Riktig längd efter: %d, Istr längd: %d\n", len, len2); */
+/*   istring_rm(str1); */
+/*   //istring_rm(str2); */
+
+/*   return 0; */
+/* } */
 
 
 /* int main(){ */

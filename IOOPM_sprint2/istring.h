@@ -32,7 +32,7 @@ char *istring_to_string(const char *str); //done and validated with unittests
  * This function is useful when istrings have been manipulated as
  * regular C strings, to reestablish the length invariant.
  */
-size_t istrfixlen(char *s);
+size_t istrfixlen(char *s); //done and tested, but inefficient
 
 /* 
  * Sets the length of an istring and inserts a corresponding '\0'
@@ -41,7 +41,7 @@ size_t istrfixlen(char *s);
  * string. The last character of the original string will be repeated
  * to fill the string to its given length.
  */
-char* istrslen(char *s, size_t length); //done but not verified
+char* istrslen(char *s, size_t length); //done and validated with unittests
 
 /*
  * For definitions, see the manual page of respective function on the
@@ -51,8 +51,8 @@ char* istrslen(char *s, size_t length); //done but not verified
  * improve the implementations if the string.h equivalents and use
  * that to guide your implementations!
  */
-char *istrchr(const char *s, int c);
-char *istrrchr(const char *s, int c);
+char *istrchr(const char *s, int c); //done and tested, but problem with const.
+char *istrrchr(const char *s, int c); //done and tested, but problem with const.
 int istrcmp(const char *s1, const char *s2); //done and validated with unittests
 int istrncmp(const char *s1, const char *s2, size_t n); //done and validated with unittests
 size_t istrlen(const char *s); //done and validated with unittests

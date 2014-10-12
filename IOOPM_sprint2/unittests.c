@@ -145,29 +145,29 @@ void testISTRNCAT(void)
   //CU_FAIL("Test not implemented yet");
 }
 
-/* void testISTRCHR(void) */
-/* { */
-/*   char *str = istring_mk("spam spam bacon spam"); */
-/*   CU_ASSERT(istrchr(str, 's') == str); */
-/*   CU_ASSERT(istrchr(str, 'b') == str + 10); */
-/*   CU_ASSERT(istrchr(str, 'c') == str + 12); */
-/*   CU_ASSERT(istrchr(str, 's') == str); */
-/*   CU_ASSERT(istrrchr(str, '\0') == str + 20); */
-/*   CU_ASSERT(istrchr(str, 'x') == NULL); */
-/*   istring_rm(str); */
-/* } */
+void testISTRCHR(void)
+{
+  char *str = istring_mk("spam spam bacon spam");
+  CU_ASSERT(istrchr(str, 's') == str);
+  CU_ASSERT(istrchr(str, 'b') == str + 10);
+  CU_ASSERT(istrchr(str, 'c') == str + 12);
+  CU_ASSERT(istrchr(str, 's') == str);
+  CU_ASSERT(istrchr(str, '\0') == str + 20);
+  CU_ASSERT(istrchr(str, 'x') == NULL);
+  istring_rm(str);
+}
 
-/* void testISTRRCHR(void) */
-/* { */
-/*   char *str = istring_mk("spam spam bacon spam"); */
-/*   CU_ASSERT(istrrchr(str, 's') == str + 16); */
-/*   CU_ASSERT(istrrchr(str, 'b') == str + 10); */
-/*   CU_ASSERT(istrrchr(str, 'c') == str + 12); */
-/*   CU_ASSERT(istrrchr(str, 's') == str + 16); */
-/*   CU_ASSERT(istrrchr(str, '\0') == str + 20); */
-/*   CU_ASSERT(istrrchr(str, 'x') == NULL); */
-/*   istring_rm(str); */
-/* } */
+void testISTRRCHR(void)
+{
+  char *str = istring_mk("spam spam bacon spam");
+  CU_ASSERT(istrrchr(str, 's') == str + 16);
+  CU_ASSERT(istrrchr(str, 'b') == str + 10);
+  CU_ASSERT(istrrchr(str, 'c') == str + 12);
+  CU_ASSERT(istrrchr(str, 's') == str + 16);
+  CU_ASSERT(istrrchr(str, '\0') == str + 20);
+  CU_ASSERT(istrrchr(str, 'x') == NULL);
+  istring_rm(str);
+}
 
 void testISTRCMP(void)
 {
@@ -236,6 +236,48 @@ void testISTRNCPY(void)
   // CU_FAIL("Test not implemented yet");
 }
 
+
+void testISTRSLEN(void)
+{
+  char *str1 = istring_mk("spam");
+  char *str2 = istring_mk("ekieki");
+  str1 = istrslen(str1, 2);
+  str2 = istrslen(str2, 9);
+  CU_ASSERT(istrlen(str1) == 2);
+  CU_ASSERT(istrlen(str2) == 9);
+  CU_ASSERT(str1[2] == '\0');
+  CU_ASSERT(str2[7] == 'i');
+  //START(str2)->length = 3; 
+  //CU_ASSERT(istrlen(str2) == 3);
+  CU_ASSERT(strlen(str1) == 2);
+  CU_ASSERT(strlen(str2) == 9);
+  str1 = istrslen(str1, 0);
+  CU_ASSERT(str1[0] == '\0');
+  istring_rm(str1);
+  istring_rm(str2);
+}
+
+
+//Own implemented
+void testISTRFIXLEN(void)
+{
+  char *str1 = istring_mk("spam");
+  char *str2 = istring_mk("spam");
+
+  str1[2] = '\0';
+  str2[4] = 'a';
+  
+  istrfixlen(str1);
+  istrfixlen(str2);
+  CU_ASSERT(istrlen(str1) == strlen(str1));
+  CU_ASSERT(istrlen(str1) == 2);
+  CU_ASSERT(str2[4] == '\0');
+  CU_ASSERT(istrlen(str2) == 4);
+  istring_rm(str1);
+  istring_rm(str2);
+}
+
+
 int main()
 {
   CU_pSuite pSuite1 = NULL;
@@ -260,6 +302,7 @@ int main()
     }
 
   /* add the tests to the suites */
+  /* Basic Functions Suite */
   if (
       (NULL == CU_add_test(pSuite1, "test of istring_mk()", testISTRING_MK)) ||
       (NULL == CU_add_test(pSuite1, "test of istring_rm()", testISTRING_RM)) ||
@@ -271,14 +314,17 @@ int main()
       return CU_get_error();
     }
 
+  /* Advanced Functions Suite */
   if (
       (NULL == CU_add_test(pSuite2, "test of istrcat()", testISTRCAT)) ||
       (NULL == CU_add_test(pSuite2, "test of istrncat()", testISTRNCAT)) ||
-      /* (NULL == CU_add_test(pSuite2, "test of istrchr()", testISTRCHR)) || */
-      /* (NULL == CU_add_test(pSuite2, "test of istrrchr()", testISTRRCHR)) || */
+      (NULL == CU_add_test(pSuite2, "test of istrchr()", testISTRCHR)) || 
+      (NULL == CU_add_test(pSuite2, "test of istrrchr()", testISTRRCHR)) || 
       (NULL == CU_add_test(pSuite2, "test of istrcmp()", testISTRCMP)) ||
       (NULL == CU_add_test(pSuite2, "test of istrncmp()", testISTRNCMP)) ||
       (NULL == CU_add_test(pSuite2, "test of istrcpy()", testISTRCPY)) ||
+      (NULL == CU_add_test(pSuite2, "test of istrslen()", testISTRSLEN)) ||
+      (NULL == CU_add_test(pSuite2, "test of istrfixlen()", testISTRFIXLEN)) ||
       (NULL == CU_add_test(pSuite2, "test of istrncpy()", testISTRNCPY))
       )
     {
