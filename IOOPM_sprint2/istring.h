@@ -55,7 +55,7 @@ char *istrchr(const char *s, int c);
 char *istrrchr(const char *s, int c);
 int istrcmp(const char *s1, const char *s2); //done and validated with unittests
 int istrncmp(const char *s1, const char *s2, size_t n); //done and validated with unittests
-size_t istrlen(const char *s); //done and verified
+size_t istrlen(const char *s); //done and validated with unittests
 
 /*
  * I nedanstående funktioner är dst en pekare till en vanlig
@@ -64,11 +64,11 @@ size_t istrlen(const char *s); //done and verified
  * t.ex. istrcpy anropats bör man vid anropsplatsen göra dst =
  * STRING(dst) för att hoppa över längd-delen av strängen.
 */
-char *istrcpy(char *dst, const char *src); //done and verified
+char *istrcpy(char *dst, const char *src); //done and validated with unittests
 
-char *istrncpy(char *dst, const char *src, size_t n); //done and verified
-char *istrcat(char *dst, const char *src); //done and verified
-char *istrncat(char *dst, const char *src, size_t n); //done and verified 
+char *istrncpy(char *dst, const char *src, size_t n); //done and validated with unittests
+char *istrcat(char *dst, const char *src); //done and validated with unittests
+char *istrncat(char *dst, const char *src, size_t n); //done and validated with unittests
 
 #endif
 

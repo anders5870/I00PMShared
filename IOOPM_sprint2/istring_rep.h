@@ -2,6 +2,7 @@
 #define ISTRING_REP_H
 
 #include <string.h>
+#include <stdint.h>
 
 
 /***********Custom functions *************/

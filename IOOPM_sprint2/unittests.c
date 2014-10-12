@@ -55,7 +55,7 @@ void testISTRLEN(void)
   CU_ASSERT(istrlen(str1) == 4);
   CU_ASSERT(istrlen(str2) == 6);
   //START(str2)->length = 3; 
-  CU_ASSERT(istrlen(str2) == 3);
+  //CU_ASSERT(istrlen(str2) == 3);
   CU_ASSERT(strlen(str2) == 6);
   istring_rm(str1);
   istring_rm(str2);
@@ -71,25 +71,77 @@ void testISTRING_TO_STRING(void)
 
 void testISTRCAT(void)
 {
-  char *str1 = istring_mk("natur");
+  // "natur" + "rutan"
+  char *str1 = "natur";
   char *str2 = istring_mk("rutan");
   char *str3 = istrcat(str1,str2);
   CU_ASSERT(istrcmp(str3, "naturrutan") == 0);
-
-  istring_rm(str1); 
   istring_rm(str2); 
   istring_rm(str3);
-  // You must implement you own!
+ // "" + "abc" 
+  str1 = "";
+  str2 = istring_mk("abc");
+  str3 = istrcat(str1, str2);
+  CU_ASSERT(istrcmp(str3, "abc") == 0);
+  istring_rm(str2); 
+  istring_rm(str3); 
+  // "abc" + ""
+  str1 = "abc";
+  str2 = istring_mk("");
+  str3 = istrcat(str1, str2);
+  CU_ASSERT(istrcmp(str3, "abc") == 0);
+  istring_rm(str2); 
+  istring_rm(str3);
+  // "" + ""
+  str1 = "";
+  str2 = istring_mk("");
+  str3 = istrcat(str1, str2);
+  CU_ASSERT(istrcmp(str3, "") == 0);
+  istring_rm(str2); 
+  istring_rm(str3);
+ 
+  // Own tests implemented
   //CU_FAIL("Test not implemented yet");
 }
 
 void testISTRNCAT(void)
 {
-  char *str1 = istring_mk("choklad");
+  //choklad + boll (bollar)
+  char *str1 = "choklad";
   char *str2 = istring_mk("bollar");
   char *str3 = istrncat(str1,str2,4);
   CU_ASSERT(istrcmp(str3, "chokladboll") == 0);
-  // You must implement you own!
+  istring_rm(str2); 
+  istring_rm(str3); 
+  // "" + "" (abc)
+  str1 = "";
+  str2 = istring_mk("abc");
+  str3 = istrncat(str1, str2, 0);
+  CU_ASSERT(istrcmp(str3, "") == 0);
+  istring_rm(str2); 
+  istring_rm(str3); 
+  // "" + abc
+  str1 = "";
+  str2 = istring_mk("abc");
+  str3 = istrncat(str1, str2, 3);
+  CU_ASSERT(istrcmp(str3, "abc") == 0);
+  istring_rm(str2); 
+  istring_rm(str3);
+  // "" + ""
+  str1 = "";
+  str2 = istring_mk("");
+  str3 = istrncat(str1, str2, 3);
+  CU_ASSERT(istrcmp(str3, "") == 0);
+  istring_rm(str2); 
+  istring_rm(str3);
+  // "abc" + ?? //how to deal with n = -1?
+  str1 = "abc";
+  str2 = istring_mk("def");
+  str3 = istrncat(str1, str2, -1);
+  CU_ASSERT(istrcmp(str1, str3) == 0);
+  istring_rm(str2); 
+  istring_rm(str3);
+  // Own tests implemented
   //CU_FAIL("Test not implemented yet");
 }
 
@@ -147,14 +199,41 @@ void testISTRNCMP(void)
 
 void testISTRCPY(void)
 {
-  // You must implement your own!
-  CU_FAIL("Test not implemented yet");
+  //copy "spam" from str1 into str2
+  char *str1 = istring_mk("spam");
+  char *str2 = malloc(strlen(str1)+ 4+1);
+  str2 = istrcpy(str2,str1);
+  CU_ASSERT(istrcmp(str1, str2) == 0);
+  istring_rm(str1);
+  //copy "" from str1 into str2
+  str1 = istring_mk("");
+  str2 = istrcpy(str2,str1);
+  CU_ASSERT(istrcmp(str1, str2) == 0);
+  istring_rm(str1);
+  // Own tests implemented
+  // CU_FAIL("Test not implemented yet");
 }
 
 void testISTRNCPY(void)
 {
-  // You must implement your own!
-  CU_FAIL("Test not implemented yet");
+  //copy 0 characters from str1 into str2
+  char *str1 = istring_mk("spam");
+  char *str2 = malloc(strlen(str1)+4+1);
+  str2 = istrncpy(str2,str1, 0);
+  CU_ASSERT(istrcmp(str2,"") == 0);
+  istring_rm(str1);
+  //copy -1 chars from str1 into str2
+  str1 = istring_mk("spam");
+  str2 = istrncpy(str2,str1, -1);
+  CU_ASSERT(istrcmp(str1,str2) == 0);
+  istring_rm(str1);
+  //copy 10 chars from str1 into str2
+  str1 = istring_mk("");
+  str2 = istrncpy(str2,str1, 10);
+  CU_ASSERT(istrcmp(str2, "") == 0);
+  istring_rm(str1);
+  // Own tests implemented
+  // CU_FAIL("Test not implemented yet");
 }
 
 int main()

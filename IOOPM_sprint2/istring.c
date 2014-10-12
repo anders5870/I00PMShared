@@ -21,6 +21,7 @@ char *STRING(char* p){
 //Function shifts all characters in dst 4 steps to the right, 
 //making room for the istring length bits and copies src to dst. 
 char *shiftRightCpy(char *dst, const char *src){
+  if (src == NULL) return NULL;
   int a = 4;
   int b = 0;
   while (*(src+b)){
@@ -50,9 +51,11 @@ char  *shiftRightSetLen(char *dst, int dstlen){
 /**********End custom functions **********/
 
 char *istring_mk(const char* str){ 
-  //if input string is NULL, return a NULL
-  if (str == NULL) return NULL;
   uint32_t length_of_string;
+  //Handle the empty string
+  if (str == NULL){
+    return NULL;
+  }
   //get the length of the input string and put it in a predefined int type 
   //of 4 byte space defined in the <stdint.h> library
   length_of_string = strlen(str);
@@ -215,7 +218,9 @@ size_t istrlen(const char *s){
 
 char *istrcpy(char *dst, const char *src){
   uint32_t srclen;
+
   srclen = istrlen(src);
+  if (src == NULL) return NULL;
   dst = shiftRightCpy(dst, src);
   dst = setilenbytes(dst, srclen);
   return dst;
@@ -223,6 +228,9 @@ char *istrcpy(char *dst, const char *src){
 }
 
 char *istrncpy(char *dst, const char *src, size_t n){
+  //If n is negative do a normal istrcpy
+  if ((int)n<0) return istrcpy(dst,src);
+
   dst = shiftRightSetLen(dst, n);
   int i;
   for (i = 0; i<n; i++){
@@ -235,27 +243,43 @@ char *istrncpy(char *dst, const char *src, size_t n){
 }
 
 char *istrcat(char *dst, const char *src){
-  uint32_t srclen = istrlen(src);
-  uint32_t dstlen = strlen(dst);
+  uint32_t srclen;
+  uint32_t dstlen;
+  //handle empty strings
+  if (src[0] == '\0') srclen = 0;
+  if (dst[0] == '\0') dstlen = 0;
+  //get the length constants
+  srclen = istrlen(src);
+  dstlen = strlen(dst);
+  //create space for the concatenated string
   char *dstcpy_ = malloc (dstlen + srclen+1 +4);
-  
-  if (dst == NULL && *(src) == '\0')
-    return dstcpy_ = NULL;
-  
+ 
+  //shift right and copy dst into the new space
   dstcpy_ = shiftRightCpy(dstcpy_, dst);
+  //set the length bytes of the new space
   dstcpy_ = setilenbytes(dstcpy_, srclen+dstlen);
+  //until src reaches null, copy each char in src ontop of dst in dstcpy_
   int i;
-    for (i = 0; *(src+i); i++){
+  for (i = 0; *(src+i); i++){
     *(dstcpy_+dstlen+i) = *(src+i);
   }
+  //lastly add the null character
   *(dstcpy_+dstlen+i) = '\0';
   return dstcpy_;
 }
 
 char *istrncat(char *dst, const char *src, size_t n){
-  //get some useful stuff
-  uint32_t srclen = istrlen(src);
-  uint32_t dstlen = strlen(dst);
+  uint32_t srclen;
+  uint32_t dstlen;
+
+  //in the case n is negative return dst as istring unchanged
+  if((int)n<0) return istring_mk(dst);
+  //handle empty strings
+  if (src[0] == '\0') srclen = 0;
+  if (dst[0] == '\0') dstlen = 0;
+  //get the length constants
+   srclen = istrlen(src);
+   dstlen = strlen(dst);
   //create space for the new string
   char *dstcpy = malloc(dstlen+1 + n + 4);
   //copy dst into the new string and shift it 4 bytes 
@@ -264,7 +288,7 @@ char *istrncat(char *dst, const char *src, size_t n){
   dstcpy = setilenbytes(dstcpy, srclen+n);
   //append n characters from src onto the end of the newly created string
   int i;
-  for ( i = 0; i<n; i++){
+  for ( i = 0; i<n && src[i] != '\0'; i++){
     *(dstcpy + dstlen + i) = *(src + i);
   }
   //dont forget to add the null byte
@@ -278,22 +302,17 @@ char *istrncat(char *dst, const char *src, size_t n){
 
 
 /* int main(){ */
-
-/*   str3 = istrslen(str3, 6); */
-/*   printf("9. %s\n", str3); */
-/*   printf("10. %d\n", (int)strlen(str3)); */
- 
-/*   char *str4 = malloc(istrlen(str3)+4 +1); */
-/*   str4 = istrcpy(str4, str3); */
-/*   printf("11. %s\n", strcmp(str3,str4) == 0 ? "True" : "False"); */
- 
-/*   char *str5 = malloc(strlen(str2)+1 + 4); */
-/*   str5 = istrncpy(str5, str2, 2); */
-/*   printf("12. %s\n", strcmp(str5,"fo") == 0 ? "True" : "False"); */
- 
-
-
-
+/*   size_t test1 = -50; */
+/*   int test2 = (int)test1; */
+/*   char *str1 = "abc"; */
+/*   char *str2 = istring_mk("def"); */
+/*   char *str3 = istrncat(str1, str2, -1); */
+/*   printf("%d  %s  %s %d\n",(istrcmp(str1, str3)), str1, str3, (int)test1); */
+/*   if (test1 <0) puts ("yes"); */
+/*   if (test1 == test2) puts("equal"); */
+/*   if (test2<0) puts("less"); */
+/*   istring_rm(str2);  */
+/*   istring_rm(str3); */
 
 /*   return 0; */
 /* } */
