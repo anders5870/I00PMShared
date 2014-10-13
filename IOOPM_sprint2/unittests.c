@@ -210,7 +210,7 @@ void testISTRCPY(void)
   istring_rm(str1);
   //copy "" from str1 into str2
   str1 = istring_mk("");
-  str2 = str2-4; //Löser minnesläcka, men är inte vackert.
+  str2 = str2-4;
   str2 = istrcpy(str2,str1);
   CU_ASSERT(istrcmp(str1, str2) == 0);
   istring_rm(str1);
@@ -230,14 +230,17 @@ void testISTRNCPY(void)
   istring_rm(str1);
   //copy -1 chars from str1 into str2
   str1 = istring_mk("spam");
+  str2 = str2-4;
   str2 = istrncpy(str2,str1, -1);
   CU_ASSERT(istrcmp(str1,str2) == 0);
   istring_rm(str1);
   //copy 10 chars from str1 into str2
   str1 = istring_mk("");
+  str2 = str2-4;
   str2 = istrncpy(str2,str1, 10);
   CU_ASSERT(istrcmp(str2, "") == 0);
   istring_rm(str1);
+  istring_rm(str2);
   // Own tests implemented
   // CU_FAIL("Test not implemented yet");
 }
@@ -264,7 +267,6 @@ void testISTRSLEN(void)
 }
 
 
-//Own implemented
 void testISTRFIXLEN(void)
 {
   char *str1 = istring_mk("spam");

@@ -35,7 +35,6 @@ char *istring_to_string(const char *str); //done and validated with unittests
  * regular C strings, to reestablish the length invariant.
  */
 size_t istrfixlen(char *s); //done and validated with unittests
-
 /* 
  * Sets the length of an istring and inserts a corresponding '\0'
  * character. If the length argument is out of bounds for the string,
