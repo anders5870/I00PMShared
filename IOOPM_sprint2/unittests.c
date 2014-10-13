@@ -28,9 +28,13 @@ int clean_suite_2(void)
 void testISTRING_MK(void)
 {
   char *str1 = istring_mk(NULL);
-  CU_ASSERT(str1 == NULL);
+  CU_ASSERT(str1[0] == '\0');
   char str2[] = "foo";
   char *str3 = istring_mk(str2);
+  char *str4 = istring_mk("  ");
+  CU_ASSERT(str4[0] == ' ');
+  CU_ASSERT(str4[1] == ' ');
+  CU_ASSERT(istrlen(str4) == 2);
   CU_ASSERT(strlen(str3) == strlen(str2));
   CU_ASSERT(strcmp(str2, str3)  == 0);
   CU_ASSERT(str3[0]  == 'f');
@@ -65,7 +69,10 @@ void testISTRING_TO_STRING(void)
 {
   char *str1 = istring_mk("spam");
   char *str2 = istring_to_string(str1);
+  char *str3 = istring_mk("");
+  char *str4 = istring_to_string(str3);
   CU_ASSERT(strcmp(str2, "spam") == 0);
+  CU_ASSERT(strcmp(str3, str4) == 0);
   istring_rm(str1);
   free(str2);
 }
@@ -138,10 +145,8 @@ void testISTRNCAT(void)
   istring_rm(str3);
   // "abc" + ?? //how to deal with n = -1?
   str1 = "abc";
-  str2 = istring_mk("def");
-  str3 = istrncat(str1, str2, -1);
+  str3 = istrncat(str3, str1, 3);
   CU_ASSERT(istrcmp(str1, str3) == 0);
-  istring_rm(str2); 
   istring_rm(str3);
   // Own tests implemented
   //CU_FAIL("Test not implemented yet");
@@ -150,6 +155,8 @@ void testISTRNCAT(void)
 void testISTRCHR(void)
 {
   char *str = istring_mk("spam spam bacon spam");
+  char *str2 = istring_mk(" ");
+  CU_ASSERT(istrchr(str2, ' ') == str2);
   CU_ASSERT(istrchr(str, 's') == str);
   CU_ASSERT(istrchr(str, 'b') == str + 10);
   CU_ASSERT(istrchr(str, 'c') == str + 12);
@@ -219,7 +226,7 @@ void testISTRCPY(void)
   // CU_FAIL("Test not implemented yet");
 }
 
-//Minnesläcka.
+
 void testISTRNCPY(void)
 {
   //copy 0 characters from str1 into str2
@@ -228,10 +235,10 @@ void testISTRNCPY(void)
   str2 = istrncpy(str2,str1, 0);
   CU_ASSERT(istrcmp(str2,"") == 0);
   istring_rm(str1);
-  //copy -1 chars from str1 into str2
+  //Copys 4 chars from str1 to str2
   str1 = istring_mk("spam");
   str2 = str2-4;
-  str2 = istrncpy(str2,str1, -1);
+  str2 = istrncpy(str2,str1, 4);
   CU_ASSERT(istrcmp(str1,str2) == 0);
   istring_rm(str1);
   //copy 10 chars from str1 into str2
@@ -248,17 +255,17 @@ void testISTRNCPY(void)
 
 void testISTRSLEN(void)
 {
-  char *str1 = istring_mk("spam");
+  char *str1 = istring_mk("");
   char *str2 = istring_mk("ekieki");
   str1 = istrslen(str1, 2);
   str2 = istrslen(str2, 9);
-  CU_ASSERT(istrlen(str1) == 2);
+  CU_ASSERT(istrlen(str1) == 0);
   CU_ASSERT(istrlen(str2) == 9);
   CU_ASSERT(str1[2] == '\0');
   CU_ASSERT(str2[7] == 'i');
   //START(str2)->length = 3; 
   //CU_ASSERT(istrlen(str2) == 3);
-  CU_ASSERT(strlen(str1) == 2);
+  CU_ASSERT(strlen(str1) == 0);
   CU_ASSERT(strlen(str2) == 9);
   str1 = istrslen(str1, 0);
   CU_ASSERT(str1[0] == '\0');

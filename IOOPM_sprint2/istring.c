@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <ctype.h>
+#include <assert.h>
 
 char *START(char* p){
   p -= 4;
@@ -51,9 +52,8 @@ char  *shiftRightSetLen(char *dst, int dstlen){
 
 char *istring_mk(const char* str){ 
   uint32_t length_of_string;
-  //Handle the empty string
   if (str == NULL){
-    return NULL;
+    return istring_mk("");
   }
   //get the length of the input string and put it in a predefined int type 
   //of 4 byte space defined in the <stdint.h> library
@@ -89,8 +89,9 @@ void istring_rm(char *str){
   str = NULL;
 }
 
-//Borde str frias?
 char *istring_to_string(const char *str){
+  if (str == NULL) return NULL;
+  
   // Find the length of the istring
   uint32_t length_of_istring;
   //Gör om de 4 första bitsen i str till ett heltal 
@@ -102,16 +103,13 @@ char *istring_to_string(const char *str){
   if (not_an_istring == NULL) return NULL; 
   //Copies the contents of the istring str into the new string not_an_istring
   int n = 0;
-  int m = 0;
   while(n<length_of_istring){
-    *(not_an_istring+n) = *(str+m);
-    m++;
+    *(not_an_istring+n) = *(str+n);
     n++;
   }
   *(not_an_istring+n) = '\0';
   // Return new_string
   return not_an_istring;
-
 }
 
 
@@ -119,7 +117,7 @@ char* istrslen(char *s, size_t length){
   char *temp2 = START(s);
   uint32_t length_old;
   length_old = (temp2[0] << 24) | (temp2[1] << 16) | (temp2[2] << 8) | temp2[3];
-  uint32_t length_new = length;
+  uint32_t length_new = abs(length);
   
   //Vid kortare istringlängd än ny längd.
   if (length_old > length_new){
@@ -145,6 +143,7 @@ char* istrslen(char *s, size_t length){
     for (int i=0; i < length_old; ++i){
       *(temp_string+i) = *(iStrPointer+i);  
     }
+    //Fyller ut resten med sista bokstaven.
     for (int i=length_old; i < length_new; ++i){
       *(temp_string + i) = *(iStrPointer+length_old-1);
     }
@@ -195,7 +194,6 @@ int istrncmp(const char *s1, const char *s2, size_t n){
   //if n pairs from s1 and s2 are equal or they reach the end 
   //simultaneously return 0.
   return 0;
-
 }
 
 size_t istrlen(const char *s){
@@ -220,8 +218,8 @@ char *istrcpy(char *dst, const char *src){
 }
 
 char *istrncpy(char *dst, const char *src, size_t n){
-  //If n is negative do a normal istrcpy
-  if ((int)n<0) return istrcpy(dst,src);
+  //If n is negative... CRASH!
+  assert((int)n>=0);   
 
   dst = shiftRightSetLen(dst, n);
   int i;
@@ -264,8 +262,8 @@ char *istrncat(char *dst, const char *src, size_t n){
   uint32_t srclen;
   uint32_t dstlen;
 
-  //in the case n is negative return dst as istring unchanged
-  if((int)n<0) return istring_mk(dst);
+  //in the case n is negative... CRASH!
+  assert((int)n>=0);
   //handle empty strings
   if (src[0] == '\0') srclen = 0;
   if (dst[0] == '\0') dstlen = 0;
@@ -309,11 +307,11 @@ char *istrchr(const char *s, int c){
 //The strrchr function searches string for the last occurrence of c. The null character terminating string is included in the search.
 //The strrchr function returns a pointer to the last occurrence of character c in string or a null pointer if no matching character is found.
 char *istrrchr(const char *s, int c){
-  int len = istrlen(s);
-  char *last_found = NULL;
   if (!s){
     return NULL;
   }
+  int len = istrlen(s);
+  char *last_found = NULL;
   for (int i = 0; i <= len; ++i){
     if (s[i] == c){
       last_found = (char *)&s[i];
@@ -324,6 +322,9 @@ char *istrrchr(const char *s, int c){
 
 
 size_t istrfixlen(char *s){
+  if (!s){
+    return 0;
+  }
   int len = istrlen(s);
   for (int i = 0; i < len ;++i){
     if (!isprint(s[i])){
@@ -336,23 +337,12 @@ size_t istrfixlen(char *s){
 }
 
 /* int main() { */
-/*   char *str1 = istring_mk("spam"); */
-/*   //char *str2 = istring_mk("ekieki"); */
+/*   char *str1 = istring_mk(NULL); */
 /*   int len; */
-/*   int len2; */
-/*   str1[2] = '\0'; */
-/*   len = strlen(str1); */
-/*   len2 = istrlen(str1); */
-/*   printf("Riktig längd innan: %d, Istr längd: %d\n", len, len2); */
-
-/*   istrfixlen(str1); */
-  
-/*   len = strlen(str1); */
-/*   len2 = istrlen(str1); */
-/*   printf("Riktig längd efter: %d, Istr längd: %d\n", len, len2); */
+/*   len = istrlen(str1); */
+/*   printf("Detta funkar:  %s, %d", str1, len); */
+/*   //char *str2 = istring_mk("ekieki"); */
 /*   istring_rm(str1); */
-/*   //istring_rm(str2); */
-
+  
 /*   return 0; */
 /* } */
-
