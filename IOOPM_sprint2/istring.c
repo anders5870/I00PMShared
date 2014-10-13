@@ -5,8 +5,6 @@
 #include <stdint.h>
 #include <ctype.h>
 
-//need to implement the istring struct ... forgot to do it...
-
 char *START(char* p){
   p -= 4;
   return p;
@@ -92,34 +90,27 @@ void istring_rm(char *str){
 }
 
 char *istring_to_string(const char *str){
-  
-  char *temp2 = str;
-  temp2 = START(temp2);
+
   // Find the length of the istring
   uint32_t length_of_istring;
-  //  printf("0.1 %d\n",*(temp2+3));
-
   //Gör om de 4 första bitsen i str till ett heltal 
   //och sätter det till length_of_istring mha byte-shifting
-  length_of_istring = (temp2[0] << 24) | (temp2[1] << 16) | (temp2[2] << 8) | temp2[3];
-
-  //printf("0.2 length of istring: %d\n", length_of_istring);
+  length_of_istring = (str[-4] << 24) | (str[-3] << 16) | (str[-2] << 8) | str[-1];
   // Create and assign space to the new string not_an_istring
-  char *not_an_istring = malloc(length_of_istring+4+1);
-  char *temp = not_an_istring;
+  char *not_an_istring = malloc(length_of_istring+1);
   //return NULL if out of memory
   if (not_an_istring == NULL) return NULL; 
   //Copies the contents of the istring str into the new string not_an_istring
   int n = 0;
-  int m = 4;
+  int m = 0;
   while(n<length_of_istring){
-    *(not_an_istring+n) = *(temp2+m);
+    *(not_an_istring+n) = *(str+m);
     m++;
     n++;
   }
   *(not_an_istring+n) = '\0';
   // Return new_string
-  return temp;
+  return not_an_istring;
 
 }
 
@@ -308,9 +299,9 @@ char *istrchr(const char *s, int c){
   int len = istrlen(s);
   for(int i = 0; i <= len; ++i){
     if (s[i] == c){
-      return s + i;  
-    } 
-  } 
+      return s + i;
+    }
+  }
   return NULL;
 }
 
@@ -326,7 +317,7 @@ char *istrrchr(const char *s, int c){
   for (int i = 0; i <= len; ++i){
     if (s[i] == c){
       last_found = &s[i];
-    } 
+    }
   }
   return last_found;
 }
@@ -370,19 +361,3 @@ size_t istrfixlen(char *s){
 /*   return 0; */
 /* } */
 
-
-/* int main(){ */
-/*   size_t test1 = -50; */
-/*   int test2 = (int)test1; */
-/*   char *str1 = "abc"; */
-/*   char *str2 = istring_mk("def"); */
-/*   char *str3 = istrncat(str1, str2, -1); */
-/*   printf("%d  %s  %s %d\n",(istrcmp(str1, str3)), str1, str3, (int)test1); */
-/*   if (test1 <0) puts ("yes"); */
-/*   if (test1 == test2) puts("equal"); */
-/*   if (test2<0) puts("less"); */
-/*   istring_rm(str2);  */
-/*   istring_rm(str3); */
-
-/*   return 0; */
-/* } */
