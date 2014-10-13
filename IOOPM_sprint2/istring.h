@@ -18,7 +18,9 @@ void istring_rm(char *str); //done and validated with unittests
 /*
  * Returns a standard null terminated char* representation of the
  * supplied istring. Returns NULL if out of memory.
+ * Note: Both the istring and normal string has allocated memory.
  */
+
 char *istring_to_string(const char *str); //done and validated with unittests
 
 /*
@@ -32,7 +34,7 @@ char *istring_to_string(const char *str); //done and validated with unittests
  * This function is useful when istrings have been manipulated as
  * regular C strings, to reestablish the length invariant.
  */
-size_t istrfixlen(char *s); //done and tested, but inefficient
+size_t istrfixlen(char *s); //done and validated with unittests
 
 /* 
  * Sets the length of an istring and inserts a corresponding '\0'

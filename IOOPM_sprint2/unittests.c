@@ -64,8 +64,10 @@ void testISTRLEN(void)
 void testISTRING_TO_STRING(void)
 {
   char *str1 = istring_mk("spam");
-  CU_ASSERT(strcmp(istring_to_string(str1), "spam") == 0);
+  char *str2 = istring_to_string(str1);
+  CU_ASSERT(strcmp(str2, "spam") == 0);
   istring_rm(str1);
+  free(str2);
 }
 
 
@@ -197,6 +199,7 @@ void testISTRNCMP(void)
   istring_rm(str3);
 }
 
+//Minnesläcka.
 void testISTRCPY(void)
 {
   //copy "spam" from str1 into str2
@@ -207,13 +210,16 @@ void testISTRCPY(void)
   istring_rm(str1);
   //copy "" from str1 into str2
   str1 = istring_mk("");
+  str2 = str2-4; //Löser minnesläcka, men är inte vackert.
   str2 = istrcpy(str2,str1);
   CU_ASSERT(istrcmp(str1, str2) == 0);
   istring_rm(str1);
+  istring_rm(str2);
   // Own tests implemented
   // CU_FAIL("Test not implemented yet");
 }
 
+//Minnesläcka.
 void testISTRNCPY(void)
 {
   //copy 0 characters from str1 into str2
