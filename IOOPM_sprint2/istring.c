@@ -93,7 +93,7 @@ void istring_rm(char *str){
 
 char *istring_to_string(const char *str){
   
-  char *temp2 = str;
+  char *temp2 = (char *)str;
   temp2 = START(temp2);
   // Find the length of the istring
   uint32_t length_of_istring;
@@ -308,7 +308,7 @@ char *istrchr(const char *s, int c){
   int len = istrlen(s);
   for(int i = 0; i <= len; ++i){
     if (s[i] == c){
-      return s + i;  
+      return (char *)s+i;  
     } 
   } 
   return NULL;
@@ -325,7 +325,7 @@ char *istrrchr(const char *s, int c){
   }
   for (int i = 0; i <= len; ++i){
     if (s[i] == c){
-      last_found = &s[i];
+      last_found = (char *)&s[i];
     } 
   }
   return last_found;
@@ -349,26 +349,26 @@ size_t istrfixlen(char *s){
   return 1;
 }
 
-/* int main() { */
-/*   char *str1 = istring_mk("spam"); */
-/*   //char *str2 = istring_mk("ekieki"); */
-/*   int len; */
-/*   int len2; */
-/*   str1[2] = '\0'; */
-/*   len = strlen(str1); */
-/*   len2 = istrlen(str1); */
-/*   printf("Riktig längd innan: %d, Istr längd: %d\n", len, len2); */
+int main() {
+  char *str1 = istring_mk("spam");
+  //char *str2 = istring_mk("ekieki");
+  int len;
+  int len2;
+  str1[2] = '\0';
+  len = strlen(str1);
+  len2 = istrlen(str1);
+  printf("Riktig längd innan: %d, Istr längd: %d\n", len, len2);
 
-/*   istrfixlen(str1); */
+  istrfixlen(str1);
   
-/*   len = strlen(str1); */
-/*   len2 = istrlen(str1); */
-/*   printf("Riktig längd efter: %d, Istr längd: %d\n", len, len2); */
-/*   istring_rm(str1); */
-/*   //istring_rm(str2); */
+  len = strlen(str1);
+  len2 = istrlen(str1);
+  printf("Riktig längd efter: %d, Istr längd: %d\n", len, len2);
+  istring_rm(str1);
+  //istring_rm(str2);
 
-/*   return 0; */
-/* } */
+  return 0;
+}
 
 
 /* int main(){ */

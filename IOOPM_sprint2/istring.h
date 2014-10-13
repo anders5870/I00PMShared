@@ -51,8 +51,8 @@ char* istrslen(char *s, size_t length); //done and validated with unittests
  * improve the implementations if the string.h equivalents and use
  * that to guide your implementations!
  */
-char *istrchr(const char *s, int c); //done and tested, but problem with const.
-char *istrrchr(const char *s, int c); //done and tested, but problem with const.
+char *istrchr(const char *s, int c); //done and validated with unittests
+char *istrrchr(const char *s, int c); //done and validated with unittests
 int istrcmp(const char *s1, const char *s2); //done and validated with unittests
 int istrncmp(const char *s1, const char *s2, size_t n); //done and validated with unittests
 size_t istrlen(const char *s); //done and validated with unittests
