@@ -1,3 +1,5 @@
+package trafiksimuleringTest;
+
 public class Light {
     private int period = 60;
     private int time = 0 ;  // Intern klocka: 0, 1, ... period-1, 0, 1 ...
@@ -34,7 +36,7 @@ public class Light {
     
     // Stegar fram klocka ett steg
     public void  step() { 
-       int time = time ++ ;
+       time = time++ ;
     }
     public boolean isGreen()   {
     	if (time<green) {
@@ -45,12 +47,11 @@ public class Light {
     	// Returnerar true om time<green, annars false
     }
 
-    public String  toString()  {
-    	return "Light(period = " + this.period +",
-    				time = "+ this.time + ",
-    				green = " + this.green +")";
-    	
-    	//...
-    	}
+  
 	
+    public String toString() {
+    	return "Light(period=" + this.period + ", time=" + this.time
+    			+", green=" + this.green + ")";
+    	}
+    
 }

@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Car {
 
-    private static int bornTime = 0;
+    private int bornTime = 0;
     private int destination; // 1 för rakt fram, 2 för vänstersväng
 
     private int currentPosition;
