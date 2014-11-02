@@ -1,7 +1,7 @@
 public class Light {
     private int period = 60;
     private int time = 0 ;  // Intern klocka: 0, 1, ... period-1, 0, 1 ...
-    private int green = 30 ; // Signalen grön när time<green 
+    private int green = 30 ; // Signalen grï¿½n nï¿½r time<green 
 
     public Light(int period, int green) {
     	this.period = period;   
@@ -13,7 +13,7 @@ public class Light {
     	green = 30;
     }
     
-    // get och set metoder för period och green
+    // get och set metoder fï¿½r period och green
     
     public void setPeriod(int period) {
     	this.period = period;
@@ -36,7 +36,6 @@ public class Light {
     public void  step() { 
        int time = time ++ ;
     }
-
     public boolean isGreen()   {
     	if (time<green) {
     		return true;
@@ -47,7 +46,10 @@ public class Light {
     }
 
     public String  toString()  {
-    	return null;
+    	return "Light(period = " + this.period +",
+    				time = "+ this.time + ",
+    				green = " + this.green +")";
+    	
     	//...
     	}
 	
