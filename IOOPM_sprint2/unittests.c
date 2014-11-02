@@ -261,7 +261,7 @@ void testISTRSLEN(void)
   str2 = istrslen(str2, 9);
   CU_ASSERT(istrlen(str1) == 0);
   CU_ASSERT(istrlen(str2) == 9);
-  CU_ASSERT(str1[2] == '\0');
+  CU_ASSERT(str1[0] == '\0');
   CU_ASSERT(str2[7] == 'i');
   //START(str2)->length = 3; 
   //CU_ASSERT(istrlen(str2) == 3);
