@@ -4,19 +4,24 @@ import java.util.Random;
 
 public class Car {
 
-    private int bornTime = 0;
+    private  int bornTime;
+    private static int bt = 0;
     private int destination; // 1 för rakt fram, 2 för vänstersväng
 
-    private int currentPosition;
+    private int currentPosition =-1;
+    
+    public static void incBornTime(){
+    		bt++;
+    }
     
     public void step()
     {
-    	currentPosition = currentPosition+1;
+    	currentPosition++;
     	// Uppdatera bilen ett tidssteg
     }
     //konstruktor
     public Car(){
-    	bornTime +=1;
+    	bornTime = bt;
     	destination = randInt(1,2);
     	currentPosition = 0;
     }
