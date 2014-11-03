@@ -1,19 +1,17 @@
-
-
-
-// Håller i en bil och känner till sina "grannar". 
+// Hï¿½ller i en bil och kï¿½nner till sina "grannar". 
 public class CarPosition{
 	
-	private Car currentCar = null; // null om ingen bil finns på positionen
+	private Car currentCar = null; // null om ingen bil finns pï¿½ positionen
 	
 	private Lane owner;
 	
 	private CarPosition forward;
 	private CarPosition turn;
 	
-	public CarPosition(Lane a_Owner)
+	public CarPosition(Lane a_Owner, Car currentCar)
 	{
 		owner = a_Owner;
+		this.currentCar = currentCar
 	}
 	
 	public boolean isEnd(CarPosition target)
@@ -23,13 +21,23 @@ public class CarPosition{
 	
 	public boolean moveForward()
 	{
-		return false;
+		if(forward.currentCar == null){
+			forward.currentCar = this.currentCar;
+			this.currentCar = null;
+			return true;
+		}
+			return false;
 		// Flytta bilen fram till forward
 	}
 	
 	public boolean turn()
 	{
-		return false;
+		if(turn!=null && turn.currentCar == null){
+			turn.currentCar = this.currentCar;
+			this.currentCar = null;	
+			return true;
+		}
+			return false;
 		// Flytta bilen till turn
 	}
 
