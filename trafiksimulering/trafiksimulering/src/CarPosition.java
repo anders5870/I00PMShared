@@ -11,7 +11,7 @@ public class CarPosition{
 	public CarPosition(Lane a_Owner, Car currentCar)
 	{
 		owner = a_Owner;
-		this.currentCar = currentCar
+		this.currentCar = currentCar;
 	}
 	
 	public boolean isEnd(CarPosition target)

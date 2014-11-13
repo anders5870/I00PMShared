@@ -1,3 +1,4 @@
+
 public class TrafficSystem {
     // Definierar de vägar och signaler som ingår i det 
     // system som skall studeras.
@@ -32,6 +33,9 @@ public class TrafficSystem {
     }
 
     public void step() {
+    	CarPosition a = r0.getFirst();
+    	CarPosition b = r1.getFirst();
+    	CarPosition c = r2.getFirst();
 	// Stega systemet ett tidssteg m h a komponenternas step-metoder
 	// Skapa bilar, lägg in och ta ur på de olika Lane-kompenenterna
     }

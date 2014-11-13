@@ -1,3 +1,4 @@
+
 public class Lane {
 
     public static class OverflowException extends RuntimeException {
@@ -39,15 +40,22 @@ public class Lane {
 	// Stega fram alla fordon (utom det på plats 0) ett steg 
         // (om det går). (Fordonet på plats 0 tas bort utifrån 
 	// mm h a metoden nedan.)
-    }
+    	
+    	for (int i = 0; i<getLength()-1;i++){
+    		if(theLane[i] == null) theLane[i+1].moveForward();
+    		//else do nothing
+    	}	
+    }   
 
-    public Car getFirst() {
-    	return null;
+    public CarPosition getFirst() {
+    	CarPosition temp = theLane[0];
+    	theLane[0] = null;
+    	return temp;
 	// Returnera och tag bort bilen som står först
     }
 
-    public Car firstCar() {
-    	return null;
+    public CarPosition firstCar() {
+    		return theLane[0];
 	// Returnera bilen som står först utan att ta bort den
     }
 
@@ -58,12 +66,21 @@ public class Lane {
     }
 
     public void putLast(Car c) throws OverflowException {
+    	if (lastFree()){
+    		CarPosition temp = new CarPosition(this, c);
+    		temp = theLane[this.getLength()-1];
+    	}
 	// Ställ en bil på sista platsen på vägen
 	// (om det går).
     }
-
-    public String toString() {
-    	return "";
+     
+    public String toString(CarPosition[] lane) {
+    	String string = null;
+    	for (int i = 0;lane != null; i++){
+    		if (lane[i] == null) string = string + "-[ ]-";
+    		else string = string + "-[X]-";
+    	}
+    	return string;
     	//...
     	}
 
