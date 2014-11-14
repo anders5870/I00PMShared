@@ -1,1 +1,6 @@
-Lanes
+1. Make the Lane class print out on which positions in the lane there are cars
+1.1 Put a car on the last position in the lane
+1.2 Step the lane forward and put a new car on the second position
+1.3 Recursive: step the lane forward a number of times equal to the number of car positions in the lane
+1.4 Begin the move forward action from the side of the lane(s) closest to the lights and until the end of the lane like above
+1.5 Let r0 be the lane reaching the right light on the right side in the travel direction and let lane r1 be parallel with it on its left side reaching the left light
