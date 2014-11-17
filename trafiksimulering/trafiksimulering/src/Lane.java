@@ -15,7 +15,7 @@ public class Lane {
     
     public boolean matchEnd(CarPosition target)
     {
-    	if(theLane[0] == target)
+    	if(theLane[getLength()-1] == target)
     		return true;
     	else
     		return false;
