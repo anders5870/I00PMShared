@@ -17,7 +17,9 @@ public class TrafficSystem {
 
     // Diverse attribut för simuleringsparametrar (ankomstintensiteter,
     // destinationer...)
+    // i intervallet 0-100
     private int ankomstintensitet;
+    private int destDistribution;
     // Diverse attribut för statistiksamling
     ....    
     
