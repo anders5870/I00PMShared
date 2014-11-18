@@ -1,3 +1,6 @@
+import java.io.FileReader;
+import java.util.Properties;
+
 
 public class TrafficSystem {
     // Definierar de vägar och signaler som ingår i det 
@@ -30,6 +33,16 @@ public class TrafficSystem {
 	// är att föredra vid uttestning av programmet eftersom
 	// man inte då behöver mata in värdena vid varje körning.
         // Standardklassen Properties är användbar för detta. 
+    	try (FileReader reader = new FileReader("parameters.properties")){
+    		Properties properties = new Properties();
+    		properties.load(reader);
+    		
+    	} catch (Exception e){
+    			e.printStackTrace();
+    			
+    	}	
+
+    		
     }
 
     public void step() {
