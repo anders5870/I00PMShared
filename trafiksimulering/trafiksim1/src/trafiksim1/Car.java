@@ -2,10 +2,46 @@ package trafiksim1;
 
 public class Car {
     private int bornTime;
-    private int dest; // 1 för rakt fram, 2 för vänstersväng
-
-    // konstruktor och get-metoder
-    ...
-
-    public String toString() {...}
+    private int destination; // 1 fï¿½r rakt fram, 2 fï¿½r vï¿½nstersvï¿½ng
+  
+     
+    //konstruktor
+    //sÃ¤tter borntime till bt och slumpar fram om bilen ska till vÃ¤nster eller hÃ¶ger 
+    public car(int bornTime, int destination){
+    	this.borntime = bornTime;
+    	this.destination = destination	
+    }
+    
+    
+    // get-metod borntime 
+    public int getBornTime(){
+    	return this.bornTime;
+    }
+    //get-metod bilens destination 
+    public int getDestination(){
+    	return this.destination;
+    }
+    
+   
+    //set-metod bornTime
+    public void setBornTime(int bornTime){
+    	this.bornTime =bornTime;
+    }
+    
+    //set-metod destinatin
+    public void setDestination(int destination){
+    	this.destination =destination;
+    }
+    
+    
+    
+    
+    
+    public String toString() {
+    	if (getDestination()== 0){
+    		return "-<>";
+    	} else {
+    		return ".<>";
+    	}
+    }
 }
