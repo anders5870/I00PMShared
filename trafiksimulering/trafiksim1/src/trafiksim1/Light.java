@@ -36,6 +36,16 @@ public class Light {
     	return this.green;
     }
     
+    public int geTime(){
+    	return this.time;
+    }
+    
+    public void setTime(){
+    	this.time = time;
+    }
+    
+    
+    
     // Returnerar true om time<green, annars false
     public boolean isGreen()   {
 		if (time<green) {
