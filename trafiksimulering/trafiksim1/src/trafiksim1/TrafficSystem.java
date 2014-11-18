@@ -1,5 +1,8 @@
 package trafiksim1;
 
+import java.io.FileReader;
+import java.util.Properties;
+
 public class TrafficSystem {
 	// Definierar de vägar och signaler som ingår i det 
     // system som skall studeras.
@@ -14,7 +17,7 @@ public class TrafficSystem {
 
     // Diverse attribut för simuleringsparametrar (ankomstintensiteter,
     // destinationer...)
-
+    private int ankomstintensitet;
     // Diverse attribut för statistiksamling
     ....    
     
@@ -22,13 +25,37 @@ public class TrafficSystem {
 
     public TrafficSystem() {...}
 
-    public readParameters() {
+    public void readParameters() {
 	// Läser in parametrar för simuleringen
 	// Metoden kan läsa från terminalfönster, dialogrutor
 	// eller från en parameterfil. Det sista alternativet
 	// är att föredra vid uttestning av programmet eftersom
 	// man inte då behöver mata in värdena vid varje körning.
         // Standardklassen Properties är användbar för detta. 
+    	try (FileReader reader = new FileReader("attributes.properties")){
+    		Properties properties = new Properties();
+    		properties.load(reader);
+    		
+    		String value = properties.getProperty("ankomstintensitet");
+    		this.ankomstintensitet = Integer.parseInt(value);
+    		value = properties.getProperty("green1");
+    		s1.setGreen(Integer.parseInt(value));
+    		value = properties.getProperty("green2");
+    		s2.setGreen(Integer.parseInt(value));
+    		value = properties.getProperty("period1");
+    		s1.setPeriod(Integer.parseInt(value));
+    		value = properties.getProperty("period2");
+    		s2.setPeriod(Integer.parseInt(value));
+    		value = properties.getProperty("time1");
+    		s1.setTime(Integer.parseInt(value));
+    		value = properties.getProperty("time2");
+    		s2.setTime(Integer.parseInt(value));
+    		
+    	} catch (Exception e){
+    			e.printStackTrace();
+    			
+    	}
+ 
     }
 
     public void step() {
