@@ -38,20 +38,33 @@ public class TrafficSystem {
     		Properties properties = new Properties();
     		properties.load(reader);
     		
-    		String value = properties.getProperty("ankomstintensitet");
-    		this.ankomstintensitet = Integer.parseInt(value);
-    		value = properties.getProperty("green1");
-    		s1.setGreen(Integer.parseInt(value));
-    		value = properties.getProperty("green2");
-    		s2.setGreen(Integer.parseInt(value));
-    		value = properties.getProperty("period1");
-    		s1.setPeriod(Integer.parseInt(value));
-    		value = properties.getProperty("period2");
-    		s2.setPeriod(Integer.parseInt(value));
-    		value = properties.getProperty("time1");
-    		s1.setTime(Integer.parseInt(value));
-    		value = properties.getProperty("time2");
-    		s2.setTime(Integer.parseInt(value));
+    		for(String key : properties.stringPropertyNames()) {
+    			  String value = properties.getProperty(key);
+    			  switch (key){
+    			  case "ankomstintensitet":
+    			   		this.ankomstintensitet = Integer.parseInt(value);
+    			   		break;
+    			  case "green1":
+    		    		s1.setGreen(Integer.parseInt(value));
+    		    		break;
+    			  case "green2":
+    		    		s2.setGreen(Integer.parseInt(value));
+    		    		break;
+    			  case "period1":
+    		    		s1.setPeriod(Integer.parseInt(value));
+    		    		break;
+    			  case "period2":
+    		    		s2.setPeriod(Integer.parseInt(value));
+    		    		break;
+    			  case "time1":
+    		    		s1.setTime(Integer.parseInt(value));
+    		    		break;
+    			  case "time2":
+    		    		s2.setTime(Integer.parseInt(value));
+    		    		default:
+    		    			System.out.print("properties file is missing!!!");
+    			  }
+    			}
     		
     	} catch (Exception e){
     			e.printStackTrace();

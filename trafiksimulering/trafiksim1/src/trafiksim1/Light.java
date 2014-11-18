@@ -36,11 +36,11 @@ public class Light {
     	return this.green;
     }
     
-    public int geTime(){
+    public int getTime(){
     	return this.time;
     }
     
-    public void setTime(){
+    public void setTime(int _time){
     	this.time = time;
     }
     
