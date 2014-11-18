@@ -41,7 +41,7 @@ public class Light {
     }
     
     public void setTime(int _time){
-    	this.time = time;
+    	this.time = _time;
     }
     
     
