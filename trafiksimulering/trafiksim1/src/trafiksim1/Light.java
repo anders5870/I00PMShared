@@ -1,5 +1,3 @@
-package trafiksim1;
-
 public class Light {
 	private int period;
     private int time;  // Intern klocka: 0, 1, ... period-1, 0, 1 ...
@@ -12,7 +10,7 @@ public class Light {
 
     // Stegar fram klocka ett steg
     public void    step() { 
-    	this.time = time++
+    	this.time = time++;
     }
 
 // get och set metoder f�r period och green

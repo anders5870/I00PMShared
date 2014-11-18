@@ -1,5 +1,3 @@
-package trafiksim1;
-
 public class Car {
     private int bornTime;
     private int destination; // 1 f�r rakt fram, 2 f�r v�nstersv�ng
@@ -7,9 +5,9 @@ public class Car {
      
     //konstruktor
     //sätter borntime till bt och slumpar fram om bilen ska till vänster eller höger 
-    public car(int bornTime, int destination){
-    	this.borntime = bornTime;
-    	this.destination = destination	
+    public Car(int bornTime, int destination){
+    	this.bornTime = bornTime;
+    	this.destination = destination;	
     }
     
     
@@ -34,14 +32,13 @@ public class Car {
     }
     
     
-    
-    
-    
     public String toString() {
     	if (getDestination()== 0){
     		return "-<>";
     	} else {
     		return ".<>";
     	}
+   
     }
+
 }
