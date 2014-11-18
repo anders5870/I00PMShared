@@ -23,3 +23,5 @@ Next you would need to run the following commands to complete the installation:
 2. $ make
 3. $ make install
 4. $ make clean
+
+git reset --hard origin/master
