@@ -1,11 +1,21 @@
+package trafiksim1;
+
 public class Light {
 	private int period;
     private int time;  // Intern klocka: 0, 1, ... period-1, 0, 1 ...
     private int green; // Signalen grï¿½n nï¿½r time<green 
 
     public Light(int period, int green) {
+    	this.time = 0;
+    	if(period > green && period > 0 && green > 0){
     	this.period = period;   
     	this.green =  green;
+    	}
+    	//om instoppade värden inte är valida så ger vi några standardvärden
+    	else{
+    		this.period = 60;
+    		this.green = 30;
+    	}
     }
 
     // Stegar fram klocka ett steg
@@ -41,7 +51,6 @@ public class Light {
     public void setTime(int _time){
     	this.time = _time;
     }
-    
     
     
     // Returnerar true om time<green, annars false

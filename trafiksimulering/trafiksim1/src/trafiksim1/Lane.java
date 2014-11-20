@@ -1,5 +1,7 @@
-public class Lane {
+package trafiksim1;
 
+
+public class Lane {
 
     private Car theLane[];
 

@@ -5,7 +5,9 @@ public class Simulation {
 			// Skapar ett TrafficSystem
 			// Utför stegningen, anropar utskriftsmetoder
 
-			...
-
+			TrafficSystem system = new TrafficSystem();
+			system.step();
+			
+			
 		    }
 }
