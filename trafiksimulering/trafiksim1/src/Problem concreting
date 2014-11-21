@@ -14,3 +14,6 @@ X1.7 Thus when a car reaches the last position in r0 it can either go to r1 or r
 1.8 If a car wants to go onto r1 but it is already occupied by a car, it will go onto r2 if possible, and vice versa
 1.9 If both first positions in r1 and r2 are occupied then the car can't move forward.
 1.11 If the car that is currently being targeted for the forward stepping action is in the wrong lane and the next position in the parallel lane is empty, it will TURN to that lane's position.
+
+NOTE: Cars are allowed to proceed onto the wrong lane. When they are on the wrong lane they will attempt to turn.
+      If they reach the first position and they are still in the wrong lane they will go through the wrong light.

@@ -30,9 +30,9 @@ public class TrafficSystem {
     private int time = 0;
 
     public TrafficSystem() {
-    	r0 = new Lane(10);
-    	r1 = new Lane(5);
-    	r2 = new Lane(5);
+//    	r0 = new Lane(10);
+//    	r1 = new Lane(5);
+//    	r2 = new Lane(5);
     	
     }
 
@@ -71,9 +71,16 @@ public class TrafficSystem {
     			  case "time2":
     		    		s2.setTime(Integer.parseInt(value));
     		    		break;
-    		    		
+    			  case "r0_len":
+  		    			this.r0 = new Lane(Integer.parseInt(value));
+  		    			break;    		    	
+    			  case "r1_r2_len":
+		    			this.r1 = new Lane(Integer.parseInt(value));
+		    			this.r2 = new Lane(Integer.parseInt(value));
+		    			break;    		    	
+  		    		    		    		
     		    		default:
-    		    			System.out.print("properties file is missing!!!");
+    		    			System.out.print("properties file is empty or missing!!!");
     			  }
     			}
     		
@@ -98,39 +105,38 @@ public class TrafficSystem {
     }
     
     public void step() {
-    	
     	//kollar om s1 är grön, om så, då tar vi bort bilen vid trafikljuset
     	if(s1.isGreen()){
     		Car c = r1.getFirst();
     		c.bornTime = 5;
     	}
-    	
-    	//samma som ovan fast andra trafikljuset
+    	//samma som ovan fast andra trafikljuset	
     	if(s1.isGreen()){
     		Car c = r2.getFirst();
     	}	
-    	
-    	//stegar fram de parallella vägarna
-     	r1.step(r2);r2.step(r1);
-     	
+    	//stegar fram de parallella vägarna och låter bilar byta fil om det går
+     	r1.step(r2);	
     	//tar bort första bilen i r0 och returnerar den
     	Car c = r0.getFirst();
-    	
     	//avgör vart bilen skall åka efter r0
     	if(c.getDestination() == 1){
     		if(r1.lastFree()){
     			r1.putLast(c);
     		}
     		//flagga bilen för svängning
-    		else{c.setTurn(true);}
-    		
-    		//frivillig utökning: om bilen skall kunna köra in på fel väg och sedan svänga
+    		else if (r2.lastFree()){
+    			r2.putLast(c);
+    			c.setTurn(true);
+    		}
     	}
 		else{
 			if(r2.lastFree()){
 				r2.putLast(c);
 			}
-			else{c.setTurn(true);}
+	   		else if (r1.lastFree()){
+    			r1.putLast(c);
+    			c.setTurn(true);
+    		}
 		}
     	
     	//Låt bilen åka vidare på fel väg om rätt väg är upptagen

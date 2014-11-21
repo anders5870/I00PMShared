@@ -18,8 +18,8 @@ public class Lane {
 
 
     public void step(Lane sideLane) {
-    	for(int i = 0; i < theLane.length-1; i++){
-    	    //kolla om bilen vill svänga
+    	for(int i = theLane.length; i > 0; i--){
+    	    //kolla om bilen i theLane vill svänga
     		if(theLane[i].getTurn())
     			//kolla om det går att svänga
     			if(sideLane.theLane[i] == null){
@@ -27,19 +27,32 @@ public class Lane {
     			sideLane.theLane[i] = theLane[i];
     			theLane[i] = null;
     			}
+    		//kolla om bilen i sideLane vill svänga
+    		if(sideLane.theLane[i].getTurn())
+    			//kolla om det går att svänga
+    			if(theLane[i] == null){
+    			//sväng
+    			theLane[i] = sideLane.theLane[i];
+    			sideLane.theLane[i] = null;
+    			}
+        	// Stega fram alla fordon (utom det på plats 0) ett steg 
+            // (om det går). (Fordonet på plats 0 tas bort utifrån 
+    		// mha getFirst().)
 			if(theLane[i] == null){
         		theLane[i] = theLane[i+1];
             	theLane[i+1]=null;
         	}
+			if(sideLane.theLane[i] == null){
+        		sideLane.theLane[i] = sideLane.theLane[i+1];
+            	sideLane.theLane[i+1]=null;
+        	}
     	}
     	
-    	// Stega fram alla fordon (utom det pï¿½ plats 0) ett steg 
-        // (om det gï¿½r). (Fordonet pï¿½ plats 0 tas bort utifrï¿½n 
-	// mm h a metoden nedan.)
+
     }
     
     public void step(){
-    	for(int i = 0; i < theLane.length-1; i++){
+    	for(int i = theLane.length; i > 0; i--){
 			if(theLane[i] == null){
         		theLane[i] = theLane[i+1];
             	theLane[i+1]=null;
@@ -52,7 +65,7 @@ public class Lane {
     	Car firstcar = theLane[0];
     	theLane[0] = null;
     	return firstcar;
-	// Returnera och tag bort bilen som stï¿½r fï¿½rst
+	// Returnera och tag bort bilen som står först
     }
 
     public Car firstCar() {
