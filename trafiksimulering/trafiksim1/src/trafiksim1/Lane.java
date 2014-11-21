@@ -18,7 +18,7 @@ public class Lane {
 
 
     public void step(Lane sideLane) {
-    	for(int i = theLane.length; i > 0; i--){
+    	for(int i = 0; i < theLane.length-1; i++){
     	    //kolla om bilen i theLane vill svänga
     		if(theLane[i].getTurn())
     			//kolla om det går att svänga
@@ -37,12 +37,20 @@ public class Lane {
     			}
         	// Stega fram alla fordon (utom det på plats 0) ett steg 
             // (om det går). (Fordonet på plats 0 tas bort utifrån 
-    		// mha getFirst().)
-			if(theLane[i] == null){
+    		// mha getFirst().    		
+			// Vänta vid position 1 om jag fortfarande behöver byta fil
+			if (i == 1 && theLane[i].getTurn()) {
+				//gör ingenting, bara vänta
+			}
+			else if(theLane[i] == null){ 
         		theLane[i] = theLane[i+1];
             	theLane[i+1]=null;
         	}
-			if(sideLane.theLane[i] == null){
+			// Vänta vid position 1 om jag fortfarande behöver byta fil
+			if (i == 1 && sideLane.theLane[i].getTurn()) {
+				//gör ingenting, bara vänta
+			}
+			else if(sideLane.theLane[i] == null){
         		sideLane.theLane[i] = sideLane.theLane[i+1];
             	sideLane.theLane[i+1]=null;
         	}
@@ -52,7 +60,7 @@ public class Lane {
     }
     
     public void step(){
-    	for(int i = theLane.length; i > 0; i--){
+    	for(int i = 0; i < theLane.length-1; i++){
 			if(theLane[i] == null){
         		theLane[i] = theLane[i+1];
             	theLane[i+1]=null;
@@ -86,8 +94,8 @@ public class Lane {
     	else{throw new OverflowException();
     	}
     	
-    // Stï¿½ll en bil pï¿½ sista platsen pï¿½ vï¿½gen
-	// (om det gï¿½r).
+    // Ställ en bil på sista platsen på vägen
+	// (om det går).
     }
 
     public int laneFull () {
