@@ -29,7 +29,12 @@ public class TrafficSystem {
     
     private int time = 0;
 
-    public TrafficSystem() {}
+    public TrafficSystem() {
+    	r0 = new Lane(10);
+    	r1 = new Lane(5);
+    	r2 = new Lane(5);
+    	
+    }
 
     public void readParameters() {
 	// Läser in parametrar för simuleringen
@@ -94,7 +99,7 @@ public class TrafficSystem {
     
     public void step() {
     	
-    	//kollar om s1 är grön, då tar vi bort bilen vid trafikljuset
+    	//kollar om s1 är grön, om så, då tar vi bort bilen vid trafikljuset
     	if(s1.isGreen()){
     		Car c = r1.getFirst();
     		c.bornTime = 5;
@@ -106,7 +111,7 @@ public class TrafficSystem {
     	}	
     	
     	//stegar fram de parallella vägarna
-     	r1.step();r2.step();
+     	r1.step(r2);r2.step(r1);
      	
     	//tar bort första bilen i r0 och returnerar den
     	Car c = r0.getFirst();
@@ -116,12 +121,16 @@ public class TrafficSystem {
     		if(r1.lastFree()){
     			r1.putLast(c);
     		}
+    		//flagga bilen för svängning
+    		else{c.setTurn(true);}
+    		
     		//frivillig utökning: om bilen skall kunna köra in på fel väg och sedan svänga
     	}
 		else{
 			if(r2.lastFree()){
 				r2.putLast(c);
 			}
+			else{c.setTurn(true);}
 		}
     	
     	//Låt bilen åka vidare på fel väg om rätt väg är upptagen

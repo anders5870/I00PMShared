@@ -6,27 +6,45 @@ public class Lane {
     private Car theLane[];
 
     public static class OverflowException extends RuntimeException {
-    // Undantag som kastas nï¿½r det inte gick att lï¿½gga 
-    // in en ny bil pï¿½ vï¿½gen
+    // Undantag som kastas när det inte gick att lägga 
+    // in en ny bil på vägen
     }
 
     public Lane(int n) {
-	// Konstruerar ett Lane-objekt med plats fï¿½r n fordon
+	// Konstruerar ett Lane-objekt med plats för n fordon
         this.theLane = new Car[n];
     	
     }
 
-    public void step() {
-	for(int i = 0; i < theLane.length-1; i++){
-        if(theLane[i] == null){
-            theLane[i] = theLane[i+1];
-            theLane[i+1]=null;
-        }
-    }
+
+    public void step(Lane sideLane) {
+    	for(int i = 0; i < theLane.length-1; i++){
+    	    //kolla om bilen vill svänga
+    		if(theLane[i].getTurn())
+    			//kolla om det går att svänga
+    			if(sideLane.theLane[i] == null){
+    			//sväng
+    			sideLane.theLane[i] = theLane[i];
+    			theLane[i] = null;
+    			}
+			if(theLane[i] == null){
+        		theLane[i] = theLane[i+1];
+            	theLane[i+1]=null;
+        	}
+    	}
     	
     	// Stega fram alla fordon (utom det pï¿½ plats 0) ett steg 
         // (om det gï¿½r). (Fordonet pï¿½ plats 0 tas bort utifrï¿½n 
 	// mm h a metoden nedan.)
+    }
+    
+    public void step(){
+    	for(int i = 0; i < theLane.length-1; i++){
+			if(theLane[i] == null){
+        		theLane[i] = theLane[i+1];
+            	theLane[i+1]=null;
+        	}
+    	}
     }
 
     public Car getFirst(){

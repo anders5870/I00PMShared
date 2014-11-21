@@ -4,12 +4,13 @@ import java.util.Random;
 
 public class Car extends TrafficSystem{
     public int bornTime;
-    private int destination; // 1 fï¿½r rakt fram, 2 fï¿½r vï¿½nstersvï¿½ng
-  
+    private int destination; // 1 för rakt fram, 2 för vänstersväng
+    private boolean turn;
      
     //konstruktor
     //sÃ¤tter borntime till bt och slumpar fram om bilen ska till vÃ¤nster eller hÃ¶ger 
     public Car(int bornTime, int destDistribution){
+    	this.turn = false;
     	this.bornTime = bornTime;
     	this.destination = (destDistribution  < randInt(0,100)) ?  1 : 0;
     }
@@ -38,6 +39,10 @@ public class Car extends TrafficSystem{
     public int  getDestination(){
     	return this.destination;
     }
+    //get-metod turn
+    public boolean getTurn(){
+    	return turn;
+    }
     
    
     //set-metod bornTime
@@ -50,6 +55,10 @@ public class Car extends TrafficSystem{
     	this.destination =destination;
     }
     
+    //set-metod turn
+    public void setTurn(boolean turn){
+    	this.turn = turn;
+    }
     
     public String toString() {
     	if (getDestination()== 0){
