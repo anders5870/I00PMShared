@@ -26,17 +26,18 @@ public class TrafficSystem {
     public int example;
     // Diverse attribut för statistiksamling
  
-    
-    private int time = 0;
+    private int carWrongLane = getNumberOfMisplacedCars();
+    private int carPassed = 0;
+    private int carEntered = 0;
+    private static int time = 0;
+    private Car[] passed;
+    private Car[] entered;
 
     public TrafficSystem() {
-//    	r0 = new Lane(10);
-//    	r1 = new Lane(5);
-//    	r2 = new Lane(5);
-    	
+    	readParameters();	   	
     }
 
-    public void readParameters() {
+    private void readParameters() {
 	// Läser in parametrar för simuleringen
 	// Metoden kan läsa från terminalfönster, dialogrutor
 	// eller från en parameterfil. Det sista alternativet
@@ -105,37 +106,44 @@ public class TrafficSystem {
     }
     
     public void step() {
+    	time++;
+    	//left: bilen som svängt vänster i korsningen
+    	//straight: bilen som kört rakt fram i korsningen
+    	//deciding: bilen som skall välja fil
+    	//newCar: nyinstoppad bil i systemets ena ände
+    	Car left, straight, deciding, newCar;
     	//kollar om s1 är grön, om så, då tar vi bort bilen vid trafikljuset
     	if(s1.isGreen()){
-    		Car c = r1.getFirst();
-    		c.bornTime = 5;
+    		left= r1.getFirst();
+    		++carPassed;
     	}
     	//samma som ovan fast andra trafikljuset	
     	if(s1.isGreen()){
-    		Car c = r2.getFirst();
+    		straight = r2.getFirst();
+    		++carPassed;
     	}	
     	//stegar fram de parallella vägarna och låter bilar byta fil om det går
      	r1.step(r2);	
     	//tar bort första bilen i r0 och returnerar den
-    	Car c = r0.getFirst();
+    	deciding = r0.getFirst();
     	//avgör vart bilen skall åka efter r0
-    	if(c.getDestination() == 1){
+    	if(deciding.getDestination() == 1){
     		if(r1.lastFree()){
-    			r1.putLast(c);
+    			r1.putLast(deciding);
     		}
     		//flagga bilen för svängning
     		else if (r2.lastFree()){
-    			r2.putLast(c);
-    			c.setTurn(true);
+    			r2.putLast(deciding);
+    			deciding.setTurn(true);
     		}
     	}
 		else{
 			if(r2.lastFree()){
-				r2.putLast(c);
+				r2.putLast(deciding);
 			}
 	   		else if (r1.lastFree()){
-    			r1.putLast(c);
-    			c.setTurn(true);
+    			r1.putLast(deciding);
+    			deciding.setTurn(true);
     		}
 		}
     	
@@ -147,11 +155,11 @@ public class TrafficSystem {
         if(r0.lastFree()){
         	//avgör om en ny bil anländer eller ej
         	if (ankomstintensitet < randInt(0,100)){
-            //skapar bilen		
-        	Car d = new Car(time, destDistribution);
-        	Car f = new Car();
+            //skapar bilen	
+        	++carEntered;
+        	newCar = new Car(time, destDistribution);
         	//stoppar in bilen
-            r0.putLast(d);
+            r0.putLast(newCar);
         	}
 
 
@@ -163,14 +171,39 @@ public class TrafficSystem {
 	// Stega systemet ett tidssteg m h a komponenternas step-metoder
 	// Skapa bilar, lägg in och ta ur på de olika Lane-kompenenterna
     }
+    public int sysLen(){
+    	return r0.getLen() + r1.getLen();
+    }
+    
 
+    
     public void printStatistics() {
 	// Skriv statistiken samlad så här långt
+    	System.out.println("time: " + time);
+    	System.out.println("cars entered: " + carEntered);
+    	System.out.println("cars passed: " + carPassed);
+    	System.out.println("misplaced cars: " + carWrongLane);
     }
 
     public void print() {
 	// Skriv ut en grafisk representation av kösituationen
 	// med hjälp av klassernas toString-metoder
+    	System.out.print(r2.toString());
+       	System.out.print(" ");
+    	System.out.println(r0.toString());
+    	System.out.println(r1.toString());
+    	
     }
-
+    
+    public int getNumberOfMisplacedCars(){
+    	return r1.getNumberOfMisplacedCars() + r2.getNumberOfMisplacedCars();
+    }
+    
+    public static int getTime(){
+    	return time;
+    }
 }
+
+
+
+

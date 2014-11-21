@@ -3,15 +3,15 @@ package trafiksim1;
 import java.util.Random;
 
 public class Car extends TrafficSystem{
-    public int bornTime;
+    private int bornTime;
     private int destination; // 1 fˆr rakt fram, 2 fˆr v‰nstersv‰ng
     private boolean turn;
      
     //konstruktor
-    //s√§tter borntime till bt och slumpar fram om bilen ska till v√§nster eller h√∂ger 
+    //s‰tter borntime till bt och slumpar fram om bilen ska till v√§nster eller h√∂ger 
     public Car(int bornTime, int destDistribution){
     	this.turn = false;
-    	this.bornTime = bornTime;
+    	this.bornTime = TrafficSystem.getTime();
     	this.destination = (destDistribution  < randInt(0,100)) ?  1 : 0;
     }
     
@@ -61,7 +61,7 @@ public class Car extends TrafficSystem{
     }
     
     public String toString() {
-    	if (getDestination()== 0){
+    	if (getDestination()== 1){
     		return "-<>";
     	} else {
     		return ".<>";

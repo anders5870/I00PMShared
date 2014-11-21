@@ -59,6 +59,10 @@ public class Lane {
 
     }
     
+    public int getLen(){
+    	return theLane.length;
+    }
+    
     public void step(){
     	for(int i = 0; i < theLane.length-1; i++){
 			if(theLane[i] == null){
@@ -105,6 +109,14 @@ public class Lane {
 
         }
         return 1;
+    }
+    
+    public int getNumberOfMisplacedCars(){
+    	int j = 0;
+    	for(int i = 0; theLane.length > i; i++){
+    		if (theLane[i].getTurn()) j++;
+    	}
+    	return j;
     }
 
     public String toString() {
