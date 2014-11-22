@@ -133,7 +133,7 @@ public class TrafficSystem {
     		}
     	}	
     	//stegar fram de parallella vägarna och låter bilar byta fil om det går
-     	r2.step(); r1.step();
+     	r2.step(r1); 
     	//tar bort första bilen i r0 och returnerar den
     	deciding = r0.getFirst();
     	//avgör vart bilen skall åka efter r0
@@ -145,7 +145,7 @@ public class TrafficSystem {
 	    		//flagga bilen för svängning
 	    		else if (r2.lastFree()){
 	    			r2.putLast(deciding);
-	    			deciding.setTurn(true);
+	    			deciding.setTurn();
 	    		}
 	    	}
 			else{
@@ -154,7 +154,7 @@ public class TrafficSystem {
 				}
 		   		else if (r1.lastFree()){
 	    			r1.putLast(deciding);
-	    			deciding.setTurn(true);
+	    			deciding.setTurn();
 	    		}
 			}
     	}
@@ -179,7 +179,6 @@ public class TrafficSystem {
        time++;	
        s1.step();
        s2.step();
-
     	
 	// Stega systemet ett tidssteg m h a komponenternas step-metoder
 	// Skapa bilar, lägg in och ta ur på de olika Lane-kompenenterna
@@ -204,13 +203,10 @@ public class TrafficSystem {
     	System.out.println("s2 period: " + s2.getPeriod());
     	System.out.println("s1 time: " + s1.getTime());
     	System.out.println("s2 time: " + s2.getTime());
+    	System.out.println("r1 Number of turns: " + r1.getNumberOfTurns());
+    	System.out.println("r2 Number of turns: " + r2.getNumberOfTurns());
     	System.out.println("r0,r1,r2 len: " + r0.getLen() + " " + r1.getLen() + " " + r2.getLen());
-    	for (int i = 0; i < r1.getLen();i++){
-    		if (!r1.isVacant(i))
-    			System.out.println("r1 pos " + (i+1) + " is not empty");
-    		if (!r2.isVacant(i))
-    			System.out.println("r2 pos " + (i+1) + " is not empty");
-    	}
+    	System.out.printf("The system is %s \n",(r0.laneFull() && r1.laneFull() && r2.laneFull()) ? "full" : "not full");
     }
 
     public void print() {

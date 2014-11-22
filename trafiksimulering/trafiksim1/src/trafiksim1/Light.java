@@ -2,11 +2,10 @@ package trafiksim1;
 
 public class Light {
 	private int period;
-    private int time;  // Intern klocka: 0, 1, ... period-1, 0, 1 ...
+    private int time = 0;  // Intern klocka: 0, 1, ... period-1, 0, 1 ...
     private int green; // Signalen grï¿½n nï¿½r time<green 
 
     public Light(int period, int green) {
-    	this.time = 0;
     	if(period > green && period > 0 && green > 0){
     	this.period = period;   
     	this.green =  green;
@@ -19,8 +18,8 @@ public class Light {
     }
 
     // Stegar fram klocka ett steg
-    public void    step() { 
-    	this.time = time++;
+    public void step() { 
+    	this.time++;
     }
 
 // get och set metoder fï¿½r period och green
@@ -51,11 +50,12 @@ public class Light {
     public void setTime(int _time){
     	this.time = _time;
     }
+
+
     
-    
-    // Returnerar true om time<green, annars false
+    // Returnerar true om det är grönt, annars false
     public boolean isGreen()   {
-		if (time<green) {
+		if ((time%period)<green) {
     		return true;
     	}else 
     		return false;

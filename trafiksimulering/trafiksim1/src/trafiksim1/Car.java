@@ -12,12 +12,9 @@ public class Car {
     public Car(int bornTime, int destDistribution){
     	this.turn = false;
     	this.bornTime = TrafficSystem.getTime();
-    	this.destination = (destDistribution  < randInt(0,100)) ?  1 : 0;
+    	this.destination = (destDistribution  < randInt(0,100)) ?  1 : 2;
     }
     
-    public Car(){
-    	//do some random shit here
-    }
     public int randInt(int min, int max) {
 
         // NOTE: Usually this should be a field rather than a method
@@ -56,12 +53,12 @@ public class Car {
     }
     
     //set-metod turn
-    public void setTurn(boolean turn){
-    	this.turn = turn;
+    public void setTurn(){
+    	this.turn = true;
     }
     
     public String toString() {
-    	if (getDestination()== 1){
+    	if (getDestination()== 2){
     		return "-<>";
     	} else {
     		return ".<>";

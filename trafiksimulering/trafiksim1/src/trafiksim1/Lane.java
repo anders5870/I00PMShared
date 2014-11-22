@@ -4,7 +4,7 @@ package trafiksim1;
 public class Lane {
 
     private Car theLane[];
-
+    private int numberOfTurns = 0;
     public static class OverflowException extends RuntimeException {
     // Undantag som kastas när det inte gick att lägga 
     // in en ny bil på vägen
@@ -15,67 +15,51 @@ public class Lane {
         this.theLane = new Car[n];
     	
     }
-
+    //help function to step()
+	private void turnAttempt(Lane sideLane, int i){
+		//se till så att det finns en bil och kolla om den vill svänga
+		if (theLane[i] != null){
+			if (theLane[i].getTurn()){
+				System.out.println("kommer hit");
+				//kolla om det går att svänga
+				if(sideLane.theLane[i] == null){
+				//sväng
+				System.out.println("en bil har svängt");
+				sideLane.theLane[i] = theLane[i];
+				theLane[i] = null;
+				numberOfTurns++;
+				}
+			}
+		}
+		
+	}
+	//help function to step()
+	private void stepWait(int i){
+    	//theLane step/wait 		
+		if (i != 0 && theLane[i+1] == null){
+			if(theLane[i] == null){
+        		theLane[i] = theLane[i+1];
+            	theLane[i+1]=null; 
+			}
+		}
+		else{
+			if (theLane[i+1] != null){
+				if (!theLane[i+1].getTurn()){
+	    			if(theLane[i] == null){
+	            		theLane[i] = theLane[i+1];
+	                	theLane[i+1]=null; 
+	    			}
+				}
+			}
+		}
+	}
 
     public void step(Lane sideLane) {
     	for(int i = 0; i < theLane.length-1; i++){
-    	    //se till så att det finns en bil och kolla om bilen i theLane vill svänga
-    		if (theLane[i] != null){
-    			if (theLane[i].getTurn())
-    				//kolla om det går att svänga
-    				if(sideLane.theLane[i] == null){
-    				//sväng
-    				sideLane.theLane[i] = theLane[i];
-    				theLane[i] = null;
-    				}
-    			//kolla om bilen i sideLane vill svänga
-    			if(sideLane.theLane[i].getTurn())
-    				//kolla om det går att svänga
-    				if(theLane[i] == null){
-    				//sväng
-    				theLane[i] = sideLane.theLane[i];
-    				sideLane.theLane[i] = null;
-    				}
-    		}
-    		
-        	// Stega fram alla fordon (utom det på plats 0) ett steg 
-            // (om det går). (Fordonet på plats 0 tas bort utifrån 
-    		// mha getFirst().    		
-    		
-			if(theLane[i] == null){ 
-				//cars that still wants to turn wait at position 1
-				if (i == 0){//first criteria to find the car at position 1
-					if (theLane[i+1] != null){//check if there is a car at i+1
-						//check if it wants to turn, if so don't move the car
-						if (theLane[i+1].getTurn()){;}
-						else{//else just step normally
-							theLane[i] = theLane[i+1];
-							theLane[i+1]=null;	
-						}
-					}
-					else {//else just step normally
-					theLane[i] = theLane[i+1];
-					theLane[i+1]=null;
-					}
-				}
-        	}
-			if(sideLane.theLane[i] == null){//exactly as above but for the parallel lane
-				//cars that still wants to turn wait at position 1
-				if (i == 0){//first criteria to find the car at position 1
-					if (sideLane.theLane[i+1] != null){//check if there is a car at i+1
-						//check if it wants to turn, if so don't move the car
-						if (sideLane.theLane[i+1].getTurn()){;}
-						else{//else just step normally
-							sideLane.theLane[i] = sideLane.theLane[i+1];
-							sideLane.theLane[i+1]=null;	
-						}
-					}
-					else {//else just step normally
-					sideLane.theLane[i] = sideLane.theLane[i+1];
-					sideLane.theLane[i+1]=null;
-					}
-				}
-        	}
+    		this.turnAttempt(sideLane, i);			
+    		sideLane.turnAttempt(this, i);
+    		this.stepWait(i);
+    		sideLane.stepWait(i);	
     	}	
     }
     
@@ -122,13 +106,13 @@ public class Lane {
 	// (om det går).
     }
 
-    public int laneFull () {
+    public boolean laneFull () {
         for(int i = 0; i < theLane.length; i++){
             
-            if(theLane[i] == null) { return 0; } 
+            if(theLane[i] == null) { return false; } 
 
         }
-        return 1;
+        return true;
     }
     
     public int getNumberOfMisplacedCars(){
@@ -144,6 +128,10 @@ public class Lane {
     	if ((theLane[index]) == null)
     		return true;
     	else return false;
+    }
+    
+    public int getNumberOfTurns(){
+    	return this.numberOfTurns;
     }
 
     public String toString() {
