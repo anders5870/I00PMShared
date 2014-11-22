@@ -2,7 +2,7 @@ package trafiksim1;
 
 import java.util.Random;
 
-public class Car extends TrafficSystem{
+public class Car {
     private int bornTime;
     private int destination; // 1 för rakt fram, 2 för vänstersväng
     private boolean turn;
@@ -18,7 +18,7 @@ public class Car extends TrafficSystem{
     public Car(){
     	//do some random shit here
     }
-    public static int randInt(int min, int max) {
+    public int randInt(int min, int max) {
 
         // NOTE: Usually this should be a field rather than a method
         // variable so that it is not re-seeded every call.

@@ -19,44 +19,64 @@ public class Lane {
 
     public void step(Lane sideLane) {
     	for(int i = 0; i < theLane.length-1; i++){
-    	    //kolla om bilen i theLane vill svänga
-    		if(theLane[i].getTurn())
-    			//kolla om det går att svänga
-    			if(sideLane.theLane[i] == null){
-    			//sväng
-    			sideLane.theLane[i] = theLane[i];
-    			theLane[i] = null;
-    			}
-    		//kolla om bilen i sideLane vill svänga
-    		if(sideLane.theLane[i].getTurn())
-    			//kolla om det går att svänga
-    			if(theLane[i] == null){
-    			//sväng
-    			theLane[i] = sideLane.theLane[i];
-    			sideLane.theLane[i] = null;
-    			}
+    	    //se till så att det finns en bil och kolla om bilen i theLane vill svänga
+    		if (theLane[i] != null){
+    			if (theLane[i].getTurn())
+    				//kolla om det går att svänga
+    				if(sideLane.theLane[i] == null){
+    				//sväng
+    				sideLane.theLane[i] = theLane[i];
+    				theLane[i] = null;
+    				}
+    			//kolla om bilen i sideLane vill svänga
+    			if(sideLane.theLane[i].getTurn())
+    				//kolla om det går att svänga
+    				if(theLane[i] == null){
+    				//sväng
+    				theLane[i] = sideLane.theLane[i];
+    				sideLane.theLane[i] = null;
+    				}
+    		}
+    		
         	// Stega fram alla fordon (utom det på plats 0) ett steg 
             // (om det går). (Fordonet på plats 0 tas bort utifrån 
     		// mha getFirst().    		
-			// Vänta vid position 1 om jag fortfarande behöver byta fil
-			if (i == 1 && theLane[i].getTurn()) {
-				//gör ingenting, bara vänta
-			}
-			else if(theLane[i] == null){ 
-        		theLane[i] = theLane[i+1];
-            	theLane[i+1]=null;
+    		
+			if(theLane[i] == null){ 
+				//cars that still wants to turn wait at position 1
+				if (i == 0){//first criteria to find the car at position 1
+					if (theLane[i+1] != null){//check if there is a car at i+1
+						//check if it wants to turn, if so don't move the car
+						if (theLane[i+1].getTurn()){;}
+						else{//else just step normally
+							theLane[i] = theLane[i+1];
+							theLane[i+1]=null;	
+						}
+					}
+					else {//else just step normally
+					theLane[i] = theLane[i+1];
+					theLane[i+1]=null;
+					}
+				}
         	}
-			// Vänta vid position 1 om jag fortfarande behöver byta fil
-			if (i == 1 && sideLane.theLane[i].getTurn()) {
-				//gör ingenting, bara vänta
-			}
-			else if(sideLane.theLane[i] == null){
-        		sideLane.theLane[i] = sideLane.theLane[i+1];
-            	sideLane.theLane[i+1]=null;
+			if(sideLane.theLane[i] == null){//exactly as above but for the parallel lane
+				//cars that still wants to turn wait at position 1
+				if (i == 0){//first criteria to find the car at position 1
+					if (sideLane.theLane[i+1] != null){//check if there is a car at i+1
+						//check if it wants to turn, if so don't move the car
+						if (sideLane.theLane[i+1].getTurn()){;}
+						else{//else just step normally
+							sideLane.theLane[i] = sideLane.theLane[i+1];
+							sideLane.theLane[i+1]=null;	
+						}
+					}
+					else {//else just step normally
+					sideLane.theLane[i] = sideLane.theLane[i+1];
+					sideLane.theLane[i+1]=null;
+					}
+				}
         	}
-    	}
-    	
-
+    	}	
     }
     
     public int getLen(){
@@ -114,9 +134,16 @@ public class Lane {
     public int getNumberOfMisplacedCars(){
     	int j = 0;
     	for(int i = 0; theLane.length > i; i++){
-    		if (theLane[i].getTurn()) j++;
+    		if (theLane[i] != null)
+    			if (theLane[i].getTurn()) j++;
     	}
     	return j;
+    }
+    
+    public boolean isVacant(int index){
+    	if ((theLane[index]) == null)
+    		return true;
+    	else return false;
     }
 
     public String toString() {

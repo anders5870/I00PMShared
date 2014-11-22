@@ -34,6 +34,8 @@ public class TrafficSystem {
     private Car[] entered;
 
     public TrafficSystem() {
+    	this.s1 = new Light(0,0);
+    	this.s2 = new Light(0,0);
     	readParameters();	   	
     }
 
@@ -44,7 +46,7 @@ public class TrafficSystem {
 	// är att föredra vid uttestning av programmet eftersom
 	// man inte då behöver mata in värdena vid varje körning.
         // Standardklassen Properties är användbar för detta. 
-    	try (FileReader reader = new FileReader("/attributes.properties")){
+    	try (FileReader reader = new FileReader("attributes.properties")){
     		Properties properties = new Properties();
     		properties.load(reader);
     		
@@ -54,6 +56,9 @@ public class TrafficSystem {
     			  case "ankomstintensitet":
     			   		this.ankomstintensitet = Integer.parseInt(value);
     			   		break;
+    			  case "destDistribution":
+  			   			this.destDistribution = Integer.parseInt(value);
+  			   			break;
     			  case "green1":
     		    		s1.setGreen(Integer.parseInt(value));
     		    		break;
@@ -74,14 +79,16 @@ public class TrafficSystem {
     		    		break;
     			  case "r0_len":
   		    			this.r0 = new Lane(Integer.parseInt(value));
-  		    			break;    		    	
+  		    			break;	    	
     			  case "r1_r2_len":
+    				  try {
 		    			this.r1 = new Lane(Integer.parseInt(value));
 		    			this.r2 = new Lane(Integer.parseInt(value));
+    				  } catch (NumberFormatException e) {
+    					  System.out.println("This is not a number");
+    					  System.out.println(e.getMessage());
+    				  }
 		    			break;    		    	
-  		    		    		    		
-    		    		default:
-    		    			System.out.print("properties file is empty or missing!!!");
     			  }
     			}
     		
@@ -92,7 +99,7 @@ public class TrafficSystem {
  
     }
 
-    public static int randInt(int min, int max) {
+    public int randInt(int min, int max) {
 
         // NOTE: Usually this should be a field rather than a method
         // variable so that it is not re-seeded every call.
@@ -106,7 +113,6 @@ public class TrafficSystem {
     }
     
     public void step() {
-    	time++;
     	//left: bilen som svängt vänster i korsningen
     	//straight: bilen som kört rakt fram i korsningen
     	//deciding: bilen som skall välja fil
@@ -114,39 +120,44 @@ public class TrafficSystem {
     	Car left, straight, deciding, newCar;
     	//kollar om s1 är grön, om så, då tar vi bort bilen vid trafikljuset
     	if(s1.isGreen()){
-    		left= r1.getFirst();
-    		++carPassed;
+    		if (r1.getFirst() != null){
+	    		left = r1.getFirst();
+	    		++carPassed;
+    		}
     	}
     	//samma som ovan fast andra trafikljuset	
     	if(s1.isGreen()){
-    		straight = r2.getFirst();
-    		++carPassed;
+    		if (r2.getFirst() != null){
+	    		straight = r2.getFirst();
+	    		++carPassed;
+    		}
     	}	
     	//stegar fram de parallella vägarna och låter bilar byta fil om det går
-     	r1.step(r2);	
+     	r2.step(); r1.step();
     	//tar bort första bilen i r0 och returnerar den
     	deciding = r0.getFirst();
     	//avgör vart bilen skall åka efter r0
-    	if(deciding.getDestination() == 1){
-    		if(r1.lastFree()){
-    			r1.putLast(deciding);
-    		}
-    		//flagga bilen för svängning
-    		else if (r2.lastFree()){
-    			r2.putLast(deciding);
-    			deciding.setTurn(true);
-    		}
-    	}
-		else{
-			if(r2.lastFree()){
-				r2.putLast(deciding);
+    	if (deciding != null){
+	    	if(deciding.getDestination() == 1){
+	    		if(r1.lastFree()){
+	    			r1.putLast(deciding);
+	    		}
+	    		//flagga bilen för svängning
+	    		else if (r2.lastFree()){
+	    			r2.putLast(deciding);
+	    			deciding.setTurn(true);
+	    		}
+	    	}
+			else{
+				if(r2.lastFree()){
+					r2.putLast(deciding);
+				}
+		   		else if (r1.lastFree()){
+	    			r1.putLast(deciding);
+	    			deciding.setTurn(true);
+	    		}
 			}
-	   		else if (r1.lastFree()){
-    			r1.putLast(deciding);
-    			deciding.setTurn(true);
-    		}
-		}
-    	
+    	}
     	//Låt bilen åka vidare på fel väg om rätt väg är upptagen
     	//Försök svänga in på rätt väg
      	r0.step();
@@ -154,7 +165,7 @@ public class TrafficSystem {
     		//kollar om det går att stoppa in en ny bil på vägen
         if(r0.lastFree()){
         	//avgör om en ny bil anländer eller ej
-        	if (ankomstintensitet < randInt(0,100)){
+        	if (ankomstintensitet >= randInt(0,100)){
             //skapar bilen	
         	++carEntered;
         	newCar = new Car(time, destDistribution);
@@ -165,25 +176,41 @@ public class TrafficSystem {
 
         }
         //stegar fram vägen ett steg
-    	
+       time++;	
+       s1.step();
+       s2.step();
 
     	
 	// Stega systemet ett tidssteg m h a komponenternas step-metoder
 	// Skapa bilar, lägg in och ta ur på de olika Lane-kompenenterna
     }
+    
     public int sysLen(){
     	return r0.getLen() + r1.getLen();
     }
-    
-
-    
+   
     public void printStatistics() {
 	// Skriv statistiken samlad så här långt
     	carWrongLane = r1.getNumberOfMisplacedCars() + r2.getNumberOfMisplacedCars();
     	System.out.println("time: " + time);
+    	System.out.println("dest distribution: " + this.destDistribution);
+    	System.out.println("spawn chance: " + this.ankomstintensitet);
     	System.out.println("cars entered: " + carEntered);
     	System.out.println("cars passed: " + carPassed);
     	System.out.println("misplaced cars: " + carWrongLane);
+    	System.out.println("s1 green: " + s1.getGreen());
+    	System.out.println("s2 green: " + s2.getGreen());
+    	System.out.println("s1 period: " + s1.getPeriod());
+    	System.out.println("s2 period: " + s2.getPeriod());
+    	System.out.println("s1 time: " + s1.getTime());
+    	System.out.println("s2 time: " + s2.getTime());
+    	System.out.println("r0,r1,r2 len: " + r0.getLen() + " " + r1.getLen() + " " + r2.getLen());
+    	for (int i = 0; i < r1.getLen();i++){
+    		if (!r1.isVacant(i))
+    			System.out.println("r1 pos " + (i+1) + " is not empty");
+    		if (!r2.isVacant(i))
+    			System.out.println("r2 pos " + (i+1) + " is not empty");
+    	}
     }
 
     public void print() {
