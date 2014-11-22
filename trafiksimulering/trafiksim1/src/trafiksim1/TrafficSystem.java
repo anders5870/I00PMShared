@@ -26,7 +26,7 @@ public class TrafficSystem {
     public int example;
     // Diverse attribut för statistiksamling
  
-    private int carWrongLane = getNumberOfMisplacedCars();
+    private int carWrongLane;
     private int carPassed = 0;
     private int carEntered = 0;
     private static int time = 0;
@@ -44,7 +44,7 @@ public class TrafficSystem {
 	// är att föredra vid uttestning av programmet eftersom
 	// man inte då behöver mata in värdena vid varje körning.
         // Standardklassen Properties är användbar för detta. 
-    	try (FileReader reader = new FileReader("attributes.properties")){
+    	try (FileReader reader = new FileReader("/attributes.properties")){
     		Properties properties = new Properties();
     		properties.load(reader);
     		
@@ -179,6 +179,7 @@ public class TrafficSystem {
     
     public void printStatistics() {
 	// Skriv statistiken samlad så här långt
+    	carWrongLane = r1.getNumberOfMisplacedCars() + r2.getNumberOfMisplacedCars();
     	System.out.println("time: " + time);
     	System.out.println("cars entered: " + carEntered);
     	System.out.println("cars passed: " + carPassed);
@@ -194,11 +195,7 @@ public class TrafficSystem {
     	System.out.println(r1.toString());
     	
     }
-    
-    public int getNumberOfMisplacedCars(){
-    	return r1.getNumberOfMisplacedCars() + r2.getNumberOfMisplacedCars();
-    }
-    
+   
     public static int getTime(){
     	return time;
     }
