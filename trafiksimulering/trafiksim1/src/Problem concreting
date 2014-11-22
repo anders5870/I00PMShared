@@ -17,3 +17,39 @@ X1.7 Thus when a car reaches the last position in r0 it can either go to r1 or r
 
 NOTE: Cars are allowed to proceed onto the wrong lane. When they are on the wrong lane they will attempt to turn.
       
+      
+      
+      			if(theLane[i] == null){ 
+				//cars that still wants to turn wait at position 1
+				if (i == 0){//first criteria to find the car at position 1
+					if (theLane[i+1] != null){//check if there is a car at i+1
+						//check if it wants to turn, if so don't move the car
+						if (theLane[i+1].getTurn()){;}
+						else{//else just step normally
+							theLane[i] = theLane[i+1];
+							theLane[i+1]=null;	
+						}
+					}
+					else {//else just step normally
+					theLane[i] = theLane[i+1];
+					theLane[i+1]=null;
+					}
+				}
+        	}
+			if(sideLane.theLane[i] == null){//exactly as above but for the parallel lane
+				//cars that still wants to turn wait at position 1
+				if (i == 0){//first criteria to find the car at position 1
+					if (sideLane.theLane[i+1] != null){//check if there is a car at i+1
+						//check if it wants to turn, if so don't move the car
+						if (sideLane.theLane[i+1].getTurn()){;}
+						else{//else just step normally
+							sideLane.theLane[i] = sideLane.theLane[i+1];
+							sideLane.theLane[i+1]=null;	
+						}
+					}
+					else {//else just step normally
+					sideLane.theLane[i] = sideLane.theLane[i+1];
+					sideLane.theLane[i+1]=null;
+					}
+				}
+        	}
