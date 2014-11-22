@@ -11,7 +11,7 @@ public class Simulation {
 			Scanner sc = new Scanner(System.in);
 			int  choice = -1;
 			while(choice != 0) {
-				System.out.println("Hello! Type:");
+				System.out.println("Hello! WHAT DO YOU WANT!?!?!:");
 				System.out.println("1. to step the system once");
 				System.out.println("2. to step through the whole system once");
 				System.out.println("3. to step through the system a number of times by your choice");
