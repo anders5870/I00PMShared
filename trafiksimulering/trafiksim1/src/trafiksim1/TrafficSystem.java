@@ -33,12 +33,29 @@ public class TrafficSystem {
     private Car[] passed;
     private Car[] entered;
 
+
+    /**
+     * @brief Constructor for trafficSystem class.
+     * @details constructs a trafficSystem with specified parameters.
+     * 
+     * 
+     * @return a trafficSystem 
+     */
+
     public TrafficSystem() {
     	this.s1 = new Light(0,0);
     	this.s2 = new Light(0,0);
     	readParameters();	   	
     }
 
+
+    /**
+     * @brief Method to read parameters from a file 
+     * @details
+     * 
+     * 
+     * @return 
+     */
     private void readParameters() {
 	// Läser in parametrar för simuleringen
 	// Metoden kan läsa från terminalfönster, dialogrutor
@@ -99,6 +116,16 @@ public class TrafficSystem {
  
     }
 
+    /**  
+     * @brief Method for randomizing an int          
+     * @details 
+     * 
+     * @param the minimal value of the int
+     * @param the maximal value of the inte
+     * 
+     * @return a randomized int 
+    */
+
     public int randInt(int min, int max) {
 
         // NOTE: Usually this should be a field rather than a method
@@ -111,6 +138,14 @@ public class TrafficSystem {
 
         return randomNum;
     }
+
+    /**  
+     * @brief Method steping the trafficsystem         
+     * @details steps through the whole system once  
+     * 
+     * 
+     * @return 
+    */
     
     public void step() {
     	//left: bilen som svängt vänster i korsningen
@@ -184,9 +219,24 @@ public class TrafficSystem {
 	// Skapa bilar, lägg in och ta ur på de olika Lane-kompenenterna
     }
     
+    /**  
+     * @brief Method for getting the length of the system        
+     * @details 
+     * 
+     * 
+     * @return the lenght of both lengths added together 
+    */
     public int sysLen(){
     	return r0.getLen() + r1.getLen();
     }
+
+    /**  
+     * @brief Method for randomizing an int          
+     * @details prints the statistics for the trafficsystem 
+     * 
+     * 
+     * @return 
+    */
    
     public void printStatistics() {
 	// Skriv statistiken samlad så här långt
@@ -209,6 +259,14 @@ public class TrafficSystem {
     	System.out.printf("The system is %s \n",(r0.laneFull() && r1.laneFull() && r2.laneFull()) ? "full" : "not full");
     }
 
+    /**  
+     * @brief Method for representing the que          
+     * @details prints a representation of the whole system by using the other classes toString-methods 
+     * 
+     * 
+     * @return  
+    */
+
     public void print() {
 	// Skriv ut en grafisk representation av kösituationen
 	// med hjälp av klassernas toString-metoder
@@ -218,6 +276,14 @@ public class TrafficSystem {
     	System.out.println(r1.toString());
     	
     }
+
+    /**  
+     * @brief Method for getting the time for how long the system has been active           
+     * @details 
+     * 
+     * 
+     * @return the time the system has been active  
+    */
    
     public static int getTime(){
     	return time;

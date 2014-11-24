@@ -2,6 +2,15 @@ package trafiksim1;
 
 import java.util.Scanner;
 
+
+/**  
+     * @brief Constructor for Simulation class.
+     * @details gives you 6 options on what you want to do with the program and then simulates your choice 
+     *  
+     * 
+     * @return 
+    */
+
 public class Simulation {
 	  public static void main(String [] args) {
 			// Skapar ett TrafficSystem

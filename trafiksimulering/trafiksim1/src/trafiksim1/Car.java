@@ -4,16 +4,34 @@ import java.util.Random;
 
 public class Car {
     private int bornTime;
-    private int destination; // 1 för rakt fram, 2 för vänstersväng
+    private int destination; // 1 goes straight 2 turs left
     private boolean turn;
-     
-    //konstruktor
-    //sätter borntime till bt och slumpar fram om bilen ska till vÃ¤nster eller hÃ¶ger 
+   
+
+   /**  
+     * @brief Constructor for Car class.
+     * @details constructs a car object with specified parameters and a set turn value 
+     * 
+     * @param bornTime time when the car was created 
+     * @param destDistribution if the car should turn keft or go straight 
+     * 
+     * @return an object Car with given parameters.
+    */
     public Car(int bornTime, int destDistribution){
     	this.turn = false;
     	this.bornTime = TrafficSystem.getTime();
     	this.destination = (destDistribution  < randInt(0,100)) ?  1 : 2;
     }
+
+    /**  
+     * @brief Method for randomizing an int          
+     * @details 
+     * 
+     * @param the minimal value of the int
+     * @param the maximal value of the inte
+     * 
+     * @return a randomized int 
+    */
     
     public int randInt(int min, int max) {
 
@@ -28,35 +46,70 @@ public class Car {
         return randomNum;
     }
     
-    // get-metod borntime 
+    /**
+     * @brief Method to get born time of a car (when the car was created).
+     * @details 
+     * @return born time of car.
+     */
     public int getBornTime(){
     	return this.bornTime;
     }
-    //get-metod bilens destination 
+    /**
+     * @brief Method to se if the car is going to turn or go straight
+     * @details 
+     * @return destination of the car
+     */
     public int  getDestination(){
     	return this.destination;
     }
-    //get-metod turn
+    /**
+     * @brief Method to see if the car is going to turn
+     * @details 
+     * @return true or false 
+     */
     public boolean getTurn(){
     	return turn;
     }
     
    
-    //set-metod bornTime
+    /**
+     * @brief Method to set the borntime 
+     * @details 
+     * 
+     * @param bornTime when the car is born
+     * @return 
+     */
     public void setBornTime(int bornTime){
     	this.bornTime =bornTime;
     }
     
-    //set-metod destinatin
+    
+    /**
+     * @brief Method to set the destination
+     * @details 
+     * 
+     * @param destination if the car is going to turn or not. 
+     * @return 
+     */
     public void setDestination(int destination){
     	this.destination =destination;
     }
     
-    //set-metod turn
+    /**
+     * @brief Method to set turn
+     * @details sets the turnvalue to true  
+     * 
+     * @return 
+     */
     public void setTurn(){
     	this.turn = true;
     }
     
+    /**
+     * @brief Method to represent a car.
+     * @details 
+     * @return representation of a car in the lane.
+     */
     public String toString() {
     	if (getDestination()== 2){
     		return "-<>";

@@ -5,6 +5,16 @@ public class Light {
     private int time = 0;  // Intern klocka: 0, 1, ... period-1, 0, 1 ...
     private int green; // Signalen gr�n n�r time<green 
 
+
+    /**  
+     * @brief Constructor for Light class.
+     * @details constructs a Light object with specified parameters for greentime and period  
+     * 
+     * @param period the period for wich the light is either green or red 
+     * @param green how long the traffic light will be green
+     * 
+     * @return an object Light object with given parameters.
+    */
     public Light(int period, int green) {
     	if(period > green && period > 0 && green > 0){
     	this.period = period;   
@@ -17,41 +27,95 @@ public class Light {
     	}
     }
 
+    /**  
+     * @brief Method to step the Light's clock 
+     * @details  
+     * 
+     * 
+     * @return 
+    */
     // Stegar fram klocka ett steg
     public void step() { 
     	this.time++;
     }
 
-// get och set metoder f�r period och green
-    
+
+    /**  
+     * @brief Method to set the light's preiod
+     * @details  
+     * 
+     * @param period is the period you want 
+     * @return 
+    */
     //set-metod för perioden
     public void setPeriod(int period) {
     	this.period = period;
     		}
+
+    /**  
+     * @brief Method to get the light's preiod
+     * @details  
+     * 
+     * @return 
+    */
     //get-metod för period	
     public int getPeriod(){
     	return this.period ;
     }
     	
-    //set-metod för green
+    /**  
+     * @brief Method to set the light's greentime
+     * @details  
+     * 
+     * @param green is the greentime you want
+     * @return 
+    */
     public void setGreen(int green){
     	this.green = green;
     }
     
-    //get-metod för green 
+    /**  
+     * @brief Method to get the light's greentime 
+     * @details  
+     * 
+     * @return 
+    */
+
     public int getGreen(){
     	return this.green;
     }
+
+    /**  
+     * @brief Method to get the light's clock
+     * @details  
+     * 
+     * @return 
+    */
+
     
     public int getTime(){
     	return this.time;
     }
+
+    /**  
+     * @brief Method to set the light's clock
+     * @details  
+     * 
+     * @param _time is the time you want to set 
+     * @return 
+    */
     
     public void setTime(int _time){
     	this.time = _time;
     }
 
-
+    /**  
+     * @brief Method to see if the light is green
+     * @details  
+     * 
+     * @param 
+     * @return true if the light is green else false  
+    */
     
     // Returnerar true om det �r gr�nt, annars false
     public boolean isGreen()   {
@@ -60,6 +124,12 @@ public class Light {
     	}else 
     		return false;
     }
+
+    /**
+     * @brief Method to represent a light
+     * @details 
+     * @return representation of a light
+     */
     
     //tostring metod som skriver ut perioden, tiden och gröntiden 
     public String toString() {
