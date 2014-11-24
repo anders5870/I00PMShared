@@ -3,6 +3,7 @@ package trafiksim1;
 import java.io.FileReader;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Scanner;
 
 public class TrafficSystem {
 	// Definierar de vägar och signaler som ingår i det 
@@ -16,7 +17,7 @@ public class TrafficSystem {
     private Light s1;
     private Light s2;
 
-  
+   
     
     // Diverse attribut för simuleringsparametrar (ankomstintensiteter,
     // destinationer...)
@@ -74,7 +75,26 @@ public class TrafficSystem {
     			   		this.ankomstintensitet = Integer.parseInt(value);
     			   		break;
     			  case "destDistribution":
-  			   			this.destDistribution = Integer.parseInt(value);
+	    					boolean  choice = false;
+	    					while(!choice){
+	    						//kolla om värdet är utanför intervallet
+	  			   			if (Integer.parseInt(value) < 0 ||  (Integer.parseInt(value) > 100)){
+	  			   				//gör en skanner
+				   				Scanner sc = new Scanner(System.in);
+	  			   				System.out.println("Read destDistribution value is not valid please enter a value between 0 and 100");
+	  			   				System.out.println("> ");
+	  			   				//läs in nästa heltal
+	  			   				 int i = sc.nextInt();
+	  			   				//kolla om värdet är utanför intervallet
+	  			   				if ( i < 0 ||  i > 100){
+	  			   					//om så så forstätt loopa
+	  			   				}
+	  			   				//annars är värdet korrekt och vi skall inte loopa mer
+	  			   				else choice = true;
+	  			   			//	sc.close();
+	  			   			}
+
+  			   			}
   			   			break;
     			  case "green1":
     		    		s1.setGreen(Integer.parseInt(value));
@@ -137,6 +157,12 @@ public class TrafficSystem {
         int randomNum = rand.nextInt((max - min) + 1) + min;
 
         return randomNum;
+    }
+    
+    public double randInt(){
+        Random r = new Random();
+        int ret = r.nextInt(60 + 1);
+        return ret / 1000.0;
     }
 
     /**  
@@ -204,6 +230,7 @@ public class TrafficSystem {
             //skapar bilen	
         	++carEntered;
         	newCar = new Car(time, destDistribution);
+        	Car copyCar = newCar;
         	//stoppar in bilen
             r0.putLast(newCar);
         	}
@@ -289,7 +316,5 @@ public class TrafficSystem {
     	return time;
     }
 }
-
-
 
 
