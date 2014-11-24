@@ -156,7 +156,7 @@ public class Lane {
      * @brief Method to check if the last place in the lane is empty 
      * @details 
      * 
-     * @return true if it is empty else fale 
+     * @return true if it is empty else false 
      * 
     */
     public boolean lastFree() {

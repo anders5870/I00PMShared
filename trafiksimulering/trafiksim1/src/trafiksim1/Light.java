@@ -3,7 +3,7 @@ package trafiksim1;
 public class Light {
 	private int period;
     private int time = 0;  // Intern klocka: 0, 1, ... period-1, 0, 1 ...
-    private int green; // Signalen grï¿½n nï¿½r time<green 
+    private int green; // Signalen grön när time<green 
 
 
     /**  

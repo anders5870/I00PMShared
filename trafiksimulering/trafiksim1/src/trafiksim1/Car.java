@@ -2,7 +2,7 @@ package trafiksim1;
 
 import java.util.Random;
 
-public class Car extends TrafficSystem {
+public class Car {
 	private int bornTime;
 	private int destination; // 1 goes straight 2 turns left
 	private boolean turn;
@@ -23,10 +23,7 @@ public class Car extends TrafficSystem {
 		this.destination = (destDistribution  < randInt(0,100)) ?  1 : 2;
 	}
 
-	public Car(){
-		this.bornTime = 0;
-		this.destination = 2;
-	}
+
 
 	/**  
 	 * @brief Method for randomizing an int          
@@ -37,8 +34,7 @@ public class Car extends TrafficSystem {
 	 * 
 	 * @return a randomized int 
 	 */
-	// TrafficSystem tsCar = new Car(foo, bar);
-	// tsCar.randInt(0, 100);
+
 	public int randInt(int min, int max) {
 
 		// NOTE: Usually this should be a field rather than a method

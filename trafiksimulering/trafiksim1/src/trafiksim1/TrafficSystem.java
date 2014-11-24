@@ -75,26 +75,16 @@ public class TrafficSystem {
     			   		this.ankomstintensitet = Integer.parseInt(value);
     			   		break;
     			  case "destDistribution":
-	    					boolean  choice = false;
-	    					while(!choice){
-	    						//kolla om värdet är utanför intervallet
-	  			   			if (Integer.parseInt(value) < 0 ||  (Integer.parseInt(value) > 100)){
-	  			   				//gör en skanner
-				   				Scanner sc = new Scanner(System.in);
-	  			   				System.out.println("Read destDistribution value is not valid please enter a value between 0 and 100");
-	  			   				System.out.println("> ");
-	  			   				//läs in nästa heltal
-	  			   				 int i = sc.nextInt();
-	  			   				//kolla om värdet är utanför intervallet
-	  			   				if ( i < 0 ||  i > 100){
-	  			   					//om så så forstätt loopa
-	  			   				}
-	  			   				//annars är värdet korrekt och vi skall inte loopa mer
-	  			   				else choice = true;
-	  			   			//	sc.close();
-	  			   			}
+    				  	int i =  Integer.parseInt(value);
+		   				Scanner sc = new Scanner(System.in);
+  			   			while (!(i >=0 && i<=100)){		
+			   					System.out.println("error in .properties file: destDistribution");
+  			   					System.out.println("Please enter a value 0-100");
+  			   					System.out.print("> ");
+  			   					i = sc.nextInt();
 
   			   			}
+	  			   			this.destDistribution = i;
   			   			break;
     			  case "green1":
     		    		s1.setGreen(Integer.parseInt(value));
@@ -159,14 +149,14 @@ public class TrafficSystem {
         return randomNum;
     }
     
-    public double randInt(){
-        Random r = new Random();
-        int ret = r.nextInt(60 + 1);
-        return ret / 1000.0;
-    }
+//    public double randInt(){
+//        Random r = new Random();
+//        int ret = r.nextInt(60 + 1);
+//        return ret / 1000.0;
+//    }
 
     /**  
-     * @brief Method steping the trafficsystem         
+     * @brief Method stepping the traffic system         
      * @details steps through the whole system once  
      * 
      * 
@@ -230,7 +220,6 @@ public class TrafficSystem {
             //skapar bilen	
         	++carEntered;
         	newCar = new Car(time, destDistribution);
-        	Car copyCar = newCar;
         	//stoppar in bilen
             r0.putLast(newCar);
         	}
