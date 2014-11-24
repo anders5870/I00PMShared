@@ -72,6 +72,7 @@ public class TrafficSystem {
     			  String value = properties.getProperty(key);
     			  switch (key){
     			  case "ankomstintensitet":
+    				  	assert (Integer.parseInt(value) <=100 && Integer.parseInt(value) >= 0);
     			   		this.ankomstintensitet = Integer.parseInt(value);
     			   		break;
     			  case "destDistribution":
