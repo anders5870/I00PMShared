@@ -90,7 +90,7 @@ BstNode searchIterativeParent(BstNode root, char *key);
 
 /**
  * Name: query\n
- * Type: BstNode root->void\n
+ * Type: (BstNode root, char *Buffer)->BstNode\n
  * Pre:\n
  * Side effect: if the key specified by the user in  the funtions
  * runtime exists in the root bst tree print its value else
@@ -100,7 +100,7 @@ BstNode query(BstNode root, char *buffer); //option1
 
 /**
  * Name: update\n
- * Type: BstNode root->BstNode root\n
+ * Type: BstNode root->void\n
  * Pre:\n
  * Post: an updated bst tree\n
  * Side effects: the user gets to input a key. If that key corresponds

@@ -37,7 +37,7 @@ BstNode insertIterative(BstNode root,  char *key_, char *value){
   return root; //Kommer aldrig hit
 }
 
-BstNode treeFillFromFile(char *filename){
+BstNode fillFromFile(char *filename){
   FILE *database = fopen(filename, "r");
   char buffer[128];
   char *key;
@@ -61,7 +61,7 @@ BstNode createTree(){
   return root;
 }
 
-BstNode insertNode(BstNode root){
+void insert(BstNode root){
   char *key;
   char *value;
   char buffer[128];
@@ -85,7 +85,6 @@ BstNode insertNode(BstNode root){
   else {
     printf("key \"%s\" already exists!\n", buffer);
   }
-  return root;
 }
 
 BstNode findMin(BstNode root){
@@ -105,13 +104,11 @@ void printTreeRecursively(BstNode root){
     printTreeRecursively(root->left);       //Visit left subtree
   printf("%s\t", root->key); 
   printf("%s\n", root->value);
-  printf("%c\t", *(root->key));             //example pointer/array notation
-  printf("%c\n", root->value[0]);           //example double pointer
   if (root->right != NULL)
     printTreeRecursively(root->right);      // Visit right subtree
 }
 
-void printTreeIteratively(BstNode root){
+void print(BstNode root){
   if (root == NULL) return;  
   stackT stack;
   BstNode current = root;
@@ -137,11 +134,11 @@ void printTreeIteratively(BstNode root){
   StackDestroy(&stack);
 }
 
-void destroyTree(BstNode root){
+void destroy(BstNode root){
     if (!root) {return;}
-    destroyTree(root->left);
+    destroy(root->left);
     printf("Destroying node %s \n", root->key);
-    destroyTree(root->right);
+    destroy(root->right);
     free(root->key);
     free(root->value);
     free(root);
@@ -215,7 +212,7 @@ BstNode findNodeWithKey(BstNode root, char *key){
 }
 
 
-BstNode deleteNode(BstNode root){
+BstNode delete(BstNode root){
   BstNode temp = root;
   char buffer[128];
   BstNode toBeDeleted = root;
@@ -372,7 +369,7 @@ BstNode deleteNode(BstNode root){
   return temp;
 }
 
-BstNode queryTree(BstNode root, char *buffer){
+BstNode query(BstNode root, char *buffer){
 
   int found = 0;
   while (root != NULL && !found){
@@ -392,7 +389,7 @@ BstNode queryTree(BstNode root, char *buffer){
   return root;
 }
 
-BstNode updateNode(BstNode root){
+void update(BstNode root){
 
   printf("Enter key: ");
   char buffer[128];
@@ -424,6 +421,5 @@ BstNode updateNode(BstNode root){
     puts("");
     puts("Value inserted successfully!");
   }
-  return temp;
 }
 

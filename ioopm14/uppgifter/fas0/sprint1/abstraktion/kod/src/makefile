@@ -11,11 +11,11 @@ LDIR =../lib
 #Looks for files in directory "lib" 
 LIBS=-lm
 #Optional library additions
-_DEPS = db.h stack.h
+_DEPS = stack.h listSpecific.h
 #List of all .h files to use when compiling
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 #Looks in IDIR for files included in _DEPS
-_OBJ = db.o treeImplementation.o functions.o stack.o
+_OBJ = db.o listImplementation.o functions.o stack.o
 #List of all .o files to use when compiling
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 #Looks in ODIR for files included in _OBJ

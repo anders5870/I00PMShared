@@ -1,0 +1,265 @@
+\hypertarget{db_8h}{
+\section{/home/jobe5241/I00PMShared/ioopm14/uppgifter/fas0/sprint1/abstraktion/kod/include/db.h File Reference}
+\label{db_8h}\index{/home/jobe5241/I00PMShared/ioopm14/uppgifter/fas0/sprint1/abstraktion/kod/include/db.h@{/home/jobe5241/I00PMShared/ioopm14/uppgifter/fas0/sprint1/abstraktion/kod/include/db.h}}
+}
+{\tt \#include $<$stdio.h$>$}\par
+\subsection*{Classes}
+\begin{CompactItemize}
+\item 
+struct \hyperlink{structbstNode}{bstNode}
+\end{CompactItemize}
+\subsection*{Typedefs}
+\begin{CompactItemize}
+\item 
+typedef struct \hyperlink{structbstNode}{bstNode} $\ast$ \hyperlink{db_8h_3dadbecf15c41bcc031e082c3848a75d}{BstNode}
+\end{CompactItemize}
+\subsection*{Functions}
+\begin{CompactItemize}
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_6b3f9c89b07ca7c317845a55dffed59a}{getNewNode} (char $\ast$key, char $\ast$value)
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_94a62b7e4861cd6cb5b0d112c405bf2d}{insertIterative} (\hyperlink{structbstNode}{BstNode} root, char $\ast$key\_\-, char $\ast$value)
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_40ccad996f32b99ed16eadfddc15011e}{fillFromFile} (char $\ast$filename)
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_98712911ec74edce3668dc87ccf7e4f7}{createTree} ()
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_ba16ba73c9329bcd6909730cd36b7597}{findMin} (\hyperlink{structbstNode}{BstNode} root)
+\item 
+void \hyperlink{db_8h_16aa87f2852a09d3e975089ab515fd05}{destroy} (\hyperlink{structbstNode}{BstNode} root)
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_1e65e5f7af7cacb53fb9b03c2602017c}{searchIterativeParent} (\hyperlink{structbstNode}{BstNode} root, char $\ast$key)
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_fc40c65bf848d846295e9e72c273e77a}{query} (\hyperlink{structbstNode}{BstNode} root, char $\ast$buffer)
+\item 
+void \hyperlink{db_8h_01b226b24524eb46f33973979066fbe9}{update} (\hyperlink{structbstNode}{BstNode} root)
+\item 
+void \hyperlink{db_8h_a0f4d1a11b78202c39af356c734a93d7}{insert} (\hyperlink{structbstNode}{BstNode} root)
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_f6801c0fec0e8c1efb10b242eaa397a3}{delete} (\hyperlink{structbstNode}{BstNode} root)
+\item 
+void \hyperlink{db_8h_8b443a5467d252122d997cbfba751475}{printTreeRecursively} (\hyperlink{structbstNode}{BstNode} root)
+\item 
+void \hyperlink{db_8h_f0041d1ba4147ee1374dc758b537912d}{print} (\hyperlink{structbstNode}{BstNode} root)
+\item 
+int \hyperlink{db_8h_6dae40716c23c0a2c2110a1463cc4fed}{isNodePresentRecursive} (\hyperlink{structbstNode}{BstNode} root, char $\ast$key)
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_e552d3880f23eddf6c4edb1fbc9e6892}{insertRecursive} (\hyperlink{structbstNode}{BstNode} root, \hyperlink{structbstNode}{BstNode} newNode)
+\item 
+void \hyperlink{db_8h_72cec63c3d7a173f684110244ef9cf09}{readline} (char $\ast$dest, int n, FILE $\ast$source)
+\item 
+void \hyperlink{db_8h_2ff76e2396465e142352766d99f11810}{printWelcomeMessage} ()
+\item 
+\hyperlink{structbstNode}{BstNode} \hyperlink{db_8h_4298f16d634cdf9f82bf047af908c68c}{findNodeWithKey} (\hyperlink{structbstNode}{BstNode} root, char $\ast$key)
+\end{CompactItemize}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{db_8h_3dadbecf15c41bcc031e082c3848a75d}{
+\index{db.h@{db.h}!BstNode@{BstNode}}
+\index{BstNode@{BstNode}!db.h@{db.h}}
+\subsubsection[{BstNode}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf bstNode} $\ast$ {\bf BstNode}}}
+\label{db_8h_3dadbecf15c41bcc031e082c3848a75d}
+
+
+Defines a binary search tree node type with the following:\par
+ a pointer to a char array named key\par
+ a pointer to a char array named value\par
+ a pointer to a new node of the same type named left\par
+ a pointer to a new node of the same type named right \par
+ The struct name is \hyperlink{structbstNode}{bstNode} and the type name is BstNode\par
+ 
+
+\subsection{Function Documentation}
+\hypertarget{db_8h_98712911ec74edce3668dc87ccf7e4f7}{
+\index{db.h@{db.h}!createTree@{createTree}}
+\index{createTree@{createTree}!db.h@{db.h}}
+\subsubsection[{createTree}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} createTree ()}}
+\label{db_8h_98712911ec74edce3668dc87ccf7e4f7}
+
+
+Name: createTree\par
+ Type: void-$>$BstNode\par
+ Pre:\par
+ Post: returns an empty binary search tree node BstNode.\par
+ \hypertarget{db_8h_f6801c0fec0e8c1efb10b242eaa397a3}{
+\index{db.h@{db.h}!delete@{delete}}
+\index{delete@{delete}!db.h@{db.h}}
+\subsubsection[{delete}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} delete ({\bf BstNode} {\em root})}}
+\label{db_8h_f6801c0fec0e8c1efb10b242eaa397a3}
+
+
+Name: delete\par
+ Type: BstNode root-$>$BstNode root\par
+ Pre:\par
+ Post: Node with the key specified in the function's runtime deleted if such node is present. If not, the input will be the same as its output.\par
+ Side effects: data is altered through user input\par
+ \hypertarget{db_8h_16aa87f2852a09d3e975089ab515fd05}{
+\index{db.h@{db.h}!destroy@{destroy}}
+\index{destroy@{destroy}!db.h@{db.h}}
+\subsubsection[{destroy}]{\setlength{\rightskip}{0pt plus 5cm}void destroy ({\bf BstNode} {\em root})}}
+\label{db_8h_16aa87f2852a09d3e975089ab515fd05}
+
+
+Name: destroy\par
+ Type: BstNode root-$>$void\par
+ Pre:\par
+ Post: frees all memory used by the tree with root root\par
+ \hypertarget{db_8h_40ccad996f32b99ed16eadfddc15011e}{
+\index{db.h@{db.h}!fillFromFile@{fillFromFile}}
+\index{fillFromFile@{fillFromFile}!db.h@{db.h}}
+\subsubsection[{fillFromFile}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} fillFromFile (char $\ast$ {\em filename})}}
+\label{db_8h_40ccad996f32b99ed16eadfddc15011e}
+
+
+Name: fillFromFile \par
+ Type: char $\ast$filename-$>$BstNode \par
+ Pre: a line in the specified file filename must not exceed 127 characters. The total number of lines must be an even number. \par
+ Post: reads a file where even line numbers become keys and odd line numbers become values and fills a tree with the corresponding key and value at each node red from the given file. Returns the resulting bst.\par
+ \hypertarget{db_8h_ba16ba73c9329bcd6909730cd36b7597}{
+\index{db.h@{db.h}!findMin@{findMin}}
+\index{findMin@{findMin}!db.h@{db.h}}
+\subsubsection[{findMin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} findMin ({\bf BstNode} {\em root})}}
+\label{db_8h_ba16ba73c9329bcd6909730cd36b7597}
+
+
+Name: findMin\par
+ Type: BstNode root-$>$BstNode min\par
+ Pre: asdf\par
+ Post: Returns the node with the smallest key value in root.\par
+ Returns root = NULL if root is empty\par
+ \hypertarget{db_8h_4298f16d634cdf9f82bf047af908c68c}{
+\index{db.h@{db.h}!findNodeWithKey@{findNodeWithKey}}
+\index{findNodeWithKey@{findNodeWithKey}!db.h@{db.h}}
+\subsubsection[{findNodeWithKey}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} findNodeWithKey ({\bf BstNode} {\em root}, \/  char $\ast$ {\em key})}}
+\label{db_8h_4298f16d634cdf9f82bf047af908c68c}
+
+
+Name: findNodeWithKey\par
+ Type: (BstNode root, char key$\ast$)-$>$BstNode\par
+ Pre: inget.\par
+ Post: BstNode med nyckel key, annars med NULL.\par
+ \hypertarget{db_8h_6b3f9c89b07ca7c317845a55dffed59a}{
+\index{db.h@{db.h}!getNewNode@{getNewNode}}
+\index{getNewNode@{getNewNode}!db.h@{db.h}}
+\subsubsection[{getNewNode}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} getNewNode (char $\ast$ {\em key}, \/  char $\ast$ {\em value})}}
+\label{db_8h_6b3f9c89b07ca7c317845a55dffed59a}
+
+
+Name: getNewNode \par
+ Type: (char $\ast$key, char $\ast$value)-$>$BstNode newNode \par
+ Pre: \par
+ Post: a new BstNode with the key and value specified.\par
+ \hypertarget{db_8h_a0f4d1a11b78202c39af356c734a93d7}{
+\index{db.h@{db.h}!insert@{insert}}
+\index{insert@{insert}!db.h@{db.h}}
+\subsubsection[{insert}]{\setlength{\rightskip}{0pt plus 5cm}void insert ({\bf BstNode} {\em root})}}
+\label{db_8h_a0f4d1a11b78202c39af356c734a93d7}
+
+
+Name: insert\par
+ Type: BstNode root-$>$BstNode root\par
+ Pre:\par
+ Post: the input tree with a new node inserted if specified key is unique\par
+ Side effects: the user is promted under function runtime to specify the key and value for the new node to be inserted. If the key is unique the the node will be inserted and the returned bst will contain the new node.\par
+ \hypertarget{db_8h_94a62b7e4861cd6cb5b0d112c405bf2d}{
+\index{db.h@{db.h}!insertIterative@{insertIterative}}
+\index{insertIterative@{insertIterative}!db.h@{db.h}}
+\subsubsection[{insertIterative}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} insertIterative ({\bf BstNode} {\em root}, \/  char $\ast$ {\em key\_\-}, \/  char $\ast$ {\em value})}}
+\label{db_8h_94a62b7e4861cd6cb5b0d112c405bf2d}
+
+
+Name: insertIterative \par
+ Type: (BstNode root, char $\ast$key, char $\ast$value)-$>$BstNode \par
+ Pre:\par
+ Post: Inserts a node with the specified key and value at \par
+ an empty place in the bst with the given root. \par
+ \hypertarget{db_8h_e552d3880f23eddf6c4edb1fbc9e6892}{
+\index{db.h@{db.h}!insertRecursive@{insertRecursive}}
+\index{insertRecursive@{insertRecursive}!db.h@{db.h}}
+\subsubsection[{insertRecursive}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} insertRecursive ({\bf BstNode} {\em root}, \/  {\bf BstNode} {\em newNode})}}
+\label{db_8h_e552d3880f23eddf6c4edb1fbc9e6892}
+
+
+\hypertarget{db_8h_6dae40716c23c0a2c2110a1463cc4fed}{
+\index{db.h@{db.h}!isNodePresentRecursive@{isNodePresentRecursive}}
+\index{isNodePresentRecursive@{isNodePresentRecursive}!db.h@{db.h}}
+\subsubsection[{isNodePresentRecursive}]{\setlength{\rightskip}{0pt plus 5cm}int isNodePresentRecursive ({\bf BstNode} {\em root}, \/  char $\ast$ {\em key})}}
+\label{db_8h_6dae40716c23c0a2c2110a1463cc4fed}
+
+
+Name: isNodePresentRecursive\par
+ Type: (BstNode root, char $\ast$key)-$>$int\par
+ Pre:\par
+ Post: returns 1 if a node with the given key is present in the tree root. returns 0 if such node is not found.\par
+ \hypertarget{db_8h_f0041d1ba4147ee1374dc758b537912d}{
+\index{db.h@{db.h}!print@{print}}
+\index{print@{print}!db.h@{db.h}}
+\subsubsection[{print}]{\setlength{\rightskip}{0pt plus 5cm}void print ({\bf BstNode} {\em root})}}
+\label{db_8h_f0041d1ba4147ee1374dc758b537912d}
+
+
+Name: print\par
+ Type: BstNode root-$>$void\par
+ Pre:\par
+ Side effects: prints the contents of the tree to the screen\par
+ \hypertarget{db_8h_8b443a5467d252122d997cbfba751475}{
+\index{db.h@{db.h}!printTreeRecursively@{printTreeRecursively}}
+\index{printTreeRecursively@{printTreeRecursively}!db.h@{db.h}}
+\subsubsection[{printTreeRecursively}]{\setlength{\rightskip}{0pt plus 5cm}void printTreeRecursively ({\bf BstNode} {\em root})}}
+\label{db_8h_8b443a5467d252122d997cbfba751475}
+
+
+Name: printTreeRecursively\par
+ Type: BstNode root-$>$void\par
+ Pre:\par
+ Side effects: prints the contents of the tree to the screen\par
+ \hypertarget{db_8h_2ff76e2396465e142352766d99f11810}{
+\index{db.h@{db.h}!printWelcomeMessage@{printWelcomeMessage}}
+\index{printWelcomeMessage@{printWelcomeMessage}!db.h@{db.h}}
+\subsubsection[{printWelcomeMessage}]{\setlength{\rightskip}{0pt plus 5cm}void printWelcomeMessage ()}}
+\label{db_8h_2ff76e2396465e142352766d99f11810}
+
+
+\hypertarget{db_8h_fc40c65bf848d846295e9e72c273e77a}{
+\index{db.h@{db.h}!query@{query}}
+\index{query@{query}!db.h@{db.h}}
+\subsubsection[{query}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} query ({\bf BstNode} {\em root}, \/  char $\ast$ {\em buffer})}}
+\label{db_8h_fc40c65bf848d846295e9e72c273e77a}
+
+
+Name: query\par
+ Type: BstNode root-$>$void\par
+ Pre:\par
+ Side effect: if the key specified by the user in the funtions runtime exists in the root bst tree print its value else print out that it was not found.\par
+ \hypertarget{db_8h_72cec63c3d7a173f684110244ef9cf09}{
+\index{db.h@{db.h}!readline@{readline}}
+\index{readline@{readline}!db.h@{db.h}}
+\subsubsection[{readline}]{\setlength{\rightskip}{0pt plus 5cm}void readline (char $\ast$ {\em dest}, \/  int {\em n}, \/  FILE $\ast$ {\em source})}}
+\label{db_8h_72cec63c3d7a173f684110244ef9cf09}
+
+
+\hypertarget{db_8h_1e65e5f7af7cacb53fb9b03c2602017c}{
+\index{db.h@{db.h}!searchIterativeParent@{searchIterativeParent}}
+\index{searchIterativeParent@{searchIterativeParent}!db.h@{db.h}}
+\subsubsection[{searchIterativeParent}]{\setlength{\rightskip}{0pt plus 5cm}{\bf BstNode} searchIterativeParent ({\bf BstNode} {\em root}, \/  char $\ast$ {\em key})}}
+\label{db_8h_1e65e5f7af7cacb53fb9b03c2602017c}
+
+
+Name: searchIterativeParent\par
+ Type: (BstNode root, char $\ast$key)-$>$BstNode parent\par
+ Pre: inget.\par
+ Post: Parent of BstNode with key key.\par
+ \hypertarget{db_8h_01b226b24524eb46f33973979066fbe9}{
+\index{db.h@{db.h}!update@{update}}
+\index{update@{update}!db.h@{db.h}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}void update ({\bf BstNode} {\em root})}}
+\label{db_8h_01b226b24524eb46f33973979066fbe9}
+
+
+Name: update\par
+ Type: BstNode root-$>$BstNode root\par
+ Pre:\par
+ Post: an updated bst tree\par
+ Side effects: the user gets to input a key. If that key corresponds to a node in the bst tree root then the user is prompted to enter a new value for that node. If the key was not found then nothing is updated and the input tree will be the same as the output tree\par
+ 

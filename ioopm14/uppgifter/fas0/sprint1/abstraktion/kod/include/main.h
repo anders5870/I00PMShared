@@ -3,4 +3,4 @@
 /* #include <string.h> */
 
 void printWelcomeMessage();
-void mainLoop(Node list);
+//void mainLoop(Node list);
