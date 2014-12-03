@@ -8,15 +8,16 @@ public class Car {
 	private boolean turn;
 
 
-	/**  
-	 * @brief Constructor for Car class.
-	 * @details constructs a car object with specified parameters and a set turn value 
+	/**
+	 * @brief Constructor for Car class
+	 * @details Constructs a Car with given parameters 
 	 * 
-	 * @param bornTime time when the car was created 
-	 * @param destDistribution if the car should turn keft or go straight 
+	 * @param bornTime: the bortime of the car
+	 * @param destDistribution: the distribution of the car, 1 for straight and 2 left turn   
 	 * 
-	 * @return an object Car with given parameters.
+	 * @return A Car with given parameters 
 	 */
+
 	public Car(int bornTime, int destDistribution){
 		this.turn = false;
 		this.bornTime = TrafficSystem.getTime();
@@ -25,14 +26,14 @@ public class Car {
 
 
 
-	/**  
-	 * @brief Method for randomizing an int          
+	/**
+	 * @brief Method for randomizing an int
 	 * @details 
 	 * 
-	 * @param the minimal value of the int
-	 * @param the maximal value of the inte
+	 * @param min minimal int 
+	 * @param max maximal int
 	 * 
-	 * @return a randomized int 
+	 * @return A randomized int 
 	 */
 
 	public int randInt(int min, int max) {
@@ -51,7 +52,7 @@ public class Car {
 	/**
 	 * @brief Method to get born time of a car (when the car was created).
 	 * @details 
-	 * @return born time of car.
+	 * @return born time of car represented by an int 
 	 */
 	public int getBornTime(){
 		return this.bornTime;
@@ -75,34 +76,33 @@ public class Car {
 
 
 	/**
-	 * @brief Method to set the borntime 
-	 * @details 
+	 * @brief Method for setting the borntime 
+	 * @details set the borntime to the borntime you want
 	 * 
-	 * @param bornTime when the car is born
-	 * @return 
+	 * @param bornTime is the borntime you want to set 
 	 */
+
 	public void setBornTime(int bornTime){
 		this.bornTime =bornTime;
 	}
 
 
 	/**
-	 * @brief Method to set the destination
-	 * @details 
+	 * @brief Method to set the destination of the car 
+	 * @details set the destination of the car to the destination you want 
 	 * 
-	 * @param destination if the car is going to turn or not. 
-	 * @return 
+	 * @param destination is the destination you want to set 
 	 */
+
 	public void setDestination(int destination){
 		this.destination =destination;
 	}
 
 	/**
-	 * @brief Method to set turn
-	 * @details sets the turn value to true  
-	 * 
-	 * @return 
+	 * @brief Method for setting a turn 
+	 * @details 
 	 */
+
 	public void setTurn(){
 		this.turn = true;
 	}
@@ -119,10 +119,11 @@ public class Car {
 	}
 
 	/**
-	 * @brief Method to represent a car.
+	 * @brief the toString method for the class Car
 	 * @details 
-	 * @return representation of a car in the lane.
+	 * @return A graphical representation of the Car 
 	 */
+	
 	public String toString() {
 		if (getDestination()== 2){
 			return "-<>";

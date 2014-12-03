@@ -6,11 +6,11 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TrafficSystem {
-	// Definierar de vägar och signaler som ingår i det 
+	// Definierar de vagar och signaler som ingar i det 
     // system som skall studeras.
     // Samlar statistik
     
-    // Attribut som beskriver beståndsdelarna i systemet
+    // Attribut som beskriver bestandsdelarna i systemet
     private Lane  r0;
     private Lane  r1;
     private Lane  r2;
@@ -19,13 +19,13 @@ public class TrafficSystem {
 
    
     
-    // Diverse attribut för simuleringsparametrar (ankomstintensiteter,
+    // Diverse attribut for simuleringsparametrar (ankomstintensiteter,
     // destinationer...)
     // i intervallet 0-100
     private int ankomstintensitet;
     private int destDistribution;
     public int example;
-    // Diverse attribut för statistiksamling
+    // Diverse attribut far statistiksamling
  
     private int carWrongLane;
     private int carPassed = 0;
@@ -54,16 +54,17 @@ public class TrafficSystem {
      * @brief Method to read parameters from a file 
      * @details
      * 
-     * 
-     * @return 
+     *  
      */
+
+    
     private void readParameters() {
-	// Läser in parametrar för simuleringen
-	// Metoden kan läsa från terminalfönster, dialogrutor
-	// eller från en parameterfil. Det sista alternativet
-	// är att föredra vid uttestning av programmet eftersom
-	// man inte då behöver mata in värdena vid varje körning.
-        // Standardklassen Properties är användbar för detta. 
+	// Laser in parametrar for simuleringen
+	// Metoden kan lasa frï¿½n terminalfonster, dialogrutor
+	// eller frï¿½a en parameterfil. Det sista alternativet
+	// ar att foredra vid uttestning av programmet eftersom
+	// man inte da behï¿½ver mata in vardena vid varje korning.
+        // Standardklassen Properties ar anvandbar for detta. 
     	try (FileReader reader = new FileReader("attributes.properties")){
     		Properties properties = new Properties();
     		properties.load(reader);
@@ -159,18 +160,15 @@ public class TrafficSystem {
     /**  
      * @brief Method stepping the traffic system         
      * @details steps through the whole system once  
-     * 
-     * 
-     * @return 
     */
-    
+
     public void step() {
-    	//left: bilen som svängt vänster i korsningen
-    	//straight: bilen som kört rakt fram i korsningen
-    	//deciding: bilen som skall välja fil
-    	//newCar: nyinstoppad bil i systemets ena ände
+    	//left: bilen som svangt vanster i korsningen
+    	//straight: bilen som kort rakt fram i korsningen
+    	//deciding: bilen som skall valja fil
+    	//newCar: nyinstoppad bil i systemets ena ande
     	Car left, straight, deciding, newCar;
-    	//kollar om s1 är grön, om så, då tar vi bort bilen vid trafikljuset
+    	//kollar om s1 ï¿½r gron, om sa, da tar vi bort bilen vid trafikljuset
     	if(s1.isGreen()){
     		if (r1.getFirst() != null){
 	    		left = r1.getFirst();
@@ -184,17 +182,17 @@ public class TrafficSystem {
 	    		++carPassed;
     		}
     	}	
-    	//stegar fram de parallella vägarna och låter bilar byta fil om det går
+    	//stegar fram de parallella vagarna och later bilar byta fil om det gar
      	r2.step(r1); 
-    	//tar bort första bilen i r0 och returnerar den
+    	//tar bort forsta bilen i r0 och returnerar den
     	deciding = r0.getFirst();
-    	//avgör vart bilen skall åka efter r0
+    	//avgor vart bilen skall aka efter r0
     	if (deciding != null){
 	    	if(deciding.getDestination() == 1){
 	    		if(r1.lastFree()){
 	    			r1.putLast(deciding);
 	    		}
-	    		//flagga bilen för svängning
+	    		//flagga bilen fï¿½r svangning
 	    		else if (r2.lastFree()){
 	    			r2.putLast(deciding);
 	    			deciding.setTurn();
@@ -210,13 +208,13 @@ public class TrafficSystem {
 	    		}
 			}
     	}
-    	//Låt bilen åka vidare på fel väg om rätt väg är upptagen
-    	//Försök svänga in på rätt väg
+    	//Lat bilen aka vidare pa fel vag om ratt vag ar upptagen
+    	//Forsok svï¿½nga in pï¿½ ratt vag
      	r0.step();
      	
-    		//kollar om det går att stoppa in en ny bil på vägen
+    		//kollar om det gar att stoppa in en ny bil pï¿½ vagen
         if(r0.lastFree()){
-        	//avgör om en ny bil anländer eller ej
+        	//avgor om en ny bil anlander eller ej
         	if (ankomstintensitet >= randInt(0,100)){
             //skapar bilen	
         	++carEntered;
@@ -227,13 +225,13 @@ public class TrafficSystem {
 
 
         }
-        //stegar fram vägen ett steg
+        //stegar fram vagen ett steg
        time++;	
        s1.step();
        s2.step();
     	
 	// Stega systemet ett tidssteg m h a komponenternas step-metoder
-	// Skapa bilar, lägg in och ta ur på de olika Lane-kompenenterna
+	// Skapa bilar, lagg in och ta ur pï¿½ de olika Lane-kompenenterna
     }
     
     /**  
@@ -243,6 +241,7 @@ public class TrafficSystem {
      * 
      * @return the lenght of both lengths added together 
     */
+   
     public int sysLen(){
     	return r0.getLen() + r1.getLen();
     }
@@ -250,13 +249,10 @@ public class TrafficSystem {
     /**  
      * @brief Method for randomizing an int          
      * @details prints the statistics for the trafficsystem 
-     * 
-     * 
-     * @return 
     */
-   
+  
     public void printStatistics() {
-	// Skriv statistiken samlad så här långt
+	// Skriv statistiken samlad sa har langt
     	carWrongLane = r1.getNumberOfMisplacedCars() + r2.getNumberOfMisplacedCars();
     	System.out.println("time: " + time);
     	System.out.println("dest distribution: " + this.destDistribution);
@@ -278,15 +274,12 @@ public class TrafficSystem {
 
     /**  
      * @brief Method for representing the que          
-     * @details prints a representation of the whole system by using the other classes toString-methods 
-     * 
-     * 
-     * @return  
+     * @details prints a representation of the whole system by using the other classes toString-methods   
     */
 
     public void print() {
-	// Skriv ut en grafisk representation av kösituationen
-	// med hjälp av klassernas toString-metoder
+	// Skriv ut en grafisk representation av kosituationen
+	// med hjalp av klassernas toString-metoder
     	System.out.print(r2.toString());
        	System.out.print(" ");
     	System.out.println(r0.toString());

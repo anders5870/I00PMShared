@@ -6,43 +6,44 @@ public class Lane {
     private Car theLane[];
     private int numberOfTurns = 0;
     public static class OverflowException extends RuntimeException {
-    // Undantag som kastas när det inte gick att lägga 
-    // in en ny bil på vägen
+    // Undantag som kastas nar det inte gick att lagga 
+    // in en ny bil pa vagen
     }
 
 
-    /**  
-     * @brief Constructor for Lane class.
-     * @details constructs a Lane object with given parameters  
+    /**
+     * @brief [Constructor for Lane class
+     * @details constructs a Lane object with given parameters
      * 
      * @param n the length of the lane 
-     * 
-     * @return an object Lane with given parameters.
-    */
+     * @return [an object Lane with given parameters
+     */
     public Lane(int n) {
-	// Konstruerar ett Lane-objekt med plats för n fordon
+	// Konstruerar ett Lane-objekt med plats for n fordon
         this.theLane = new Car[n];
     	
     }
     
-    /**  
-     * @brief Help method for step 
+
+    /**
+     * @brief Help method for step called turnAttempt 
      * @details checks if the first position in the side lane is empty and puts a care there
      * 
      * @param sideLane the turn Lane 
-     * @param i length of the turn lane 
+     * @param i length of the turn lane
      * 
-    */
+     * @return Prints if the car has attempted to turn
+     */
     //help function to step()
 	private void turnAttempt(Lane sideLane, int i){
-		//se till så att det finns en bil och kolla om den vill svänga
+		//se till sa att det finns en bil och kolla om den vill svanga
 		if (theLane[i] != null){
 			if (theLane[i].getTurn()){
 				System.out.println("kommer hit");
-				//kolla om det går att svänga
+				//kolla om det gar att svanga
 				if(sideLane.theLane[i] == null){
-				//sväng
-				System.out.println("en bil har svängt");
+				//svang
+				System.out.println("en bil har svangt");
 				sideLane.theLane[i] = theLane[i];
 				theLane[i] = null;
 				numberOfTurns++;
@@ -51,13 +52,15 @@ public class Lane {
 		}
 		
 	}
-	/**  
-     * @brief Help method for step 
+	
+
+    /**
+     * @brief Method for making a car wait 
      * @details checks if the first position in the side lane is empty. Waits if it is not and steps the lane 
      * 
-     * @param i length of the lane 
-     * 
-    */
+     * @param i the length of the lane 
+     */
+
 	private void stepWait(int i){
     	//theLane step/wait 		
 		if (i != 0 && theLane[i+1] == null){
@@ -78,13 +81,13 @@ public class Lane {
 		}
 	}
 
-    /**  
-     * @brief Method to step the lane 
-     * @details steps sidelane
+    
+    /**
+     * @brief [brief description]
+     * @details [long description]
      * 
-     * @param sideLane the turn lane 
-     * 
-    */
+     * @param sideLane [description]
+     */
     public void step(Lane sideLane) {
     	for(int i = 0; i < theLane.length-1; i++){
     		this.turnAttempt(sideLane, i);			
@@ -102,18 +105,17 @@ public class Lane {
      * @return the length of the lane 
      * 
     */
+
+
     public int getLen(){
     	return theLane.length;
     }
     
 
-    /**  
+    /**
      * @brief Method to step the lane 
      * @details steps lane 
-     * 
-     * @param 
-     * 
-    */
+     */
     public void step(){
     	for(int i = 0; i < theLane.length-1; i++){
 			if(theLane[i] == null){
@@ -131,12 +133,13 @@ public class Lane {
      * @return the first car 
      * 
     */
+
     public Car getFirst(){
     	
     	Car firstcar = theLane[0];
     	theLane[0] = null;
     	return firstcar;
-	// Returnera och tag bort bilen som står först
+	// Returnera och tag bort bilen som star forst
     }
 
 
@@ -147,9 +150,10 @@ public class Lane {
      * @return the first car 
      * 
     */
+
     public Car firstCar() {
     	return theLane[0];
-	// Returnera bilen som stï¿½r fï¿½rst utan att ta bort den
+	// Returnera bilen som star forst utan att ta bort den
     }
 
     /**  
@@ -159,6 +163,7 @@ public class Lane {
      * @return true if it is empty else false 
      * 
     */
+
     public boolean lastFree() {
     	return(theLane[theLane.length-1] == null);
 	// Returnera true om sista platsen ledig, annars false
@@ -179,8 +184,8 @@ public class Lane {
     	else{throw new OverflowException();
     	}
     	
-    // Ställ en bil på sista platsen på vägen
-	// (om det går).
+    // Stall en bil pa sista platsen pa vagen
+	// (om det gar).
     }
 
     /**  
@@ -190,6 +195,7 @@ public class Lane {
      * @return returns true if it is full else false 
      * 
     */
+
     public boolean laneFull () {
         for(int i = 0; i < theLane.length; i++){
             
@@ -206,6 +212,7 @@ public class Lane {
      * @return the number of cars who wants to turn but can't 
      * 
     */
+
     public int getNumberOfMisplacedCars(){
     	int j = 0;
     	for(int i = 0; theLane.length > i; i++){
@@ -223,6 +230,7 @@ public class Lane {
      * @return true if it is empty else false 
      * 
     */
+
     public boolean isVacant(int index){
     	if ((theLane[index]) == null)
     		return true;
@@ -236,6 +244,8 @@ public class Lane {
      * @return the number of turns in the system
      * 
     */
+
+    
     public int getNumberOfTurns(){
     	return this.numberOfTurns;
     }
@@ -244,9 +254,11 @@ public class Lane {
      * @brief Method to represent a lane 
      * @details 
      * 
-     * @return representation of a lane  
+     * @return graphical representation of a lane  
      * 
     */
+
+   
     public String toString() {
     	String lane = "";
     	for(int i=0; i<theLane.length; i++) {
