@@ -1,0 +1,52 @@
+\hypertarget{istrslen_8c}{\section{istrslen.\-c File Reference}
+\label{istrslen_8c}\index{istrslen.\-c@{istrslen.\-c}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{istrslen_8c_af38f2fda3d91d2e1812fcd8f57c625ba}{istrslen} (char $\ast$s, size\-\_\-t length)
+\item 
+\hyperlink{istrslen_8c_ab0bc73ba3f508934d887a49e34c56430}{printf} (\char`\"{}8. \%s\textbackslash{}n\char`\"{}, str3)
+\item 
+\hyperlink{istrslen_8c_a5c71e3c0302eaecc8124264b6554c9dd}{printf} (\char`\"{}9. \%d\textbackslash{}n\char`\"{}, strlen(\hyperlink{istrslen_8c_adae762842e4f9cef969be5c36459cad2}{str3}))
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{istrslen_8c_adae762842e4f9cef969be5c36459cad2}{str3} = \hyperlink{istrslen_8c_af38f2fda3d91d2e1812fcd8f57c625ba}{istrslen}(str3, 6)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{istrslen_8c_af38f2fda3d91d2e1812fcd8f57c625ba}{\index{istrslen.\-c@{istrslen.\-c}!istrslen@{istrslen}}
+\index{istrslen@{istrslen}!istrslen.c@{istrslen.\-c}}
+\subsubsection[{istrslen}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istrslen (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{s, }
+\item[{size\-\_\-t}]{length}
+\end{DoxyParamCaption}
+)}}\label{istrslen_8c_af38f2fda3d91d2e1812fcd8f57c625ba}
+Name\-: istrslen\par
+Type\-: (char {\itshape s, size\-\_\-t length)-\/$>$ char} \par
+Post\-: Sets the length of an istring and inserts a corresponding '\textbackslash{}0' character. If the length argument is out of bounds for the string, a new istring should be returned with the contents of the original string. The last character of the original string will be repeated to fill the string to its given length. \hypertarget{istrslen_8c_ab0bc73ba3f508934d887a49e34c56430}{\index{istrslen.\-c@{istrslen.\-c}!printf@{printf}}
+\index{printf@{printf}!istrslen.c@{istrslen.\-c}}
+\subsubsection[{printf}]{\setlength{\rightskip}{0pt plus 5cm}printf (
+\begin{DoxyParamCaption}
+\item[{\char`\"{}8. \%s\textbackslash{}n\char`\"{}}]{, }
+\item[{{\bf str3}}]{}
+\end{DoxyParamCaption}
+)}}\label{istrslen_8c_ab0bc73ba3f508934d887a49e34c56430}
+\hypertarget{istrslen_8c_a5c71e3c0302eaecc8124264b6554c9dd}{\index{istrslen.\-c@{istrslen.\-c}!printf@{printf}}
+\index{printf@{printf}!istrslen.c@{istrslen.\-c}}
+\subsubsection[{printf}]{\setlength{\rightskip}{0pt plus 5cm}printf (
+\begin{DoxyParamCaption}
+\item[{\char`\"{}9. \%d\textbackslash{}n\char`\"{}}]{, }
+\item[{strlen({\bf str3})}]{}
+\end{DoxyParamCaption}
+)}}\label{istrslen_8c_a5c71e3c0302eaecc8124264b6554c9dd}
+
+
+\subsection{Variable Documentation}
+\hypertarget{istrslen_8c_adae762842e4f9cef969be5c36459cad2}{\index{istrslen.\-c@{istrslen.\-c}!str3@{str3}}
+\index{str3@{str3}!istrslen.c@{istrslen.\-c}}
+\subsubsection[{str3}]{\setlength{\rightskip}{0pt plus 5cm}str3 = {\bf istrslen}(str3, 6)}}\label{istrslen_8c_adae762842e4f9cef969be5c36459cad2}

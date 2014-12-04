@@ -1,4 +1,4 @@
-//Adam Wendelin & Anders Ålander
+//Anders Ålander
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -288,8 +288,7 @@ char *istrncat(char *dst, const char *src, size_t n){
 
 }
 
-//The strchr function searches string for the first occurrence of c. The null character terminating string is included in the search.
-//The strchr function returns a pointer to the first occurrence of character c in string or a null pointer if no matching character is found.
+
 char *istrchr(const char *s, int c){
   if (!s){
     return NULL;
@@ -304,8 +303,7 @@ char *istrchr(const char *s, int c){
 }
 
 
-//The strrchr function searches string for the last occurrence of c. The null character terminating string is included in the search.
-//The strrchr function returns a pointer to the last occurrence of character c in string or a null pointer if no matching character is found.
+
 char *istrrchr(const char *s, int c){
   if (!s){
     return NULL;

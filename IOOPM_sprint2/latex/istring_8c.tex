@@ -1,0 +1,249 @@
+\hypertarget{istring_8c}{\section{istring.\-c File Reference}
+\label{istring_8c}\index{istring.\-c@{istring.\-c}}
+}
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdint.\-h$>$}\\*
+{\ttfamily \#include $<$ctype.\-h$>$}\\*
+{\ttfamily \#include $<$assert.\-h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char $\ast$ \hyperlink{istring_8c_a40e777e3099ac9fbdf848ced1b454e87}{S\-T\-A\-R\-T} (char $\ast$p)
+\item 
+char $\ast$ \hyperlink{istring_8c_a55b5a2d66035dd1dc793fbf3677b9570}{S\-T\-R\-I\-N\-G} (char $\ast$p)
+\item 
+char $\ast$ \hyperlink{istring_8c_aaa95065185e34860fd6353ef17d2b2ef}{shift\-Right\-Cpy} (char $\ast$dst, const char $\ast$src)
+\item 
+char $\ast$ \hyperlink{istring_8c_a7f8dc297a397a8d8264a915339de8147}{setilenbytes} (char $\ast$dst, uint32\-\_\-t srclen)
+\item 
+char $\ast$ \hyperlink{istring_8c_af96c0d313deb40b9ce08631ddbc2c03e}{shift\-Right\-Set\-Len} (char $\ast$dst, int dstlen)
+\item 
+char $\ast$ \hyperlink{istring_8c_a084ca9730e39e55dd603b4f4bfa96f75}{istring\-\_\-mk} (const char $\ast$str)
+\item 
+void \hyperlink{istring_8c_a8677cdd5fc4f55f34f79d3a7441fe219}{istring\-\_\-rm} (char $\ast$str)
+\item 
+char $\ast$ \hyperlink{istring_8c_a8dcac2d3dc3251d9724dbaef638704cb}{istring\-\_\-to\-\_\-string} (const char $\ast$str)
+\item 
+char $\ast$ \hyperlink{istring_8c_af38f2fda3d91d2e1812fcd8f57c625ba}{istrslen} (char $\ast$s, size\-\_\-t length)
+\item 
+int \hyperlink{istring_8c_a230d78e3d1cb1a963ecee7b8fb5f5392}{istrcmp} (const char $\ast$s1, const char $\ast$s2)
+\item 
+int \hyperlink{istring_8c_a99425832f5ad21fcfb0cf6e50cbb48a0}{istrncmp} (const char $\ast$s1, const char $\ast$s2, size\-\_\-t n)
+\item 
+size\-\_\-t \hyperlink{istring_8c_af341b0b3f17a74b9d48899a02da24cd5}{istrlen} (const char $\ast$s)
+\item 
+char $\ast$ \hyperlink{istring_8c_a172d5c956d4e69287710dd22146b6566}{istrcpy} (char $\ast$dst, const char $\ast$src)
+\item 
+char $\ast$ \hyperlink{istring_8c_a4c57b21db876c2141f268e20c4eb7203}{istrncpy} (char $\ast$dst, const char $\ast$src, size\-\_\-t n)
+\item 
+char $\ast$ \hyperlink{istring_8c_a4c463b43b99165787e081ca48540cc3b}{istrcat} (char $\ast$dst, const char $\ast$src)
+\item 
+char $\ast$ \hyperlink{istring_8c_aff053d0414c55f44f40cf35117a2ac22}{istrncat} (char $\ast$dst, const char $\ast$src, size\-\_\-t n)
+\item 
+char $\ast$ \hyperlink{istring_8c_aebf9076b90aa009ff5f7284c0a946ada}{istrchr} (const char $\ast$s, int c)
+\item 
+char $\ast$ \hyperlink{istring_8c_a3498a74557c17efc2a76641ac365142b}{istrrchr} (const char $\ast$s, int c)
+\item 
+size\-\_\-t \hyperlink{istring_8c_afa55aed97060689ef94fc0d640073a17}{istrfixlen} (char $\ast$s)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{istring_8c_a4c463b43b99165787e081ca48540cc3b}{\index{istring.\-c@{istring.\-c}!istrcat@{istrcat}}
+\index{istrcat@{istrcat}!istring.c@{istring.\-c}}
+\subsubsection[{istrcat}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istrcat (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{dst, }
+\item[{const char $\ast$}]{src}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a4c463b43b99165787e081ca48540cc3b}
+Name\-: istrcat\par
+Type\-: (char {\itshape dst, const char $\ast$src)-\/$>$char}\par
+Pre\-:\par
+Post\-: concatenates dst with src. Returns the concatenated string. \hypertarget{istring_8c_aebf9076b90aa009ff5f7284c0a946ada}{\index{istring.\-c@{istring.\-c}!istrchr@{istrchr}}
+\index{istrchr@{istrchr}!istring.c@{istring.\-c}}
+\subsubsection[{istrchr}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istrchr (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s, }
+\item[{int}]{c}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_aebf9076b90aa009ff5f7284c0a946ada}
+Name\-: istrchr\par
+Type\-: (const char {\itshape s, int c)-\/$>$char}\par
+Pre\-:\par
+Post\-: The strchr function searches string for the first occurrence of c. The null character terminating string is included in the search. The strchr function returns a pointer to the first occurrence of character c in string or a null pointer if no matching character is found. \hypertarget{istring_8c_a230d78e3d1cb1a963ecee7b8fb5f5392}{\index{istring.\-c@{istring.\-c}!istrcmp@{istrcmp}}
+\index{istrcmp@{istrcmp}!istring.c@{istring.\-c}}
+\subsubsection[{istrcmp}]{\setlength{\rightskip}{0pt plus 5cm}int istrcmp (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s1, }
+\item[{const char $\ast$}]{s2}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a230d78e3d1cb1a963ecee7b8fb5f5392}
+Name\-: istrcmp\par
+Type\-: (const char $\ast$s1, const char $\ast$s2)-\/$>$int\par
+Pre\-:\par
+Post\-: compares strings s1 and s2. Returns -\/1 if s1 is greater than s2, returns 0 if s1 and s2 are equal, returns 1 if s2 is greater than s1. \hypertarget{istring_8c_a172d5c956d4e69287710dd22146b6566}{\index{istring.\-c@{istring.\-c}!istrcpy@{istrcpy}}
+\index{istrcpy@{istrcpy}!istring.c@{istring.\-c}}
+\subsubsection[{istrcpy}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istrcpy (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{dst, }
+\item[{const char $\ast$}]{src}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a172d5c956d4e69287710dd22146b6566}
+Name\-: istrcpy\par
+Type\-: (char {\itshape dst, const char $\ast$src)-\/$>$char}\par
+Pre\-:\par
+Post\-: copies src into dst and returns dst. \hypertarget{istring_8c_afa55aed97060689ef94fc0d640073a17}{\index{istring.\-c@{istring.\-c}!istrfixlen@{istrfixlen}}
+\index{istrfixlen@{istrfixlen}!istring.c@{istring.\-c}}
+\subsubsection[{istrfixlen}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t istrfixlen (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_afa55aed97060689ef94fc0d640073a17}
+Name\-: istrfixlen\par
+Type\-: char $\ast$s-\/$>$size\-\_\-t\par
+Post\-: Inspects the length of the string from str and if it differs from length, updates length accordingly. If str does not contain a \textbackslash{}0 token, it will be inserted at the first element which is not a printable ascii character, and length updated accordingly. This function must be as efficient as possible and not rescan the string if it can be avoided.\par
+ This function is useful when istrings have been manipulated as regular C strings, to reestablish the length invariant. \hypertarget{istring_8c_a084ca9730e39e55dd603b4f4bfa96f75}{\index{istring.\-c@{istring.\-c}!istring\-\_\-mk@{istring\-\_\-mk}}
+\index{istring\-\_\-mk@{istring\-\_\-mk}!istring.c@{istring.\-c}}
+\subsubsection[{istring\-\_\-mk}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istring\-\_\-mk (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{str}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a084ca9730e39e55dd603b4f4bfa96f75}
+Name\-: istring\-\_\-mk\par
+Type\-: const char$\ast$ str-\/$>$char$\ast$\par
+Pre\-:\par
+Post\-: Returns a new istring instance created from supplied string. Returns N\-U\-L\-L if out of memory. Returns N\-U\-L\-L string if argument str is N\-U\-L\-L. \hypertarget{istring_8c_a8677cdd5fc4f55f34f79d3a7441fe219}{\index{istring.\-c@{istring.\-c}!istring\-\_\-rm@{istring\-\_\-rm}}
+\index{istring\-\_\-rm@{istring\-\_\-rm}!istring.c@{istring.\-c}}
+\subsubsection[{istring\-\_\-rm}]{\setlength{\rightskip}{0pt plus 5cm}void istring\-\_\-rm (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{str}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a8677cdd5fc4f55f34f79d3a7441fe219}
+Name\-: istring\-\_\-rm\par
+Type\-: char $\ast$str-\/$>$void\par
+Post\-: Deallocates the supplied istring. \hypertarget{istring_8c_a8dcac2d3dc3251d9724dbaef638704cb}{\index{istring.\-c@{istring.\-c}!istring\-\_\-to\-\_\-string@{istring\-\_\-to\-\_\-string}}
+\index{istring\-\_\-to\-\_\-string@{istring\-\_\-to\-\_\-string}!istring.c@{istring.\-c}}
+\subsubsection[{istring\-\_\-to\-\_\-string}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istring\-\_\-to\-\_\-string (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{str}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a8dcac2d3dc3251d9724dbaef638704cb}
+Name\-: istring\-\_\-to\-\_\-string\par
+Type\-: const char {\itshape str-\/$>$char}\par
+Post\-: Returns a standard null terminated char$\ast$ representation of the supplied istring. Returns N\-U\-L\-L if out of memory. Note\-: Both the istring and normal string has allocated memory. \hypertarget{istring_8c_af341b0b3f17a74b9d48899a02da24cd5}{\index{istring.\-c@{istring.\-c}!istrlen@{istrlen}}
+\index{istrlen@{istrlen}!istring.c@{istring.\-c}}
+\subsubsection[{istrlen}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t istrlen (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_af341b0b3f17a74b9d48899a02da24cd5}
+Name\-: istrlen\par
+Type\-: const char $\ast$s-\/$>$size\-\_\-t\par
+Pre\-:\par
+Post\-: returns the length of the given istring \hypertarget{istring_8c_aff053d0414c55f44f40cf35117a2ac22}{\index{istring.\-c@{istring.\-c}!istrncat@{istrncat}}
+\index{istrncat@{istrncat}!istring.c@{istring.\-c}}
+\subsubsection[{istrncat}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istrncat (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{dst, }
+\item[{const char $\ast$}]{src, }
+\item[{size\-\_\-t}]{n}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_aff053d0414c55f44f40cf35117a2ac22}
+Name\-: istrncat\par
+Type\-: (char {\itshape dst, const char $\ast$src, size\-\_\-t n)-\/$>$char}\par
+Pre\-: n$>$=0\par
+Post\-: concatenates dst with the first n characters from src. \hypertarget{istring_8c_a99425832f5ad21fcfb0cf6e50cbb48a0}{\index{istring.\-c@{istring.\-c}!istrncmp@{istrncmp}}
+\index{istrncmp@{istrncmp}!istring.c@{istring.\-c}}
+\subsubsection[{istrncmp}]{\setlength{\rightskip}{0pt plus 5cm}int istrncmp (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s1, }
+\item[{const char $\ast$}]{s2, }
+\item[{size\-\_\-t}]{n}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a99425832f5ad21fcfb0cf6e50cbb48a0}
+Name\-: istrncmp\par
+Type\-: (const char $\ast$s1, const char $\ast$s2, size\-\_\-t n)-\/$>$int\par
+Pre\-:\par
+Post\-: compares the n first characters in s1 and s2. Returns -\/1 if if the substring of s1 is greater than the substring of s2, returns 0 if the substring of s1 is equal to the substring of s2, returns 1 if the substring of s2 is greater than the substring of s1. \hypertarget{istring_8c_a4c57b21db876c2141f268e20c4eb7203}{\index{istring.\-c@{istring.\-c}!istrncpy@{istrncpy}}
+\index{istrncpy@{istrncpy}!istring.c@{istring.\-c}}
+\subsubsection[{istrncpy}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istrncpy (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{dst, }
+\item[{const char $\ast$}]{src, }
+\item[{size\-\_\-t}]{n}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a4c57b21db876c2141f268e20c4eb7203}
+Name\-: istrncpy\par
+Type\-: (char {\itshape dst, const char $\ast$src, size\-\_\-t n)-\/$>$ char}\par
+Pre\-: n$>$=0\par
+Post\-: copies n charachers from src into dst and returns dst. \hypertarget{istring_8c_a3498a74557c17efc2a76641ac365142b}{\index{istring.\-c@{istring.\-c}!istrrchr@{istrrchr}}
+\index{istrrchr@{istrrchr}!istring.c@{istring.\-c}}
+\subsubsection[{istrrchr}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istrrchr (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{s, }
+\item[{int}]{c}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a3498a74557c17efc2a76641ac365142b}
+Name\-: istrrchr\par
+Type\-: (constchar {\itshape s, int c)-\/$>$char}\par
+Pre\-:\par
+Post\-: The strrchr function searches string for the last occurrence of c. The null character terminating string is included in the search. The strrchr function returns a pointer to the last occurrence of character c in string or a null pointer if no matching character is found. \hypertarget{istring_8c_af38f2fda3d91d2e1812fcd8f57c625ba}{\index{istring.\-c@{istring.\-c}!istrslen@{istrslen}}
+\index{istrslen@{istrslen}!istring.c@{istring.\-c}}
+\subsubsection[{istrslen}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ istrslen (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{s, }
+\item[{size\-\_\-t}]{length}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_af38f2fda3d91d2e1812fcd8f57c625ba}
+Name\-: istrslen\par
+Type\-: (char {\itshape s, size\-\_\-t length)-\/$>$ char} \par
+Post\-: Sets the length of an istring and inserts a corresponding '\textbackslash{}0' character. If the length argument is out of bounds for the string, a new istring should be returned with the contents of the original string. The last character of the original string will be repeated to fill the string to its given length. \hypertarget{istring_8c_a7f8dc297a397a8d8264a915339de8147}{\index{istring.\-c@{istring.\-c}!setilenbytes@{setilenbytes}}
+\index{setilenbytes@{setilenbytes}!istring.c@{istring.\-c}}
+\subsubsection[{setilenbytes}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ setilenbytes (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{dst, }
+\item[{uint32\-\_\-t}]{srclen}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a7f8dc297a397a8d8264a915339de8147}
+Name\-: setilenbytes\par
+Type\-: (char {\itshape dst, uint32\-\_\-t srclen)-\/$>$char}\par
+Pre\-:\par
+Post\-: sets the length bytes of the istring to reflect its length, returns the istring with the bytes set. \hypertarget{istring_8c_aaa95065185e34860fd6353ef17d2b2ef}{\index{istring.\-c@{istring.\-c}!shift\-Right\-Cpy@{shift\-Right\-Cpy}}
+\index{shift\-Right\-Cpy@{shift\-Right\-Cpy}!istring.c@{istring.\-c}}
+\subsubsection[{shift\-Right\-Cpy}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ shift\-Right\-Cpy (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{dst, }
+\item[{const char $\ast$}]{src}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_aaa95065185e34860fd6353ef17d2b2ef}
+Name\-: shift\-Right\-Cpy\par
+Type\-: (char {\itshape dst, const char $\ast$src)-\/$>$char}\par
+Pre\-:\par
+Post\-: Function shifts all characters in dst 4 steps to the right, making room for the istring length bits and copies src to dst, and returns dst. \hypertarget{istring_8c_af96c0d313deb40b9ce08631ddbc2c03e}{\index{istring.\-c@{istring.\-c}!shift\-Right\-Set\-Len@{shift\-Right\-Set\-Len}}
+\index{shift\-Right\-Set\-Len@{shift\-Right\-Set\-Len}!istring.c@{istring.\-c}}
+\subsubsection[{shift\-Right\-Set\-Len}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ shift\-Right\-Set\-Len (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{dst, }
+\item[{int}]{dstlen}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_af96c0d313deb40b9ce08631ddbc2c03e}
+Name\-: shift\-Right\-Set\-Len\par
+Type\-: (char {\itshape dst, int dstlen)-\/$>$char}\par
+Pre\-:\par
+Post\-: Shifts all characters in dst 4 steps to the right, making room for the istring length bits and sets the length bytes to reflect its length, and returns the istring with the bytes set. \hypertarget{istring_8c_a40e777e3099ac9fbdf848ced1b454e87}{\index{istring.\-c@{istring.\-c}!S\-T\-A\-R\-T@{S\-T\-A\-R\-T}}
+\index{S\-T\-A\-R\-T@{S\-T\-A\-R\-T}!istring.c@{istring.\-c}}
+\subsubsection[{S\-T\-A\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ S\-T\-A\-R\-T (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{p}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a40e777e3099ac9fbdf848ced1b454e87}
+\hypertarget{istring_8c_a55b5a2d66035dd1dc793fbf3677b9570}{\index{istring.\-c@{istring.\-c}!S\-T\-R\-I\-N\-G@{S\-T\-R\-I\-N\-G}}
+\index{S\-T\-R\-I\-N\-G@{S\-T\-R\-I\-N\-G}!istring.c@{istring.\-c}}
+\subsubsection[{S\-T\-R\-I\-N\-G}]{\setlength{\rightskip}{0pt plus 5cm}char$\ast$ S\-T\-R\-I\-N\-G (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{p}
+\end{DoxyParamCaption}
+)}}\label{istring_8c_a55b5a2d66035dd1dc793fbf3677b9570}
