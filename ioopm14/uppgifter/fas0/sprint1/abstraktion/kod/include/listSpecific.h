@@ -26,33 +26,34 @@ void readline(char *dest, int n, FILE *source);
 /**
  * Name: fillFromFile                  \n                 
  * Type: char *filename->Node \n       
- * Pre: a line in the specified file filename must not    
- * exceed 127 characters. The total number of lines must
- * be an even number. \n 
+ * Pre: a file with the name filename exists.\n A line in the specified file filename must not    
+ * exceed 127 characters.\n The total number of lines must
+ * be an even number. \n
  * Post: reads a file where even line numbers become keys
  * and odd line numbers become values and fills a tree    
  * with the corresponding key and value at each node red 
- * from the given file. Returns the resulting list.\n 
+ * from the given file. Returns the resulting list.\n
+ * Side effects: reads the file found with filename.\n
  */
 Node fillFromFile(char *filename);
 
 
 /**
  * Name: query\n
- * Type: (Node root, char *buffer)->Node\n
- * Pre:\n
+ * Type: (Node cursor, char *buffer)->Node\n
+ * Pre: true\n
  * Post: if the key specified by the user in the functions
- * runtime exists in the list it returns the Node.\n
+ * runtime exists in the list it returns the corresponding Node.\n
  */
 Node query(Node cursor, char *buffer);
 
 
 /**
  * Name: update\n
- * Type: Node root->void\n
+ * Type: Node cursor->void\n
  * Pre: true\n
  * Side effects: the user gets to input a key. If that key corresponds
- * to a node in the Node then the user is prompted to enter
+ * to a node in the cursor list then the user is prompted to enter
  * a new value for that node. If the key was not found then nothing
  * is updated.\n
  */
@@ -63,9 +64,9 @@ void update(Node cursor);
  * Name: insert\n
  * Type: Node list->void\n
  * Pre: true\n
- * Side effects: the user is promted under function runtime to specify the
- * key and value for the new node to be inserted. If the key is unique
- * the the node will be inserted at the end of list.\n
+ * Side effects: the user is prompted under function runtime to specify the
+ * key and value for a new node to be inserted. If the key is unique
+ * then the node will be inserted at the end of list.\n
  */
 void insert(Node list);
 
@@ -94,7 +95,7 @@ void print(Node cursor);
 /**
  * Name: destroy\n
  * Type: Node list->void\n
- * Pre:\n
+ * Pre: true\n
  * Post: frees all memory used by the list with the root list\n
  */
 void destroy(Node list);
