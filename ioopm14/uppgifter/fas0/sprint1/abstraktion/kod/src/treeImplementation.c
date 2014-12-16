@@ -88,13 +88,11 @@ void insert(BstNode root){
 }
 
 BstNode findMin(BstNode root){
-  puts("3.2");
   if (root == NULL) return root;
   if (root->left == NULL) return root;
   BstNode dir = root->left;
   while (dir->left != NULL)
     dir = dir->left;
-  puts("3.3");
   return dir;
 }
 
@@ -137,7 +135,7 @@ void print(BstNode root){
 void destroy(BstNode root){
     if (!root) {return;}
     destroy(root->left);
-    printf("Destroying node %s \n", root->key);
+    //printf("Destroying node %s \n", root->key);
     destroy(root->right);
     free(root->key);
     free(root->value);

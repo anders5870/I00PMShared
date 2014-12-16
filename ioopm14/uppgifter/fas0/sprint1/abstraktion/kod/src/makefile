@@ -25,6 +25,14 @@ $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 db : $(OBJ) 
+testTree: unittests.c db.c treeImplementation.c functions.c stack.c 
+	$(CC) $(TFLAGS) unittests.c db.c treeImplementation.c functions.c stack.c -o unittests -lcunit
+	./unittests SMALL.db
+testList: unittests.c db.c listImplementation.c functions.c stack.c 
+	$(CC) $(TFLAGS) unittests.c db.c treeImplementation.c functions.c stack.c -o unittests -lcunit
+	./unittests SMALL.db
+
+
 #What to create and what to create it from
 	gcc -o $@ $^ $(CFLAGS) $(LIBS)
 #How to create it

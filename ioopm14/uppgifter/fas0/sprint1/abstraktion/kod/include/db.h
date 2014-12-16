@@ -125,6 +125,7 @@ void insert(BstNode root);
  * Type: BstNode root->BstNode root\n
  * Pre:\n
  * Post: attempt to delete  a BstNode in thebst with root root
+ * Returns the root of the tree. 
  * Side effects: the user is prompted under function runtime to specify
  * the key of the BstNode to be deleted. If such node is found it is
  * removed from the bst. If the key was not found the user will be 
