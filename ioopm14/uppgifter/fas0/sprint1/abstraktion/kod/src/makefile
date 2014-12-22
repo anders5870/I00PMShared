@@ -11,11 +11,11 @@ LDIR =../lib
 #Looks for files in directory "lib" 
 LIBS=-lm
 #Optional library additions
-_DEPS = stack.h listSpecific.h
+_DEPS = stack.h treeSpecific.h
 #List of all .h files to use when compiling
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 #Looks in IDIR for files included in _DEPS
-_OBJ = db.o listImplementation.o functions.o stack.o
+_OBJ = db.o treeImplementation.o functions.o stack.o
 #List of all .o files to use when compiling
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 #Looks in ODIR for files included in _OBJ
@@ -25,13 +25,6 @@ $(ODIR)/%.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 db : $(OBJ) 
-testTree: unittests.c db.c treeImplementation.c functions.c stack.c 
-	$(CC) $(TFLAGS) unittests.c db.c treeImplementation.c functions.c stack.c -o unittests -lcunit
-	./unittests SMALL.db
-testList: unittests.c db.c listImplementation.c functions.c stack.c 
-	$(CC) $(TFLAGS) unittests.c db.c treeImplementation.c functions.c stack.c -o unittests -lcunit
-	./unittests SMALL.db
-
 
 #What to create and what to create it from
 	gcc -o $@ $^ $(CFLAGS) $(LIBS)
@@ -40,5 +33,5 @@ testList: unittests.c db.c listImplementation.c functions.c stack.c
 #Keeps make from doing something with a file named clean
 clean:
 #Custom created make command. Run it with: make clean
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~
+	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ db
 #Cleans ODIR and IDIR from garbage

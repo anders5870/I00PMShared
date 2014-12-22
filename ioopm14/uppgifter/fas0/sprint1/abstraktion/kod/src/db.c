@@ -1,6 +1,5 @@
-//Main
-//#include "db.h"
-#include "listSpecific.h"
+#include "treeSpecific.h"
+
 int main(int argc, char *argv[]){
   if (argc < 2){
     puts("Usage: db [FILE]");

@@ -1,9 +1,9 @@
 #ifndef _STACK_H
 #define _STACK_H
 #define MAXSTACKSIZE 1024
-#include "db.h"
+#include "treeSpecific.h"
 
-typedef BstNode stackElementT;
+typedef Node stackElementT;
 typedef struct {
   stackElementT *contents;
   int maxSize;

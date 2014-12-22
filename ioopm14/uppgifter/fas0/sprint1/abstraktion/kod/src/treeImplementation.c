@@ -1,19 +1,19 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "db.h"
+#include "treeSpecific.h"
 #include "stack.h"
 
-BstNode getNewNode(char *key, char *value){
-  BstNode newNode = malloc(sizeof(struct bstNode));
+Node getNewNode(char *key, char *value){
+  Node newNode = malloc(sizeof(struct node));
   newNode->key = key;
   (*newNode).value = value;
   newNode->left = newNode->right = NULL;
   return newNode;
 }
 
-BstNode insertIterative(BstNode root,  char *key_, char *value){
-  BstNode tempNode = root;
+Node insertIterative(Node root,  char *key_, char *value){
+  Node temp = root;
   if (root == NULL){
     root = getNewNode(key_, value);
     return root;
@@ -22,14 +22,14 @@ BstNode insertIterative(BstNode root,  char *key_, char *value){
     if (strcmp(root->key, key_) > 0){
       if(root->right == NULL){
 	root->right = getNewNode(key_, value);
-	return tempNode;
+        return temp;
       }
       root = root->right;
     }
     else {
       if(root->left == NULL){
 	root->left = getNewNode(key_, value);
-	return tempNode;
+        return temp;
       }
       root = root->left;
     }
@@ -37,13 +37,13 @@ BstNode insertIterative(BstNode root,  char *key_, char *value){
   return root; //Kommer aldrig hit
 }
 
-BstNode fillFromFile(char *filename){
+Node fillFromFile(char *filename){
   FILE *database = fopen(filename, "r");
   char buffer[128];
   char *key;
   char *value;
 
-  BstNode root = NULL;
+  Node root = NULL;
   while(!(feof(database))){ 
     readline(buffer, sizeof(buffer), database);
     key = malloc(strlen(buffer) + 1);
@@ -56,12 +56,12 @@ BstNode fillFromFile(char *filename){
   return root;
 }
 
-BstNode createTree(){
-  BstNode root = malloc(sizeof(struct bstNode));
+Node createTree(){
+  Node root = malloc(sizeof(struct node));
   return root;
 }
 
-void insert(BstNode root){
+void insert(Node root){
   char *key;
   char *value;
   char buffer[128];
@@ -77,7 +77,7 @@ void insert(BstNode root){
     readline(buffer, sizeof(buffer), stdin); 
     value = malloc(strlen(buffer) + 1); 
     strcpy(value, buffer);
-    root = insertIterative(root, key, value);
+    insertIterative(root, key, value);
     puts("");
     puts("Entry inserted successfully:");
     printf("key: %s\nvalue: %s\n", key, value); 
@@ -87,16 +87,16 @@ void insert(BstNode root){
   }
 }
 
-BstNode findMin(BstNode root){
+Node findMin(Node root){
   if (root == NULL) return root;
   if (root->left == NULL) return root;
-  BstNode dir = root->left;
+  Node dir = root->left;
   while (dir->left != NULL)
     dir = dir->left;
   return dir;
 }
 
-void printTreeRecursively(BstNode root){ 
+void printTreeRecursively(Node root){ 
   if (root == NULL) return;                  //inorder traversal
   if (root->left != NULL)
     printTreeRecursively(root->left);       //Visit left subtree
@@ -106,10 +106,10 @@ void printTreeRecursively(BstNode root){
     printTreeRecursively(root->right);      // Visit right subtree
 }
 
-void print(BstNode root){
+void print(Node root){
   if (root == NULL) return;  
   stackT stack;
-  BstNode current = root;
+  Node current = root;
   StackInit(&stack, MAXSTACKSIZE);
   int done = 0;
   puts("");
@@ -132,7 +132,7 @@ void print(BstNode root){
   StackDestroy(&stack);
 }
 
-void destroy(BstNode root){
+void destroy(Node root){
     if (!root) {return;}
     destroy(root->left);
     //printf("Destroying node %s \n", root->key);
@@ -143,7 +143,7 @@ void destroy(BstNode root){
     root = NULL;
 }
 
-int isNodePresentRecursive(BstNode root, char *key){
+int isNodePresentRecursive(Node root, char *key){
   if (root == NULL)
     return 0;
   else if (strcmp(root->key, key) == 0)
@@ -154,7 +154,7 @@ int isNodePresentRecursive(BstNode root, char *key){
     return isNodePresentRecursive(root->right, key);
 }
 
-BstNode insertRecursive(BstNode root, BstNode newNode){
+Node insertRecursive(Node root, Node newNode){
   if (root == NULL){
     root = newNode;
     printf("%s\t%s\n",root->key,root->value);
@@ -168,8 +168,8 @@ BstNode insertRecursive(BstNode root, BstNode newNode){
   return root;
 }
 
-BstNode searchIterativeParent(BstNode root, char *key){
-  BstNode parent = root;
+Node searchIterativeParent(Node root, char *key){
+  Node parent = root;
   int found = 0;
   while (root != NULL && !found){
     if (strcmp(root->key, key) > 0){
@@ -187,7 +187,7 @@ BstNode searchIterativeParent(BstNode root, char *key){
   return parent;
 }
 
-BstNode findNodeWithKey(BstNode root, char *key){
+Node findNodeWithKey(Node root, char *key){
   int found = 0;
 
   while (root != NULL && !found){
@@ -210,11 +210,11 @@ BstNode findNodeWithKey(BstNode root, char *key){
 }
 
 
-BstNode delete(BstNode root){
-  BstNode temp = root;
+Node delete(Node root){
+  Node temp = root;
   char buffer[128];
-  BstNode toBeDeleted = root;
-  BstNode parentOfNodeToBeDeleted = root;
+  Node toBeDeleted = root;
+  Node parentOfNodeToBeDeleted = root;
   //exit if tree is empty
   if(root == NULL) {
     puts("Database is empty...aborting...");
@@ -266,7 +266,7 @@ BstNode delete(BstNode root){
   }
   else if(toBeDeleted->left == NULL) {  //Case 2: One child
     puts("2");
-    BstNode test;
+    Node test;
     test = toBeDeleted->right;
     if (toBeDeleted == root){
       free(root->key);
@@ -293,7 +293,7 @@ BstNode delete(BstNode root){
   }
   else if(toBeDeleted->right == NULL) {
     puts("2.1");
-    BstNode test;
+    Node test;
     //1. Save test
     test = toBeDeleted->left;
     if (toBeDeleted == root){
@@ -328,11 +328,11 @@ BstNode delete(BstNode root){
   }
   else {  // case 3: 2 children
     puts("3");
-    BstNode minParent = findMin(toBeDeleted->right);
+    Node minParent = findMin(toBeDeleted->right);
 
     if (minParent == NULL || minParent == temp->right) {//if parent or cur is root---go right
       minParent = temp;
-      BstNode right = minParent->right;
+      Node right = minParent->right;
       puts("3.4");
       //free space to be overwritten and create space for the new data
       free(minParent->key);
@@ -345,7 +345,7 @@ BstNode delete(BstNode root){
       minParent->right = NULL;
     }
     else {    //if parent is NOT root---go left
-      BstNode left = minParent->left;
+      Node left = minParent->left;
       puts("3.4.2");
       //free space to be overwritten and create space for the new data
       free(toBeDeleted->key);
@@ -367,7 +367,7 @@ BstNode delete(BstNode root){
   return temp;
 }
 
-BstNode query(BstNode root, char *buffer){
+Node query(Node root, char *buffer){
 
   int found = 0;
   while (root != NULL && !found){
@@ -387,12 +387,11 @@ BstNode query(BstNode root, char *buffer){
   return root;
 }
 
-void update(BstNode root){
+void update(Node root){
 
   printf("Enter key: ");
   char buffer[128];
   readline(buffer, sizeof(buffer), stdin);
-  BstNode temp = root;
   int found = 0;
 
   while (root != NULL && !found){
