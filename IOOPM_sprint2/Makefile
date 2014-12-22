@@ -5,13 +5,13 @@ C_COMPILER   = gcc
 C_OPTIONS    = -ggdb -Wall -std=c99
 
 # Clean settings
-GEN_EXTENSIONS = *.o *.out
+GEN_EXTENSIONS = *.o *.out *~ 
 
 # SCM
 VC_PROGRAM = git
 
 clean:
-	rm -f $(GEN_EXTENSIONS) unittests *.orig
+	rm -f $(GEN_EXTENSIONS) unittests istring *.orig
 
 commit: beautify clean test
 	$(VC_PROGRAM) pull; $(VC_PROGRAM) commit; $(VC_PROGRAM) push
@@ -26,5 +26,7 @@ test: unittests.c istring.c istring.h
 	$(C_COMPILER) $(C_OPTIONS) unittests.c istring.c -o unittests -lcunit
 	./unittests
 
-istring: istring.c
-	$(C_COMPILER) $(C_OPTIONS) istring.c -o istring
+istring: main.c istring.c 
+	$(C_COMPILER) $(C_OPTIONS) main.c istring.c -o istring
+	valgrind ./istring --leak-check=full
+

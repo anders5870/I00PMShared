@@ -207,9 +207,7 @@ size_t istrlen(const char *s){
 
 
 char *istrcpy(char *dst, const char *src){
-  uint32_t srclen;
-
-  srclen = istrlen(src);
+  uint32_t srclen = istrlen(src);
   if (src == NULL) return NULL;
   dst = shiftRightCpy(dst, src);
   dst = setilenbytes(dst, srclen);
@@ -296,6 +294,7 @@ char *istrchr(const char *s, int c){
   int len = istrlen(s);
   for(int i = 0; i <= len; ++i){
     if (s[i] == c){
+      // char* i = malloc(sizeof(char));
       return (char *)s+i;  
     } 
   } 
@@ -334,32 +333,4 @@ size_t istrfixlen(char *s){
   return 1;
 }
 
-int main() {
-  char *str1 = istring_mk(NULL);
-  char *str2 = istring_mk("Anders");  
-  char *str3 = istring_mk("Ålander");  
-  char *str4 = istring_mk(" ");  
-  char *str5 = istrcat(str2,str4);  
-  char *str6 = istrcat(str5, str3);
-  char *str7 = istring_to_string(str6);
-  printf("An empty istring has length %s", istrlen(str1));
-  printf("My first name is %s\n",str2);
-  printf("My last  name is %s\n",str3);
-  printf("My name concatenated is %s", str6);
-  printf("%s has length %d", str6, istrlen(str6));
-  printf("%s is my name stored as normal string, it also has length %d", str7, strlen(str7));
-  printf("An istring's length can be changed without touching the string itself\n");
-  printf("%s has length %d, but we can change it to %d", str2, istrlen(str2), istrlen(istrslen(str2, 10)));
-  printf("Return a given letter at a given position ex. 3rd letter in %s is %c", str2, istrchr(str2, 3));
-  printf("3rd letter from the end in %s is %c", str2, istrrchr(str2, 3));
-  printf("Are the strings %s and %s equal? %s", str2, str3, istrcmp(str2,str3)?"no":"yes");
-  printf("Which one of %s and %s is greatest? %s", str2, str3, istrcmp(str2,str3)<0?str2:str3);
-
-  //ISTRNCMP NEXT
-
-  //char *str2 = istring_mk("ekieki");
-  istring_rm(str1);
-  
-  return 0;
-}
 
