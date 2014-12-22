@@ -4,6 +4,26 @@
 #include "treeSpecific.h"
 #include "stack.h"
 
+void readline(char *dest, int n, FILE *source){
+  fgets(dest, n, source);
+  int len = strlen(dest);
+  if(dest[len-1] == '\n')
+    dest[len-1] = '\0';
+}
+
+void printWelcomeMessage(){
+  puts("Welcome to");
+  puts(" ____    ____       ");
+  puts("/\\  _`\\ /\\  _`\\     ");
+  puts("\\ \\ \\/\\ \\ \\ \\L\\ \\   ");
+  puts(" \\ \\ \\ \\ \\ \\  _ <\\ ");
+  puts("  \\ \\ \\_\\ \\ \\ \\L\\ \\ ");
+  puts("   \\ \\____/\\ \\____/ ");
+  puts("    \\/___/  \\/___/  ");
+  puts("");
+}
+
+
 Node getNewNode(char *key, char *value){
   Node newNode = malloc(sizeof(struct node));
   newNode->key = key;
@@ -61,32 +81,6 @@ Node createTree(){
   return root;
 }
 
-void insert(Node root){
-  char *key;
-  char *value;
-  char buffer[128];
-  puts("");
-  printf("Enter key: ");
-  readline(buffer, sizeof(buffer), stdin); 
-  key = malloc(strlen(buffer) + 1);
-  strcpy(key, buffer);
-  puts("Searching database for duplicate keys...!");
-  if (!isNodePresentRecursive(root, key)){
-    puts("Key is unique!\n");
-    printf("Enter value: ");
-    readline(buffer, sizeof(buffer), stdin); 
-    value = malloc(strlen(buffer) + 1); 
-    strcpy(value, buffer);
-    insertIterative(root, key, value);
-    puts("");
-    puts("Entry inserted successfully:");
-    printf("key: %s\nvalue: %s\n", key, value); 
-  } 
-  else {
-    printf("key \"%s\" already exists!\n", buffer);
-  }
-}
-
 Node findMin(Node root){
   if (root == NULL) return root;
   if (root->left == NULL) return root;
@@ -133,14 +127,14 @@ void print(Node root){
 }
 
 void destroy(Node root){
-    if (!root) {return;}
-    destroy(root->left);
-    //printf("Destroying node %s \n", root->key);
-    destroy(root->right);
-    free(root->key);
-    free(root->value);
-    free(root);
-    root = NULL;
+  if (!root) {return;}
+  destroy(root->left);
+  //printf("Destroying node %s \n", root->key);
+  destroy(root->right);
+  free(root->key);
+  free(root->value);
+  free(root);
+  root = NULL;
 }
 
 int isNodePresentRecursive(Node root, char *key){
@@ -210,9 +204,8 @@ Node findNodeWithKey(Node root, char *key){
 }
 
 
-Node delete(Node root){
+Node delete(Node root, char *buffer){
   Node temp = root;
-  char buffer[128];
   Node toBeDeleted = root;
   Node parentOfNodeToBeDeleted = root;
   //exit if tree is empty
@@ -220,10 +213,6 @@ Node delete(Node root){
     puts("Database is empty...aborting...");
     return root;
   }
-  //Input node from user
-  printf("Enter key: ");
-  readline(buffer, sizeof(buffer), stdin);
-
   //find parent of node to delete
   parentOfNodeToBeDeleted = searchIterativeParent(root, buffer);
 
@@ -369,8 +358,7 @@ Node delete(Node root){
 
 Node query(Node root, char *buffer){
 
-  int found = 0;
-  while (root != NULL && !found){
+  while (root){
     if (strcmp(root->key, buffer) > 0){
       root = root->right;
     }
@@ -378,27 +366,21 @@ Node query(Node root, char *buffer){
       root = root->left;
     }
     else {
-      found = 1;
       return root;
     }
   }
-  if(!found)
-    return NULL;
-  return root;
+  return NULL;
+
 }
 
-void update(Node root){
-
-  printf("Enter key: ");
-  char buffer[128];
-  readline(buffer, sizeof(buffer), stdin);
+void update(Node root, char* key){
   int found = 0;
 
   while (root != NULL && !found){
-    if (strcmp(root->key, buffer) > 0){
+    if (strcmp(root->key, key) > 0){
       root = root->right;
     }
-    else if (strcmp(root->key, buffer) < 0){
+    else if (strcmp(root->key, key) < 0){
       root = root->left;
     }
     else {
@@ -407,14 +389,14 @@ void update(Node root){
     }
   }
   if(!found)
-    printf("Could not find an entry matching key \"%s\"!\n", buffer);
+    printf("Could not find an entry matching key \"%s\"!\n", key);
   else{
     puts("");
     printf("Enter new value: ");
-    readline(buffer, sizeof(buffer), stdin);
+    readline(key, sizeof(key), stdin);
     free(root->value);
-    root->value = malloc(strlen(buffer) + 1);
-    strcpy(root->value, buffer);
+    root->value = malloc(strlen(key) + 1);
+    strcpy(root->value, key);
     puts("");
     puts("Value inserted successfully!");
   }

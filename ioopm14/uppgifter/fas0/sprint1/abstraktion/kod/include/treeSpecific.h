@@ -30,9 +30,10 @@ Node getNewNode(char *key, char *value);
  * Type: (Node root, char *key, char *value)->Node \n   
  * Pre:\n    
  * Post: Inserts a node with the specified key and value at
- * an empty place in the bst with the given root. \n
+ * an empty place in the bst with the given root. It will 
+ * insert even if there is a node with the same key present \n
  */
-Node insertIterative(Node root, char *key_, char *value); //
+Node insertIterative(Node root, char *key_, char *value); 
 
 
 /**
@@ -89,36 +90,23 @@ Node searchIterativeParent(Node root, char *key);
  * Name: query\n
  * Type: Node root->Node\n
  * Pre:\n
- * Post: returns the value component of the Node with
- * specified key read from buffer
+ * Post: returns the  Node with
+ * specified key.
  * If no such Node is found it returns NULL.\n
  */
-Node query(Node root, char *buffer); 
+Node query(Node root, char *key); 
 
 /**
  * Name: update\n
  * Type: Node root->Node root\n
  * Pre:\n
  * Post: an updated bst with root root\n
- * Side effects: the user gets to input a key. If that key corresponds
+ * If the specified key corresponds
  * to a node in the  bst tree root then the user is prompted to enter
  * a new value for that node. If the key was not found then nothing
  * will be changed.\n
  */
-void update(Node root);
-
-/**
- * Name: insert\n
- * Type: Node root->void\n
- * Pre:\n
- * Post: attempt to add a new Node in the bst with root root.
- * Side effects: the user is promted under function runtime to specify the
- * key and value for the new node to be inserted. If the key is unique
- * the the node will be inserted and the returned bst will contain the new
- * node. If the key is not unique user will be notified and nothing
- * will be updated\n
- */
-void insert(Node root);
+void update(Node root, char *key);
 
 /**
  * Name: delete\n
@@ -126,12 +114,11 @@ void insert(Node root);
  * Pre:\n
  * Post: attempt to delete  a Node in thebst with root root
  * Returns the root of the tree. 
- * Side effects: the user is prompted under function runtime to specify
- * the key of the Node to be deleted. If such node is found it is
+ * Side effects:  If the node with key key is under root, it is
  * removed from the bst. If the key was not found the user will be 
- * notified and nothing will be updated\n
+ * notified and nothing will be changed in the root\n
  */
-Node delete(Node root);
+Node delete(Node root, char *key);
 
 
 /**

@@ -1,5 +1,6 @@
 #include "treeSpecific.h"
-
+#include <stdlib.h>
+#include <string.h>
 int main(int argc, char *argv[]){
   if (argc < 2){
     puts("Usage: db [FILE]");
@@ -11,7 +12,8 @@ int main(int argc, char *argv[]){
 
   Node root = fillFromFile(filename);
   Node node;
-
+  char *key;
+  char *value;
   int choice = -1;
   char buffer[128];
   while(choice != 0){
@@ -34,13 +36,35 @@ int main(int argc, char *argv[]){
       else printf("Key was found! It's value is: %s\n", node->value);
       break;
     case 2:
-      update(root); //updateroot = searchIterative(root, 1);//
+      printf("Enter key: ");
+      readline(buffer, sizeof(buffer), stdin);
+      update(root, buffer); //updateroot = searchIterative(root, 1);//
       break;
     case 3:
-      insert(root); //insert(&)root = searchIterative(root, 2);//
+      puts("");
+      printf("Enter key: ");
+      readline(buffer, sizeof(buffer), stdin); 
+      key = malloc(strlen(buffer) + 1);
+      strcpy(key, buffer);
+      if (!isNodePresentRecursive(root, key)){
+        puts("Key is unique!\n");
+        printf("Enter value: ");
+        readline(buffer, sizeof(buffer), stdin); 
+        value = malloc(strlen(buffer) + 1); 
+        strcpy(value, buffer);
+        insertIterative(root, key, value); //<<<Insert
+        puts("");
+        puts("Entry inserted successfully:");
+        printf("key: %s\nvalue: %s\n", key, value); 
+      } 
+      else {
+        printf("key \"%s\" already exists!\n", buffer);
+      }
       break;
     case 4:
-      root = delete(root); //delete root = searchIterative(root,3);//
+      printf("Enter key: ");
+      readline(buffer, sizeof(buffer), stdin);
+      root = delete(root, buffer); //delete root = searchIterative(root,3);//
       break;
     case 5:
       print(root); //print iteratively
