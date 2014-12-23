@@ -1,4 +1,4 @@
-IDIR =../include
+	IDIR =../include
 #Defines a constant that looks for files in directory
 #"include" above the current directory
 CC=gcc
@@ -15,7 +15,7 @@ _DEPS = stack.h treeSpecific.h
 #List of all .h files to use when compiling
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 #Looks in IDIR for files included in _DEPS
-_OBJ =  db.o treeImplementation.o stack.o
+_OBJ = db.o treeImplementation.o stack.o
 #List of all .o files to use when compiling
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 #Looks in ODIR for files included in _OBJ
@@ -29,7 +29,9 @@ db : $(OBJ)
 	gcc -o $@ $^ $(CFLAGS) $(LIBS)
 #How to create it
 
-
+test : $(OBJ) 
+	gcc -o unittest $^ $(CFLAGS) -lcunit $(LIBS)
+	./unittest valgrind --leak-ckeck=full
 
 .PHONY: clean
 #Keeps make from doing something with a file named clean

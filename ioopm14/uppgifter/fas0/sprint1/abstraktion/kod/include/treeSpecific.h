@@ -1,5 +1,5 @@
-#ifndef __treeSpecific_h
-#define __treeSpecific_h
+#ifndef __db_h
+#define __db_h
 #include <stdio.h>
 
 
@@ -100,13 +100,9 @@ Node query(Node root, char *key);
  * Name: update\n
  * Type: Node root->Node root\n
  * Pre:\n
- * Post: an updated bst with root root\n
- * If the specified key corresponds
- * to a node in the  bst tree root then the user is prompted to enter
- * a new value for that node. If the key was not found then nothing
- * will be changed.\n
+ * Post: updates the value component in the given node.
  */
-void update(Node root, char *key);
+void update(Node node, char *buffer);
 
 /**
  * Name: delete\n

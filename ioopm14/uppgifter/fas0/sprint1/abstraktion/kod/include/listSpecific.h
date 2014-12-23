@@ -1,3 +1,6 @@
+#ifndef __list3Specific_h
+#define __listSpecific_h
+
 #include <stdio.h>
 
 /**
@@ -107,3 +110,5 @@ void destroy(Node list);
  * Side Effects: Prints a welcome message to DB\n
  */
 void printWelcomeMessage();
+
+#endif

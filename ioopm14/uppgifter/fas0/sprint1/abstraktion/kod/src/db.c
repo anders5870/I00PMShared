@@ -36,9 +36,19 @@ int main(int argc, char *argv[]){
       else printf("Key was found! It's value is: %s\n", node->value);
       break;
     case 2:
+      
+      puts("");
       printf("Enter key: ");
-      readline(buffer, sizeof(buffer), stdin);
-      update(root, buffer); //updateroot = searchIterative(root, 1);//
+      readline(buffer, sizeof(buffer), stdin); 
+      // strcpy(key, buffer);
+      node = query(root, buffer);
+      if (node){
+        update(node, buffer);
+      }
+      else {
+      printf("Could not find an entry matching key \"%s\"!\n", buffer);
+      }
+
       break;
     case 3:
       puts("");
@@ -64,7 +74,7 @@ int main(int argc, char *argv[]){
     case 4:
       printf("Enter key: ");
       readline(buffer, sizeof(buffer), stdin);
-      root = delete(root, buffer); //delete root = searchIterative(root,3);//
+      root = delete(root, buffer); 
       break;
     case 5:
       print(root); //print iteratively

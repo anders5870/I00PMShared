@@ -83,10 +83,10 @@ Node createTree(){
 
 Node findMin(Node root){
   if (root == NULL) return root;
-  if (root->left == NULL) return root;
-  Node dir = root->left;
-  while (dir->left != NULL)
-    dir = dir->left;
+  if (root->right == NULL) return root;
+  Node dir = root->right;
+  while (dir->right != NULL)
+    dir = dir->right;
   return dir;
 }
 
@@ -134,6 +134,10 @@ void destroy(Node root){
   free(root->key);
   free(root->value);
   free(root);
+  root->left = NULL;
+  root->key = NULL;
+  root->value = NULL;
+  root->right = NULL;
   root = NULL;
 }
 
@@ -203,157 +207,122 @@ Node findNodeWithKey(Node root, char *key){
   return root = NULL;
 }
 
+void deleteLeaf(Node parent, Node delete){
+
+}
+void deleteNode(Node node){
+  free(node->key);
+  free(node->value);
+  free(node);
+  node->left = NULL;
+  node->key = NULL;
+  node->value = NULL;
+  node->right = NULL;
+  node = NULL;
+}
+void deleteright(Node parent, Node delete){
+  Node rightchild = delete->right;
+  int rightorleft = 0;
+  Node parentright = parent->right;
+  delete->right = NULL;
+  rightorleft = (strcmp(parentright->key, delete->key)?0:1); 
+  destroy(delete);
+  if (rightorleft) {
+    parent->right = rightchild;
+  }
+  else{
+    parent->left = rightchild;
+  }
+}
+
+
+void deleteleft(Node parent, Node delete){
+  Node leftchild = delete->left; 
+  int rightorleft = 0;
+  Node parentright = parent->right;
+  delete->left = NULL;
+  rightorleft = (strcmp(parentright->key, delete->key)?0:1); 
+  deleteNode(delete);
+  if (rightorleft){
+    parent->right = leftchild;
+  }
+  else{
+    parent->right = leftchild;
+
+  }
+}
+
+Node deleteRoot(Node root){
+  Node temp = root->left;
+  free(root->key);
+  free(root->value);
+  free(root);
+  root->left = NULL;
+  root->key = NULL;
+  root->value = NULL;
+  root->right = NULL;
+  root = NULL;
+  return temp;
+}
+
+
 
 Node delete(Node root, char *buffer){
   Node temp = root;
-  Node toBeDeleted = root;
-  Node parentOfNodeToBeDeleted = root;
-  //exit if tree is empty
-  if(root == NULL) {
-    puts("Database is empty...aborting...");
+  Node delete = query(root, buffer);
+  Node parent = searchIterativeParent(root, buffer); 
+  if (!delete){
+    printf("Node was not found!");
     return root;
-  }
-  //find parent of node to delete
-  parentOfNodeToBeDeleted = searchIterativeParent(root, buffer);
-
-  //find node to delete
-  toBeDeleted = findNodeWithKey(root, buffer);
-
-  //exit if entry to delete was not found
-  if (toBeDeleted == NULL){ 
-    puts("Entry to delete was not found...aborting...");
-    return temp;
-  }
-  // Case 1:  No child
-  if(toBeDeleted->left == NULL && toBeDeleted->right == NULL) {
-    puts("1");
-    if (toBeDeleted == root){
-      free(root->key);
-      free(root->value);
-      free(root);
-      root = NULL;
-      return root;
-    }
-    if (parentOfNodeToBeDeleted->right == root){
-      //free key and value
-      free(toBeDeleted->key);
-      free(toBeDeleted->value);
-      //free the node and set it to NULL
-      free(parentOfNodeToBeDeleted->right);
-      parentOfNodeToBeDeleted->right = NULL;
-    }
-    else {
-
-      free(toBeDeleted->key);
-      free(toBeDeleted->value);
-      
-      free(parentOfNodeToBeDeleted->left);
-      parentOfNodeToBeDeleted->left = NULL;
-    }
-    puts("Entry deleted successfully");
+  }    
+  //if there are two children
+  if (delete->left && delete->right){
+    Node min = NULL;
+    do {
+      puts("two children");
+      min = findMin(delete->left);
+      free(delete->key); free(delete->value);
+      delete->key = malloc(strlen(min->key)+1);
+      delete->value = malloc(strlen(min->value)+1);
+      delete->key = min->key;
+      delete->value = min->value;
+      delete = min;
+    }while(min->left && min->right);
+    //reduced to 0-1 children after the do-while
     
   }
-  else if(toBeDeleted->left == NULL) {  //Case 2: One child
-    puts("2");
-    Node test;
-    test = toBeDeleted->right;
-    if (toBeDeleted == root){
-      free(root->key);
-      free(root->value);
-      free(root);
-      root = NULL;
-      return test;
+  //NAND: Case of a leaf
+  if (!(delete->left) && !(delete->right)){
+    
+    if (strcmp(delete->key, parent->key) >= 0 ){
+      destroy(delete);
+      parent->left = NULL;
     }
-    parentOfNodeToBeDeleted = searchIterativeParent(root, toBeDeleted->key);
-    free(toBeDeleted->key);
-    free(toBeDeleted->value);
-    if (parentOfNodeToBeDeleted->left == toBeDeleted){
-      free(toBeDeleted);
-      parentOfNodeToBeDeleted->left = NULL;
-      parentOfNodeToBeDeleted->left = test;
+    else {
+      destroy(delete);
+      parent->right = NULL;
     }
-    else{
-      free(toBeDeleted);
-      parentOfNodeToBeDeleted->right = NULL;
-      parentOfNodeToBeDeleted->right = test;
-    }
-
-    puts("Entry deleted successfully");
   }
-  else if(toBeDeleted->right == NULL) {
-    puts("2.1");
-    Node test;
-    //1. Save test
-    test = toBeDeleted->left;
-    if (toBeDeleted == root){
-      free(root->key);
-      free(root->value);
-      free(root);
-      root = NULL;
-      return test;
+  //If right is a child
+  if (!(delete->left) && (delete->right)){
+    puts("A right child");
+    if (strcmp(delete->key, root->key) == 0){
+      return deleteRoot(root); 
     }
-    //2. Find parent of node to be deleted
-    parentOfNodeToBeDeleted = searchIterativeParent(root, toBeDeleted->key);
-    //3. Remove key and value from node to be deleted
-    free(toBeDeleted->key);
-    free(toBeDeleted->value);
-    //4. Check if node to be deleted is right or left child of parent node
-    if (parentOfNodeToBeDeleted->left == toBeDeleted){
-      //5.1 If it is the left child, remove the node and set it to NULL
-      free(toBeDeleted);
-      parentOfNodeToBeDeleted->left = NULL;
-      //6.1 Link parent node with test
-      parentOfNodeToBeDeleted->left = test;
-    }
-    else{
-      //5.2 Else it is the right child. Remove it and set it to NULL
-      free(toBeDeleted);
-      parentOfNodeToBeDeleted->right = NULL;
-      //6.2 Link parent node with test
-      parentOfNodeToBeDeleted->right = test;
-    }
-
-    puts("Entry deleted successfully");
+    deleteright(parent, delete);
   }
-  else {  // case 3: 2 children
-    puts("3");
-    Node minParent = findMin(toBeDeleted->right);
 
-    if (minParent == NULL || minParent == temp->right) {//if parent or cur is root---go right
-      minParent = temp;
-      Node right = minParent->right;
-      puts("3.4");
-      //free space to be overwritten and create space for the new data
-      free(minParent->key);
-      free(minParent->value);
-      //insert new data
-      minParent->key = right->key;
-      minParent->value = right->value;
-      //free the node the data was contained in from parent-perspective
-      free(minParent->right);
-      minParent->right = NULL;
+  //If left is a child
+  if ((delete->left) && !(delete->right)){
+    puts("A left child");
+    if (strcmp(delete->key, root->key) == 0){
+      return deleteRoot(root); 
     }
-    else {    //if parent is NOT root---go left
-      Node left = minParent->left;
-      puts("3.4.2");
-      //free space to be overwritten and create space for the new data
-      free(toBeDeleted->key);
-      free(toBeDeleted->value);
-      //insert new data
-      toBeDeleted->key = left->key;
-      toBeDeleted->value = left->value;
-      //find the parent
-      parentOfNodeToBeDeleted = searchIterativeParent(root, left->key);
-      //free the node the data was contained in from parent-perspective
-      free(parentOfNodeToBeDeleted->left);
-      parentOfNodeToBeDeleted->left = NULL;
+    else {
+      deleteleft(parent, delete);
     }
-    puts("3.5");
-    puts("Entry deleted successfully");
-    printf("%p\n", temp->key);
   }
-  toBeDeleted = parentOfNodeToBeDeleted = NULL;
-  return temp;
+  return temp; 
 }
 
 Node query(Node root, char *buffer){
@@ -373,32 +342,14 @@ Node query(Node root, char *buffer){
 
 }
 
-void update(Node root, char* key){
-  int found = 0;
-
-  while (root != NULL && !found){
-    if (strcmp(root->key, key) > 0){
-      root = root->right;
-    }
-    else if (strcmp(root->key, key) < 0){
-      root = root->left;
-    }
-    else {
-      puts("Found entry");
-      found = 1;
-    }
-  }
-  if(!found)
-    printf("Could not find an entry matching key \"%s\"!\n", key);
-  else{
-    puts("");
-    printf("Enter new value: ");
-    readline(key, sizeof(key), stdin);
-    free(root->value);
-    root->value = malloc(strlen(key) + 1);
-    strcpy(root->value, key);
-    puts("");
-    puts("Value inserted successfully!");
-  }
+void update(Node node, char *buffer){
+  free(node->value);
+  printf("Enter value: ");
+  readline(buffer, sizeof(buffer), stdin); 
+  char *value = malloc(strlen(buffer) + 1);
+  strcpy(value, buffer);
+  node->value = value;
+  puts("");
+  puts("Value inserted successfully!");
+  
 }
-
