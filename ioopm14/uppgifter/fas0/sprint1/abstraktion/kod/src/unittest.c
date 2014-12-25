@@ -14,26 +14,10 @@ int clean_suite_1(void)
   return 0;
 }
 
-void testCREATETREE(){
-  Node root = createTree();
-  CU_ASSERT(root->key == NULL);
-  CU_ASSERT(root->value == NULL);
-  CU_ASSERT(root->left == NULL);
-  CU_ASSERT(root->right == NULL);
-  destroy(root);
-}
-
 void testDESTROY(){
   Node root = fillFromFile("TEST2.db");
-  CU_ASSERT(root->key != NULL);
-  CU_ASSERT(root->value != NULL);
-  CU_ASSERT(root->left != NULL);
-  CU_ASSERT(root->right != NULL);
+  CU_ASSERT(root != NULL);
   destroy(root);
-  CU_ASSERT(root->key == NULL);
-  CU_ASSERT(root->value == NULL);
-  CU_ASSERT(root->left == NULL);
-  CU_ASSERT(root->right == NULL);
 }
 
 void testSEARCHITERATIVEPARENT(){
@@ -42,6 +26,7 @@ void testSEARCHITERATIVEPARENT(){
   CU_ASSERT(strcmp(parent->key, "Anders") == 0);
   parent = searchIterativeParent(root, "Karin");
   CU_ASSERT(strcmp(parent->key, "Cecilia") == 0);
+  destroy(root);
 }
 
 void testQUERY(){
@@ -49,36 +34,37 @@ void testQUERY(){
   Node test = query(root, "Leo");
   CU_ASSERT(strcmp(test->value, "3") == 0);
   CU_ASSERT(query(root,"Yipman") == NULL);
+  destroy(root);
 }
 
- /** Discovered that greater nodes are inserted
-  *  on the left instead of on the right in
-  *  the insert function, so the smallest nodes
-  *  will be found on the right instead of
-  *  on the left by findMind() but it poses
-  *  no problems as long as its behavior is
-  *  known.
-  */
+/** Discovered that greater nodes are inserted
+ *  on the left instead of on the right in
+ *  the insert function, so the smallest nodes
+ *  will be found on the right instead of
+ *  on the left by findMind() but it poses
+ *  no problems as long as its behavior is
+ *  known.
+ */
 void testFINDMIN(){
-  Node root = fillFromFile("TEST.db");
+  Node root = fillFromFile("TEST2.db");
   Node min = findMin(root);
-  Node left = root->left;
-  CU_ASSERT(strcmp(min->value, "39") == 0);
+  CU_ASSERT(strcmp(min->key, "Aaa") == 0);
   root = delete(root, min->key);
   min = findMin(root);
-  CU_ASSERT(strcmp(min->value, "38") == 0);
+  CU_ASSERT(strcmp(min->key, "Aaron") == 0);
   root = delete(root, min->key);
   min = findMin(root);
-  CU_ASSERT(strcmp(min->value, "37") == 0);
+  CU_ASSERT(strcmp(min->key, "Aas") == 0);
   destroy(root);
 }
 
 void testGETNEWNODE(){
-  Node node = getNewNode("aaaa", "40");
-  CU_ASSERT(strcmp(node->key, "aaaa") == 0);
-  CU_ASSERT(strcmp(node->value, "40") == 0);
+  Node node = getNewNode("aaaaa", "400");
+  CU_ASSERT(strcmp(node->key, "aaaaa") == 0);
+  CU_ASSERT(strcmp(node->value, "400") == 0);
   CU_ASSERT( node-> left == NULL);
   CU_ASSERT( node-> right == NULL);
+  free(node);
 }
 
 void testFILLFROMFILE(){
@@ -97,54 +83,62 @@ void testFILLFROMFILE(){
 void testDELETE(){
   Node root = fillFromFile("TEST2.db");
   //delete root node
-  delete(root, "Anders");
+  root = delete(root, "Anders");
   CU_ASSERT(query(root, "Anders") == NULL);
   CU_ASSERT(strcmp(root->key, "Anders") != 0);
-  
   //delete leaf node
-  delete(root, "Leo");
+  root = delete(root, "Leo");
   CU_ASSERT(query(root, "Leo") == NULL);
   //delete node with one child
-  delete(root, "Ture");
+  root = delete(root, "Ture");
   CU_ASSERT(query(root, "Ture") == NULL);
   //delete node with two children
-  delete(root, "Karin");
-    CU_ASSERT(query(root, "Karin") == NULL);
-  //Two more nodes
-  delete(root, "Kerstin");
-  CU_ASSERT(query(root, "Kerstin") == NULL);
-  delete(root, "Erik");
-  CU_ASSERT(query(root, "Erik") == NULL);
-  //Last node that should be the root node
-  CU_ASSERT(strcmp(root->key, "Cecilia") == 0);
-  delete(root, "Cecilia");
-  CU_ASSERT(query(root, "Cecilia") == NULL);
+  root = delete(root, "Karin");
+  CU_ASSERT(query(root, "Karin") == NULL);
+  root = delete(root, "Abba");
+  CU_ASSERT(query(root, "Abba") == NULL);
+  //delete all remaining except the root
+  root = delete(root, "Cecilia");
+  root = delete(root, "Ace");
+  root = delete(root, "Aaron");
+  root = delete(root, "Kerstin");
+  root = delete(root, "Aas");
+  root = delete(root, "Aau");
+  root = delete(root, "Aaa");
+  //delete root
+  root = delete(root, "Erik");
   CU_ASSERT(root == NULL);
-
+  destroy(root);
+  
 }
 
 void testINSERT(){
   Node root = fillFromFile("TEST2.db");
-  insertIterative(root, "Abba", "1");
-  Node test1 = query(root, "Abba");
-  CU_ASSERT(strcmp(test1->key, "Abba") == 0);
-  CU_ASSERT(strcmp(test1->value, "1") == 0);
+  char *key = malloc(strlen("Kalle")+1);
+  char *value = malloc(strlen("1")+1);
+  strcpy(key, "Kalle");strcpy(value, "1");
+  root = insertIterative(root, key, value);
+  Node test = query(root, "Kalle");
+  CU_ASSERT(strcmp(test->key, "Kalle") == 0);
+  CU_ASSERT(strcmp(test->value, "1") == 0);
   CU_ASSERT(query(root, "Yipman") == NULL);
   destroy(root);
+
 }
 
 void testUPDATE(){
   Node root = fillFromFile("TEST2.db");
-  Node test = query(root, "Leo");
-  update(test, "5");
-  CU_ASSERT(strcmp(test->value, "5") == 0);
-  test = query(root, "Yipman");
+  Node node = query(root, "Leo");
+  update(node, "50");
+  CU_ASSERT(strcmp(node->value, "50") == 0);
+  node = query(root, "Yipman");
   CU_ASSERT(query(root, "Yipman") == NULL); 
-  update(test, "150");
-  CU_ASSERT(query(root, "Yipman") != NULL);
-  CU_ASSERT(test->value != NULL);
-  CU_ASSERT(test->key == NULL);
-  
+  // char *buffer2 = "150";
+  node = query(root, "Leo");
+  update(node, "150");
+  node = query(root, "Yipman");
+  CU_ASSERT(node == NULL);
+  destroy(root);
   
 }
 
@@ -166,7 +160,7 @@ int main()
     }
   
   if (
-      (NULL == CU_add_test(pSuite1, "test of CREATETREE()", testCREATETREE)) ||
+      /* (NULL == CU_add_test(pSuite1, "test of CREATETREE()", testCREATETREE)) ||*/
       (NULL == CU_add_test(pSuite1, "test of DESTROY()", testDESTROY)) ||
       (NULL == CU_add_test(pSuite1, "test of SEARCHITERATIVEPARENT()", testSEARCHITERATIVEPARENT)) ||
       (NULL == CU_add_test(pSuite1, "test of QUERY()", testQUERY)) ||

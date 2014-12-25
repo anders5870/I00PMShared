@@ -23,6 +23,8 @@ int main(int argc, char *argv[]){
     puts("3. New entry");
     puts("4. Remove entry");
     puts("5. Print database");
+    puts("6. Print root");
+    puts("7. Write file");
     puts("0. Exit database");
     printf("? ");
     scanf("%d", &choice);
@@ -40,10 +42,13 @@ int main(int argc, char *argv[]){
       puts("");
       printf("Enter key: ");
       readline(buffer, sizeof(buffer), stdin); 
-      // strcpy(key, buffer);
-      node = query(root, buffer);
+      Node node = query(root, buffer);
       if (node){
+        printf("Enter value: ");
+        readline(buffer, sizeof(buffer), stdin);
         update(node, buffer);
+        puts("");
+        puts("Value inserted successfully!");  
       }
       else {
       printf("Could not find an entry matching key \"%s\"!\n", buffer);
@@ -52,17 +57,18 @@ int main(int argc, char *argv[]){
       break;
     case 3:
       puts("");
+      
       printf("Enter key: ");
       readline(buffer, sizeof(buffer), stdin); 
       key = malloc(strlen(buffer) + 1);
       strcpy(key, buffer);
-      if (!isNodePresentRecursive(root, key)){
+      if (!query(root, key)){
         puts("Key is unique!\n");
         printf("Enter value: ");
         readline(buffer, sizeof(buffer), stdin); 
         value = malloc(strlen(buffer) + 1); 
         strcpy(value, buffer);
-        insertIterative(root, key, value); //<<<Insert
+        root = insertIterative(root, key, value); //<<<Insert
         puts("");
         puts("Entry inserted successfully:");
         printf("key: %s\nvalue: %s\n", key, value); 
@@ -75,9 +81,18 @@ int main(int argc, char *argv[]){
       printf("Enter key: ");
       readline(buffer, sizeof(buffer), stdin);
       root = delete(root, buffer); 
+      printf("Node '%s' deleted successfullly\n", buffer);
       break;
     case 5:
       print(root); //print iteratively
+      break;
+    case 6:
+      printf("Key: %s Value: %s\n", root->key, root->value);
+      break;
+    case 7:
+      printf("Enter filename: ");
+      readline(buffer, sizeof(buffer), stdin); 
+      writefile(root, buffer);
       break;
     case 0:
       // Exit

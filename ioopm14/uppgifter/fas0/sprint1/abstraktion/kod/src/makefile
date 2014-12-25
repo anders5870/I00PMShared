@@ -26,16 +26,16 @@ $(ODIR)/%.o: %.c $(DEPS)
 
 db : $(OBJ) 
 #What to create and what to create it from
-	gcc -o $@ $^ $(CFLAGS) $(LIBS)
+	$(CC) -o $@ $^ $(CFLAGS) $(LIBS) -lcunit
 #How to create it
 
-test : $(OBJ) 
+test : unittest.o treeImplementation.o stack.o
 	gcc -o unittest $^ $(CFLAGS) -lcunit $(LIBS)
-	./unittest valgrind --leak-ckeck=full
+	valgrind --leak-check=full ./unittest 	
 
 .PHONY: clean
 #Keeps make from doing something with a file named clean
 clean:
 #Custom created make command. Run it with: make clean
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ db
+	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ db unittest *.o 
 #Cleans ODIR and IDIR from garbage
